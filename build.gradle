@@ -1,0 +1,57 @@
+// Dashoboards build file
+//
+// In case of issues, please report in Slack!
+//
+
+buildscript {
+    repositories {
+        mavenCentral()
+        // The following is only necessary if you want to use SNAPSHOT releases.
+        // maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+    }
+    dependencies {
+        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.0'
+    }
+}
+
+plugins {
+    id 'application'
+    id 'idea'
+    id 'eclipse'
+    id 'com.github.johnrengelman.shadow' version '2.0.1'
+}
+
+apply plugin: 'org.junit.platform.gradle.plugin'
+
+repositories {
+    mavenCentral()
+    maven { // Sonatype Snapshots (JUnit 5)
+        url "https://oss.sonatype.org/content/repositories/snapshots"
+    }
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+group = 'uk.ac.dundee.ac41004.team9'
+mainClassName = 'uk.ac.dundee.ac41004.team9.Main'
+version = '0.0.1'
+
+build.dependsOn += shadowJar
+
+dependencies {
+    // JSR305 (@Nullable annotations)
+    compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
+
+    // Spark
+    compile group: 'com.sparkjava', name: 'spark-core', version: '2.6.0'
+    compile group: 'com.sparkjava', name: 'spark-template-mustache', version: '2.5.5'
+
+    // Logging (SLF4j + Logback Classic)
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+
+    // JUnit
+    testRuntime group: 'org.junit.platform', name: 'junit-platform-launcher', version: '1.0.0'
+    testRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.0.0'
+    testRuntime group: 'org.junit.vintage', name: 'junit-vintage-engine', version: '4.12.0'
+}
