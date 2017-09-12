@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/DUSA-Dashoboards.iml" filepath="$PROJECT_DIR$/DUSA-Dashoboards.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/dashoboards.iml" filepath="$PROJECT_DIR$/.idea/modules/dashoboards.iml" />
     </modules>
   </component>
 </project>
