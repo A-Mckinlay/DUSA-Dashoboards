@@ -18,6 +18,11 @@ address - it's free! The other tools are good too. *Free!*)
 3. ???
 4. Profit (and work)
 
+Once IDEA is running, you'll get a error notification about missing required plugins. Click the link in the notification
+and installed the required plugins from there. After restarting IDEA, you'll get another notification about linking the
+Gradle project. Click the link to import it, uncheck the option about "Seperate Source Sets" and hit Import. If you have
+no JDKs defined, cancel out, go to File -> Project Structure and define a JDK, then restart IDEA and retry the import.
+
 ### Eclipse
 Nope. No idea. Sorry. Searching for "Eclipse" and "Gradle" may give pointers? IDEA is recommended.
 
