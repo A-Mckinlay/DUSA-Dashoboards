@@ -23,6 +23,7 @@ import java.util.Optional;
 /**
  * Parser for Excel (Horrible Spreadsheet Format) Yoyo files.
  */
+@SuppressWarnings("WeakerAccess")
 @ParametersAreNonnullByDefault
 public class YoyoXSSFParser {
 
@@ -44,10 +45,13 @@ public class YoyoXSSFParser {
             XSSFWorkbook workbook = new XSSFWorkbook(strm);
             Sheet sheet = workbook.getSheet(SHEET_NAME);
             if (sheet == null) throw new IllegalArgumentException("No sheet '" + SHEET_NAME + "' in Excel file!");
-            return new SheetParser().createEntity(sheet, YoyoWeekSpreadsheetRow.class, ex -> {
+            List<YoyoWeekSpreadsheetRow> rows = new SheetParser().createEntity(sheet, YoyoWeekSpreadsheetRow.class,
+                    ex -> {
                 log.error("Error in sheet parsing", ex);
                 throw new IllegalArgumentException("Error in sheet parsing", ex);
             });
+            log.debug("Loaded {} rows from XSSF file. Yay.", rows.size());
+            return rows;
         } catch (IOException ex) {
             log.error("IO exception in sheet parsing", ex);
             return null;

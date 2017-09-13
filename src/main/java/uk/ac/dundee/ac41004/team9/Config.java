@@ -31,7 +31,10 @@ public class Config {
 
         // Compiled into jar
         try (InputStream strm = Config.class.getClassLoader().getResourceAsStream("config.properties")) {
-            if (strm != null) props.load(strm);
+            if (strm != null) {
+                log.info("Loading config properties file from classpath.");
+                props.load(strm);
+            }
         } catch (IOException ex) {
             log.info("Unable to load config from classpath; skipping.");
         }
@@ -40,6 +43,7 @@ public class Config {
         Path workingDir = Paths.get(".", "config.properties");
         if (Files.exists(workingDir)) {
             try (InputStream strm = new FileInputStream(workingDir.toFile())) {
+                log.info("Loading config properties file from working directory.");
                 props.load(strm);
             } catch (IOException ex) {
                 log.warn("Error while loading config file in working directory; skipping.", ex);
@@ -48,11 +52,17 @@ public class Config {
 
         // Process properties, check env vars, etc.
         // ADD NEW SETTING VARIABLES HERE!
+
+        // Database
+        log.debug("Loading database configuration.");
         dbHost = configString("dbHost", dbHost);
         dbPort = configInt("dbPort", dbPort);
         dbUser = configString("dbUser", dbUser);
         dbPass = configString("dbPass", dbPass);
         dbName = configString("dbName", dbName);
+
+        // Fin.
+        log.info("Configuration loading complete.");
     }
 
     private static String configString(String configName, Object defaultValue) {
@@ -61,6 +71,7 @@ public class Config {
         return props.getProperty(configName, defaultValue.toString());
     }
 
+    @SuppressWarnings("SameParameterValue")
     private static int configInt(String configName, int defaultValue) {
         String str = configString(configName, defaultValue);
         try {
@@ -70,6 +81,11 @@ public class Config {
                             " Using default or config file value..", str, configName);
             return defaultValue;
         }
+    }
+
+    private static boolean configBool(String configName, boolean defaultValue) {
+        String str = configString(configName, defaultValue).toLowerCase();
+        return str.equals("true") || str.equals("yes");
     }
 
 }

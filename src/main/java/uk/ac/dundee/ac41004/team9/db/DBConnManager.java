@@ -21,6 +21,7 @@ public class DBConnManager {
         // Check we have Postgres driver
         try {
             Class.forName("org.postgresql.Driver");
+            log.debug("Postgres driver found.");
         } catch (ClassNotFoundException ex) {
             throw new RuntimeException("Unable to load Postgres driver!", ex);
         }
@@ -43,6 +44,7 @@ public class DBConnManager {
     /** Gets a new connection from the DriverManager. Connections <b>must</b> be destroyed by the caller! */
     private static Connection getConnection() throws SQLException {
         String url = "jdbc:postgresql://" + Config.getDbHost() + ":" + Config.getDbPort() + "/" + Config.getDbName();
+        log.debug("Creating connection to {}", url);
         return DriverManager.getConnection(url, Config.getDbUser(), Config.getDbPass());
     }
 

@@ -96,3 +96,7 @@ gradle-app.setting
 
 # Cache of project
 .gradletasknamecache
+
+#### DASHOBOARDS-SPECIFIC ####
+# Don't package config files (may contain passwords!)
+config.properties
