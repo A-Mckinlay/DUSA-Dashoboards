@@ -11,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.dundee.ac41004.team9.data.TransactionType;
 
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
@@ -21,6 +23,7 @@ import java.util.Optional;
 /**
  * Parser for Excel (Horrible Spreadsheet Format) Yoyo files.
  */
+@ParametersAreNonnullByDefault
 public class YoyoXSSFParser {
 
     private static final Logger log = LoggerFactory.getLogger(YoyoXSSFParser.class);
@@ -29,14 +32,14 @@ public class YoyoXSSFParser {
     private YoyoXSSFParser() {} // Static
 
     /**
-     * Parses a complete XLS(X) file stream into YoyoWeekSpreadsheetRow objects.
+     * Parses a complete XLSX file stream into YoyoWeekSpreadsheetRow objects.
      *
      * @implNote Does NOT check for size, so ensure any user provided data is checked for max size.
      *
      * @param strm The stream which provides the sheet.
      * @return A list of spreadsheet row objects.
      */
-    public static List<YoyoWeekSpreadsheetRow> parseSheet(InputStream strm) {
+    public static @Nullable List<YoyoWeekSpreadsheetRow> parseSheet(InputStream strm) {
         try {
             XSSFWorkbook workbook = new XSSFWorkbook(strm);
             Sheet sheet = workbook.getSheet(SHEET_NAME);
@@ -93,14 +96,14 @@ public class YoyoXSSFParser {
          *
          * @return The transaction type, or null if the type entry is invalid.
          */
-        public TransactionType getTransactionType() {
+        public @Nullable TransactionType getTransactionType() {
             Optional<TransactionType> ttype = Arrays.stream(TransactionType.values())
                     .filter(t -> t.name().equalsIgnoreCase(transactionType))
                     .findFirst();
             return ttype.orElse(null);
         }
 
-        String getRawTransactionType() {
+        @Nullable String getRawTransactionType() {
             return transactionType;
         }
 
