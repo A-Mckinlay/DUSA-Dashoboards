@@ -60,6 +60,9 @@ dependencies {
     // Excel Parser
     compile group: 'org.javafunk', name: 'excel-parser', version: '1.0.1'
 
+    // Database
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.1.4'
+
     // JUnit
     testRuntime group: 'org.junit.platform', name: 'junit-platform-launcher', version: '1.0.0'
     testRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.0.0'
