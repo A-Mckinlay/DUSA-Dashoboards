@@ -57,6 +57,7 @@ public class YoyoXSSFParser {
     /**
      * Represents a single row in a Yoyo weekly spreadsheet.
      */
+    @SuppressWarnings("unused")
     @ExcelObject(parseType = ParseType.ROW, start = 7)
     public static class YoyoWeekSpreadsheetRow {
 
