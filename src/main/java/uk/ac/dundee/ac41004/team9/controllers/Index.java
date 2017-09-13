@@ -1,4 +1,4 @@
-package uk.ac.dundee.ac41004.team9;
+package uk.ac.dundee.ac41004.team9.controllers;
 
 import static uk.ac.dundee.ac41004.team9.Render.*;
 
