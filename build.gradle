@@ -28,6 +28,10 @@ repositories {
     maven { // Sonatype Snapshots (JUnit 5)
         url "https://oss.sonatype.org/content/repositories/snapshots"
     }
+    maven {
+        name 'Tethys'
+        url 'http://tethys.drakon.io/maven'
+    }
 }
 
 sourceCompatibility = 1.8
@@ -49,6 +53,9 @@ dependencies {
     // Logging (SLF4j + Logback Classic)
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+
+    // Autorouter
+    compile group: 'io.drakon.spark', name: 'autorouter', version: '0.0.1'
 
     // JUnit
     testRuntime group: 'org.junit.platform', name: 'junit-platform-launcher', version: '1.0.0'

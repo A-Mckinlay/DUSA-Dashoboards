@@ -36,6 +36,16 @@ you. No nasty classpath issues!
 
 To skip tests, drop the last `test` section of the command. You **will** need a JDK to run this.
 
+## Other notes
+This project uses [Autorouter](https://github.com/Emberwalker/spark-autorouter). To use it, annotate your route methods
+(which must be `public static` and don't have void return types) with the HTTP verb annotations, which can be imported
+as:
+```java
+import static io.drakon.spark.autorouter.Routes.*;
+```
+
+Javadocs are accessible in IDEA once the Gradle project is imported, and basic usage docs are found on Autorouter's
+Github page.
 
 ## Comms
 Team Trello: https://trello.com/ac41004team9
