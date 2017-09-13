@@ -13,6 +13,6 @@ public class Index {
     @Routes.GET(path="/")
     public static Object indexRoute(Request req, Response res){
         Map<String, Object> model = new HashMap<>();
-        return new MustacheTemplateEngine().render(new ModelAndView(model, "/templates/index.mustache"));
+        return new MustacheTemplateEngine().render(new ModelAndView(model, "index.mustache"));
     }
 }
