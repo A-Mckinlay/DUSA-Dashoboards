@@ -43,9 +43,6 @@ version = '0.0.1'
 build.dependsOn += shadowJar
 
 dependencies {
-    // JSR305 (@Nullable annotations)
-    compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
-
     // Spark
     compile group: 'com.sparkjava', name: 'spark-core', version: '2.6.0'
     compile group: 'com.sparkjava', name: 'spark-template-mustache', version: '2.5.5'
@@ -55,13 +52,14 @@ dependencies {
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
 
     // Autorouter
-    compile group: 'io.drakon.spark', name: 'autorouter', version: '0.0.1'
+    compile group: 'io.drakon.spark', name: 'autorouter', version: '0.0.2'
 
-    // Excel Parser
-    compile group: 'org.javafunk', name: 'excel-parser', version: '1.0.1'
-
-    // Database
-    compile group: 'org.postgresql', name: 'postgresql', version: '42.1.4'
+    // Misc. bits
+    compile group: 'org.javafunk', name: 'excel-parser', version: '1.0.1' // Excel parsing
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.1.4' // DB driver
+    compile group: 'org.projectlombok', name: 'lombok', version: '1.14.4' // Lombok!
+    compile group: 'com.google.guava', name: 'guava', version: '23.0' // Guava utilities
+    compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2' // JSR305 (@Nullable annotations)
 
     // JUnit
     testRuntime group: 'org.junit.platform', name: 'junit-platform-launcher', version: '1.0.0'
