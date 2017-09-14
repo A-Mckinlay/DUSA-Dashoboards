@@ -4,14 +4,67 @@
 {{>header}}
 
 <head>
-
     <title>DUSA Dashboards</title>
-
 </head>
 
 <body>
 
-<h1>Home Page</h1>
+    {{>navbar}}
+    <div class="container">
+        <div class="page-header" id="dashboard-banner">
+            <div class="row">
+                <div class="col-md-10">
+                    <h1>Dashboard</h1>
+                    <p class="lead">Your data at a glance.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-{{>footer}}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h5>Week In Review</h5>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h5>Venue Revenue</h5>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h5>Loyalty Report</h5>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </div>
 
+        </div>
+
+
+    </div>
+
+    {{>footer}}
+
+</body>
