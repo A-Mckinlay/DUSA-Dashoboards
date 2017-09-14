@@ -5,14 +5,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spark.Request;
 import spark.Response;
+import uk.ac.dundee.ac41004.team9.db.DBIngest;
 import uk.ac.dundee.ac41004.team9.xssf.YoyoXSSFParser;
 
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import static jdk.nashorn.internal.runtime.regexp.joni.Syntax.Java;
+import static spark.Spark.halt;
 import static uk.ac.dundee.ac41004.team9.Render.mustache;
-import static uk.ac.dundee.ac41004.team9.xssf.YoyoXSSFParser.parseSheet;
 
 public class Upload {
 
@@ -24,20 +27,22 @@ public class Upload {
     }
 
     @Routes.POST(path="/upload")
-    public static Object uploadFileRoute(Request req, Response res){
+    public static Object uploadFileRoute(Request req, Response res) {
         log.info("Hello I am in the controller for Upload");
         res = uploadDisbursalFile(req, res);
         return null;
     }
 
-    private static Response uploadDisbursalFile(Request req, Response res){
-        try(InputStream is = req.raw().getPart("disbursal-file").getInputStream()){
+    private static Response uploadDisbursalFile(Request req, Response res) {
+        req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
+        try (InputStream is = req.raw().getPart("disbursal-file").getInputStream()) {
             List<YoyoXSSFParser.YoyoWeekSpreadsheetRow> disbursalSheet;
             disbursalSheet = YoyoXSSFParser.parseSheet(is);
             log.info("in the controller doing the things");
-            //TODO: write upload codeszzzzz
+            boolean success = DBIngest.uploadRowsToDB(disbursalSheet);
+            if (!success) throw halt(500, "something went WRONG D:");
             return null;
-        }catch(java.io.IOException | javax.servlet.ServletException e){
+        } catch (IOException | ServletException e) {
             log.error("upload failed", e);
             res.status(500);
             return res;

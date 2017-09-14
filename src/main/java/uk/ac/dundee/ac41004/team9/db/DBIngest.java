@@ -18,7 +18,7 @@ public class DBIngest {
 
     private DBIngest() {} // Static
 
-    public boolean uploadRowsToDB(List<YoyoXSSFParser.YoyoWeekSpreadsheetRow> data) {
+    public static boolean uploadRowsToDB(List<YoyoXSSFParser.YoyoWeekSpreadsheetRow> data) {
         Boolean bool = runWithConnection(conn -> {
             try {
                 conn.setAutoCommit(false);
