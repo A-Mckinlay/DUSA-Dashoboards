@@ -46,11 +46,11 @@ class YoyoTransactionSheet {
         Preconditions.checkArgument(rowIndex > 0, "rowIndex must be positive");
 
         int rowId = START_ROW + rowIndex - 1;
-        log.debug("getRow {}", rowId);
+        log.trace("getRow {}", rowId);
 
         Row row = sheet.getRow(rowId);
         if (row == null) return null;
-        log.debug("row exists");
+        log.trace("row exists");
 
         try {
             LocalDateTime dateTime = LocalDateTime.parse(row.getCell(1).toString(), DT_FMT);
@@ -65,7 +65,7 @@ class YoyoTransactionSheet {
 
             YoyoWeekSpreadsheetRow outRow = new YoyoWeekSpreadsheetRow(dateTime, retailerRef, outletRef, outletName,
                     userId, rawTransactionType, cashSpent, discountAmount, totalAmount);
-            log.debug("parsed: {}", outRow);
+            log.trace("parsed: {}", outRow);
             return outRow;
         } catch (DateTimeParseException | NullPointerException | IllegalStateException ex) {
             log.error("Error parsing Excel sheet row.", ex);
