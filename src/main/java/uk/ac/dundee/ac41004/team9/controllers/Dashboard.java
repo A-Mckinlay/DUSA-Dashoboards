@@ -6,9 +6,9 @@ import io.drakon.spark.autorouter.Routes;
 import spark.Request;
 import spark.Response;
 
-public class Index {
+public class Dashboard {
     @Routes.GET(path="/")
     public static Object indexRoute(Request req, Response res) {
-        return mustache("index");
+        return mustache("dashboard");
     }
 }

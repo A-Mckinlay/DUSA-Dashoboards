@@ -1,10 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
 {{>header}}
 
-<h1> Upload </h1>
+<head>
+    <title>Upload</title>
+</head>
 
-<form method='post' enctype='multipart/form-data'>
-    <input type='file' name='disbursal-file'>
-    <button>Upload</button>"
-</form>
+<body>
+    {{>navbar}}
+    <div class="container">
+        <div class="page-header" id="upload-banner">
+            <div class="row">
+                <div class="col-md-10">
+                    <h1>Upload</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form method='post' enctype='multipart/form-data'>
+        <input type='file' name='disbursal-file'>
+        <button>Upload</button>"
+    </form>
+</body>
 
 {{>footer}}
+

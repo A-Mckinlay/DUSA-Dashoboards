@@ -6,9 +6,9 @@ import spark.Response;
 
 import static uk.ac.dundee.ac41004.team9.Render.mustache;
 
-public class UserGroups {
-    @Routes.GET(path="/usergroups")
+public class Herds {
+    @Routes.GET(path="/herds")
     public static Object userGroupsRoute(Request req, Response res) {
-        return mustache("usergroups");
+        return mustache("herds");
     }
 }
