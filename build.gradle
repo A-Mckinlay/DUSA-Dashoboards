@@ -54,12 +54,16 @@ dependencies {
     // Autorouter
     compile group: 'io.drakon.spark', name: 'autorouter', version: '0.0.3'
 
+    // Excel
+    compile group: 'org.apache.poi', name: 'poi', version: '3.17'
+    compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.17'
+
     // Misc. bits
-    compile group: 'org.javafunk', name: 'excel-parser', version: '1.0.1' // Excel parsing
     compile group: 'org.postgresql', name: 'postgresql', version: '42.1.4' // DB driver
     compile group: 'org.projectlombok', name: 'lombok', version: '1.14.4' // Lombok!
     compile group: 'com.google.guava', name: 'guava', version: '23.0' // Guava utilities
     compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2' // JSR305 (@Nullable annotations)
+    compile group: 'org.jooq', name: 'jool', version: '0.9.12' // Lambda utils
 
     // JUnit
     testRuntime group: 'org.junit.platform', name: 'junit-platform-launcher', version: '1.0.0'

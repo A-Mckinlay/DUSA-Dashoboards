@@ -2,7 +2,7 @@ package uk.ac.dundee.ac41004.team9.db;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.dundee.ac41004.team9.xssf.YoyoXSSFParser;
+import uk.ac.dundee.ac41004.team9.xssf.YoyoWeekSpreadsheetRow;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -18,13 +18,13 @@ public class DBIngest {
 
     private DBIngest() {} // Static
 
-    public static boolean uploadRowsToDB(List<YoyoXSSFParser.YoyoWeekSpreadsheetRow> data) {
+    public static boolean uploadRowsToDB(List<YoyoWeekSpreadsheetRow> data) {
         Boolean bool = runWithConnection(conn -> {
             try {
                 conn.setAutoCommit(false);
                 PreparedStatement ps = conn.prepareStatement("INSERT INTO disbursals(datetime, outletref, userid," +
                         "transactiontype, cashspent, discountamount, totalamount) VALUES (?, ?, ?, ?, ?, ?, ?)");
-                for (YoyoXSSFParser.YoyoWeekSpreadsheetRow row : data) {
+                for (YoyoWeekSpreadsheetRow row : data) {
                     ps.setTimestamp(1, new Timestamp(row.getDateTime().toEpochSecond(ZoneOffset.UTC)));
                     ps.setInt(2, row.getOutletRef());
                     ps.setString(3, row.getUserId());
