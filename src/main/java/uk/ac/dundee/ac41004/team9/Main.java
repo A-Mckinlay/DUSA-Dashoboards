@@ -1,6 +1,7 @@
 package uk.ac.dundee.ac41004.team9;
 
 import io.drakon.spark.autorouter.Autorouter;
+import spark.Spark;
 import uk.ac.dundee.ac41004.team9.db.DBConnManager;
 
 public class Main {
@@ -9,6 +10,7 @@ public class Main {
         Config.init();
         DBConnManager.init();
 
+        Spark.staticFiles.location("/static");
         Autorouter autorouter = new Autorouter("uk.ac.dundee.ac41004.team9");
         autorouter.route();
     }
