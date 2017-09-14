@@ -47,6 +47,10 @@ public class Upload {
             log.error("upload failed; parse error.", e);
             res.status(400);
             return "invalid file"; // TODO: Proper error page
+        } catch (Exception ex) {
+            log.error("error in upload; probably invalid file.", ex);
+            res.status(400);
+            return "invalid file"; // TODO: Proper error page
         }
     }
 }
