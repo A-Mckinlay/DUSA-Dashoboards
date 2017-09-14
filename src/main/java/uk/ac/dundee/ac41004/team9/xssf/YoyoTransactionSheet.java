@@ -56,14 +56,15 @@ class YoyoTransactionSheet {
             LocalDateTime dateTime = LocalDateTime.parse(row.getCell(1).toString(), DT_FMT);
             int retailerRef = (int)row.getCell(2).getNumericCellValue();
             int outletRef = (int)row.getCell(3).getNumericCellValue();
+            String outletName = row.getCell(5).toString();
             String userId = row.getCell(6).toString();
             String rawTransactionType = row.getCell(7).toString();
             double cashSpent = Double.parseDouble(row.getCell(8).toString());
             double discountAmount = Double.parseDouble(row.getCell(9).toString());
             double totalAmount = Double.parseDouble(row.getCell(10).toString());
 
-            YoyoWeekSpreadsheetRow outRow = new YoyoWeekSpreadsheetRow(dateTime, retailerRef, outletRef, userId,
-                    rawTransactionType, cashSpent, discountAmount, totalAmount);
+            YoyoWeekSpreadsheetRow outRow = new YoyoWeekSpreadsheetRow(dateTime, retailerRef, outletRef, outletName,
+                    userId, rawTransactionType, cashSpent, discountAmount, totalAmount);
             log.debug("parsed: {}", outRow);
             return outRow;
         } catch (DateTimeParseException | NullPointerException | IllegalStateException ex) {

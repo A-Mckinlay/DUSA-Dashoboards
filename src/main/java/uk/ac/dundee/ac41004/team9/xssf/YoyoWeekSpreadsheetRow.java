@@ -2,6 +2,7 @@ package uk.ac.dundee.ac41004.team9.xssf;
 
 
 import lombok.Getter;
+import lombok.ToString;
 import uk.ac.dundee.ac41004.team9.data.TransactionType;
 
 import javax.annotation.Nullable;
@@ -13,6 +14,7 @@ import java.util.Optional;
  * Represents a single row in a Yoyo weekly spreadsheet.
  */
 @SuppressWarnings("unused")
+@ToString
 public class YoyoWeekSpreadsheetRow {
 
     @Getter
@@ -23,6 +25,9 @@ public class YoyoWeekSpreadsheetRow {
 
     @Getter
     private Integer outletRef;
+
+    @Getter
+    private String outletName;
 
     @Getter
     private String userId;
@@ -38,12 +43,13 @@ public class YoyoWeekSpreadsheetRow {
     @Getter
     private Double totalAmount;
 
-    public YoyoWeekSpreadsheetRow(LocalDateTime dateTime, Integer retailerRef, Integer outletRef, String userId,
-                                  String transactionType, Double cashSpent, Double discountAmount,
+    public YoyoWeekSpreadsheetRow(LocalDateTime dateTime, Integer retailerRef, Integer outletRef, String outletName,
+                                  String userId, String transactionType, Double cashSpent, Double discountAmount,
                                   Double totalAmount) {
         this.dateTime = dateTime;
         this.retailerRef = retailerRef;
         this.outletRef = outletRef;
+        this.outletName = outletName;
         this.userId = userId;
         this.transactionType = transactionType;
         this.cashSpent = cashSpent;
@@ -68,17 +74,4 @@ public class YoyoWeekSpreadsheetRow {
         return transactionType;
     }
 
-    @Override
-    public String toString() {
-        return "YoyoWeekSpreadsheetRow{" +
-                "dateTime=" + dateTime +
-                ", retailerRef=" + retailerRef +
-                ", outletRef=" + outletRef +
-                ", userId='" + userId + '\'' +
-                ", transactionType='" + transactionType + '\'' +
-                ", cashSpent=" + cashSpent +
-                ", discountAmount=" + discountAmount +
-                ", totalAmount=" + totalAmount +
-                '}';
-    }
 }

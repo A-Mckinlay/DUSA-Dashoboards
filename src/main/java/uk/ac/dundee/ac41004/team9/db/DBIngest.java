@@ -1,7 +1,9 @@
 package uk.ac.dundee.ac41004.team9.db;
 
+import org.jooq.lambda.Unchecked;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.ac.dundee.ac41004.team9.util.Pair;
 import uk.ac.dundee.ac41004.team9.xssf.YoyoWeekSpreadsheetRow;
 
 import java.sql.PreparedStatement;
@@ -22,8 +24,22 @@ public class DBIngest {
         Boolean bool = runWithConnection(conn -> {
             try {
                 conn.setAutoCommit(false);
-                PreparedStatement ps = conn.prepareStatement("INSERT INTO disbursals(datetime, outletref, userid," +
-                        "transactiontype, cashspent, discountamount, totalamount) VALUES (?, ?, ?, ?, ?, ?, ?)");
+
+                // Outlet names
+                final PreparedStatement ps1 = conn.prepareStatement("INSERT INTO outlets(outletref, outletname)" +
+                        " VALUES (?, ?) ON CONFLICT DO NOTHING;");
+                data.stream()
+                        .map(row -> new Pair<>(row.getOutletRef(), row.getOutletName()))
+                        .forEach(Unchecked.consumer(pair -> {
+                            ps1.setInt(1, pair.first);
+                            ps1.setString(2, pair.second);
+                            ps1.executeUpdate();
+                        }));
+
+                // Disbursals
+                final PreparedStatement ps = conn.prepareStatement("INSERT INTO disbursals(datetime, outletref," +
+                        " userid, transactiontype, cashspent, discountamount, totalamount)" +
+                        " VALUES (?, ?, ?, ?, ?, ?, ?)");
                 for (YoyoWeekSpreadsheetRow row : data) {
                     ps.setTimestamp(1, new Timestamp(row.getDateTime().toEpochSecond(ZoneOffset.UTC)));
                     ps.setInt(2, row.getOutletRef());

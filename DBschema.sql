@@ -1,86 +1,76 @@
-create sequence disbursals_id_seq
-;
+CREATE SEQUENCE disbursals_id_seq;
 
-create table disbursals
+CREATE TABLE disbursals
 (
-	id serial not null
-		constraint disbursals_pkey
-			primary key,
-	datetime timestamp not null,
-	outletref integer not null,
-	userid text not null,
-	transactiontype integer not null,
-	cashspent numeric(2) not null,
-	discountamount numeric(2) not null,
-	totalamount numeric(2) not null
-)
-;
+  id              SERIAL        NOT NULL
+    CONSTRAINT disbursals_pkey
+    PRIMARY KEY,
+  datetime        TIMESTAMP     NOT NULL,
+  outletref       INTEGER       NOT NULL,
+  userid          TEXT          NOT NULL,
+  transactiontype INTEGER       NOT NULL,
+  cashspent       NUMERIC(8, 2) NOT NULL,
+  discountamount  NUMERIC(8, 2) NOT NULL,
+  totalamount     NUMERIC(8, 2) NOT NULL
+);
 
-create unique index disbursals_id_uindex
-	on disbursals (id)
-;
+CREATE UNIQUE INDEX disbursals_id_uindex
+  ON disbursals (id);
 
-create table users
+CREATE TABLE users
 (
-	username text not null
-		constraint users_pkey
-			primary key,
-	password text not null,
-	email text not null,
-	isadmin boolean default false not null,
-	firstname text not null,
-	lastname text not null
-)
-;
+  username  TEXT                  NOT NULL
+    CONSTRAINT users_pkey
+    PRIMARY KEY,
+  password  TEXT                  NOT NULL,
+  email     TEXT                  NOT NULL,
+  isadmin   BOOLEAN DEFAULT FALSE NOT NULL,
+  firstname TEXT                  NOT NULL,
+  lastname  TEXT                  NOT NULL
+);
 
-create unique index users_username_uindex
-	on users (username)
-;
+CREATE UNIQUE INDEX users_username_uindex
+  ON users (username);
 
-create table outlets
+CREATE TABLE outlets
 (
-	outletref integer not null
-		constraint outlets_pkey
-			primary key,
-	outletname text not null
-)
-;
+  outletref  INTEGER NOT NULL
+    CONSTRAINT outlets_pkey
+    PRIMARY KEY,
+  outletname TEXT    NOT NULL
+);
 
-create unique index outlets_outletref_uindex
-	on outlets (outletref)
-;
+CREATE UNIQUE INDEX outlets_outletref_uindex
+  ON outlets (outletref);
 
-create unique index outlets_outletname_uindex
-	on outlets (outletname)
-;
+CREATE UNIQUE INDEX outlets_outletname_uindex
+  ON outlets (outletname);
 
-comment on table outlets is 'Joining Table'
-;
+COMMENT ON TABLE outlets IS 'Joining Table';
 
-alter table disbursals
-	add constraint disbursals_fk_outlets
-		foreign key (outletref) references outlets
-;
+ALTER TABLE disbursals
+  ADD CONSTRAINT disbursals_fk_outlets
+FOREIGN KEY (outletref) REFERENCES outlets;
 
-create table transactiontypes
+CREATE TABLE transactiontypes
 (
-	transactionid integer not null
-		constraint transactiontypes_pkey
-			primary key,
-	transactiontype text not null
-)
-;
+  transactionid   INTEGER NOT NULL
+    CONSTRAINT transactiontypes_pkey
+    PRIMARY KEY,
+  transactiontype TEXT    NOT NULL
+);
 
-create unique index transactiontypes_transactionid_uindex
-	on transactiontypes (transactionid)
-;
+CREATE UNIQUE INDEX transactiontypes_transactionid_uindex
+  ON transactiontypes (transactionid);
 
-create unique index transactiontypes_transactiontype_uindex
-	on transactiontypes (transactiontype)
-;
+CREATE UNIQUE INDEX transactiontypes_transactiontype_uindex
+  ON transactiontypes (transactiontype);
 
-alter table disbursals
-	add constraint disbursals_fk_transactiontypes
-		foreign key (transactiontype) references transactiontypes
-;
+ALTER TABLE disbursals
+  ADD CONSTRAINT disbursals_fk_transactiontypes
+FOREIGN KEY (transactiontype) REFERENCES transactiontypes;
 
+
+INSERT INTO transactiontypes (transactionid, transactiontype) VALUES (0, 'Payment');
+INSERT INTO transactiontypes (transactionid, transactiontype) VALUES (1, 'Redemption');
+INSERT INTO transactiontypes (transactionid, transactiontype) VALUES (2, 'Reversal');
