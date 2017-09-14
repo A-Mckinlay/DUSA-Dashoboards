@@ -64,6 +64,7 @@ dependencies {
     compile group: 'com.google.guava', name: 'guava', version: '23.0' // Guava utilities
     compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2' // JSR305 (@Nullable annotations)
     compile group: 'org.jooq', name: 'jool', version: '0.9.12' // Lambda utils
+    compile group: 'org.apache.shiro', name: 'shiro-core', version: '1.4.0' // Session/Security toolkit
 
     // JUnit
     testRuntime group: 'org.junit.platform', name: 'junit-platform-launcher', version: '1.0.0'
