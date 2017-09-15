@@ -53,7 +53,7 @@ dependencies {
 
     // Autorouter
     compile group: 'io.drakon.spark', name: 'autorouter', version: '0.0.3'
-    compile group: 'io.drakon.spark', name: 'syn', version: '0.0.2'
+    compile group: 'io.drakon.spark', name: 'syn', version: '0.0.3'
 
     // Excel
     compile group: 'org.apache.poi', name: 'poi', version: '3.17'
