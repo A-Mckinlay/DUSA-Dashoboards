@@ -19,10 +19,29 @@
         </div>
     </div>
 
-    <form method='post' enctype='multipart/form-data'>
-        <input type='file' name='disbursal-file'>
-        <button>Upload</button>"
-    </form>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h5>Upload your weekly disbursal file</h5>
+                        <form method='post' enctype='multipart/form-data'>
+                            <input type='file' name='disbursal-file'>
+                            <button>Upload</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h5>Information</h5>
+                        <p>Please upload your weekly disbursal files using the adjacent file selector. Uploading bulk files(more than one week) could take a long time so please either allow time for it to complete or upload each week instead.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 {{>footer}}
