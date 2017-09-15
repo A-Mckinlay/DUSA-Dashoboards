@@ -9,10 +9,10 @@ Our instance of Syn is found in `uk.ac.dundee.ac41004.team9.SecurityManager` if 
 rendering is handled in that class as well, and is on the `/login` path.
 
 ## Auth Providers
-At time of writing, we're using the (very lazy) `MemeticAuthProvider` which just parrots back the last 'created' user to
-Syn. This defaults (in SecurityManager) to "test"/"test". Later on, we'll probably need to implement a database-backed
-`Syn.AuthProvider` class and set it up instead of the `MemeticAuthProvider`.
+There is two `Syn.AuthProvider` implementations in the `SecurityManager` - `MemeticAuthProvider` and
+`DatabaseAuthProvider`. If `secUseRealDatabase` is enabled, the database-backed `DatabaseAuthProvider` is used, else the
+`MemeticAuthProvider` is used which uses the last given credentials this run - which by default are "test"/"test".
 
 ## Switch it off! SWITCH IT OFF!
-You can disarm Syn by commenting out `syn.route();` in the `init()` method of `SecurityManager`. There might also be a
-config flag by the time you read this - check the code in `SecurityManager`.
+There's now a config flag to disable Syn, stopping it from ever registering its routes. This might be handy if doing
+front-end work and don't want to constantly log back in. To disable, change `secEnable` to `false`.
