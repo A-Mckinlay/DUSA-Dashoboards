@@ -23,6 +23,11 @@ import static uk.ac.dundee.ac41004.team9.Render.mustache;
 @UtilityClass
 public class Upload {
 
+    private static final String FILE_LOCATION = "/temp";
+    private static final int MAX_FILE_SIZE = 1024 * 1024; // 1MB in Bytes.
+    private static final int MAX_REQUEST_SIZE = MAX_FILE_SIZE;
+    private static final int FILE_SIZE_THRESHOLD = MAX_FILE_SIZE; // No files on disk.
+
     @Routes.GET(path="/upload")
     public static Object uploadPageRoute(Request req, Response res) {
         return mustache("upload");
@@ -31,7 +36,10 @@ public class Upload {
     @Routes.POST(path="/upload")
     public static Object uploadFileRoute(Request req, Response res) {
         log.info("Hello I am in the controller for Upload");
-        req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
+        // Multipart config via https://groups.google.com/forum/#!msg/sparkjava/fjO64BP1UQw/CsxdNVz7qrAJ
+        MultipartConfigElement multipartConfigElement = new MultipartConfigElement(FILE_LOCATION, MAX_FILE_SIZE,
+                MAX_REQUEST_SIZE, FILE_SIZE_THRESHOLD);
+        req.attribute("org.eclipse.jetty.multipartConfig", multipartConfigElement);
         try (InputStream is = req.raw().getPart("disbursal-file").getInputStream()) {
             List<YoyoWeekSpreadsheetRow> disbursalSheet;
             disbursalSheet = YoyoXSSFParser.parseSheet(is);
@@ -46,7 +54,7 @@ public class Upload {
         } catch (YoyoParseException e) {
             log.error("upload failed; parse error.", e);
             res.status(400);
-            return "invalid file"; // TODO: Proper error page
+            return "invalid or too large file"; // TODO: Proper error page
         } catch (Exception ex) {
             log.error("error in upload; probably invalid file.", ex);
             res.status(400);
