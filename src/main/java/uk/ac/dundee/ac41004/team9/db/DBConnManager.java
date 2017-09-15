@@ -5,14 +5,14 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.function.Function;
 
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import uk.ac.dundee.ac41004.team9.Config;
 
 /** Manager for database connections */
 @Slf4j
+@UtilityClass
 public class DBConnManager {
-
-    private DBConnManager() {} // Static
 
     /** Initialises the database manager. Call once during app startup. */
     public static void init() {

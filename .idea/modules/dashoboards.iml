@@ -24,7 +24,7 @@
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.apache.poi:poi-ooxml:3.17" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.apache.poi:poi:3.17" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.postgresql:postgresql:42.1.4" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Gradle: org.projectlombok:lombok:1.14.4" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: org.projectlombok:lombok:1.16.18" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.reflections:reflections:0.9.11" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: com.google.guava:guava:23.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: com.google.code.findbugs:jsr305:3.0.2" level="project" />
@@ -65,7 +65,7 @@
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.poi:poi-ooxml:3.17" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.poi:poi:3.17" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.postgresql:postgresql:42.1.4" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.projectlombok:lombok:1.14.4" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.projectlombok:lombok:1.16.18" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.reflections:reflections:0.9.11" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.google.guava:guava:23.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.google.code.findbugs:jsr305:3.0.2" level="project" />
@@ -106,7 +106,7 @@
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.poi:poi-ooxml:3.17" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.poi:poi:3.17" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.postgresql:postgresql:42.1.4" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.projectlombok:lombok:1.14.4" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.projectlombok:lombok:1.16.18" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.reflections:reflections:0.9.11" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.guava:guava:23.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.code.findbugs:jsr305:3.0.2" level="project" />

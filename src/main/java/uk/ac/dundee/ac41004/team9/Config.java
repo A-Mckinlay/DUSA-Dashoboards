@@ -9,10 +9,12 @@ import java.nio.file.Paths;
 import java.util.Properties;
 
 import lombok.Getter;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
 /** App configuration. */
 @Slf4j
+@UtilityClass
 public class Config {
 
     // Database

@@ -61,7 +61,7 @@ dependencies {
 
     // Misc. bits
     compile group: 'org.postgresql', name: 'postgresql', version: '42.1.4' // DB driver
-    compile group: 'org.projectlombok', name: 'lombok', version: '1.14.4' // Lombok!
+    compile group: 'org.projectlombok', name: 'lombok', version: '1.16.18' // Lombok!
     compile group: 'com.google.guava', name: 'guava', version: '23.0' // Guava utilities
     compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2' // JSR305 (@Nullable annotations)
     compile group: 'org.jooq', name: 'jool', version: '0.9.12' // Lambda utils

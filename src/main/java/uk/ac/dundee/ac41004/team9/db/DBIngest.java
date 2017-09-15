@@ -1,5 +1,6 @@
 package uk.ac.dundee.ac41004.team9.db;
 
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.jooq.lambda.Unchecked;
 import uk.ac.dundee.ac41004.team9.util.Pair;
@@ -14,10 +15,8 @@ import java.util.List;
 import static uk.ac.dundee.ac41004.team9.db.DBConnManager.runWithConnection;
 
 @Slf4j
+@UtilityClass
 public class DBIngest {
-
-
-    private DBIngest() {} // Static
 
     public static boolean uploadRowsToDB(List<YoyoWeekSpreadsheetRow> data) {
         Boolean bool = runWithConnection(conn -> {

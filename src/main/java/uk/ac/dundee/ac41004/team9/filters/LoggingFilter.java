@@ -1,6 +1,7 @@
 package uk.ac.dundee.ac41004.team9.filters;
 
 import io.drakon.spark.autorouter.Routes;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import spark.Request;
 import spark.Response;
@@ -9,6 +10,7 @@ import spark.Response;
  * Filters responsable for logging request/response events.
  */
 @Slf4j
+@UtilityClass
 public class LoggingFilter {
 
     @Routes.After

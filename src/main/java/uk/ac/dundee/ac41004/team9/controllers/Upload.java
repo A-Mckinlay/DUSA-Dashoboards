@@ -1,6 +1,7 @@
 package uk.ac.dundee.ac41004.team9.controllers;
 
 import io.drakon.spark.autorouter.Routes;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import spark.Request;
 import spark.Response;
@@ -19,6 +20,7 @@ import static spark.Spark.halt;
 import static uk.ac.dundee.ac41004.team9.Render.mustache;
 
 @Slf4j
+@UtilityClass
 public class Upload {
 
     @Routes.GET(path="/upload")

@@ -3,8 +3,10 @@ package uk.ac.dundee.ac41004.team9;
 import javax.annotation.Nullable;
 
 import io.drakon.spark.syn.Syn;
+import lombok.experimental.UtilityClass;
 import spark.Redirect;
 
+@UtilityClass
 public class SecurityManager {
 
     private static Syn SYN_INST = null;

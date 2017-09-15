@@ -1,5 +1,6 @@
 package uk.ac.dundee.ac41004.team9.xssf;
 
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -15,11 +16,10 @@ import java.util.List;
 @SuppressWarnings("WeakerAccess")
 @ParametersAreNonnullByDefault
 @Slf4j
+@UtilityClass
 public class YoyoXSSFParser {
 
     private static final String SHEET_NAME = "List of transactions";
-
-    private YoyoXSSFParser() {} // Static
 
     /**
      * Parses a complete XLSX file stream into YoyoWeekSpreadsheetRow objects.
