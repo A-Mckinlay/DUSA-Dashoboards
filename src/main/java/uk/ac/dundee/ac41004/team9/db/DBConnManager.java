@@ -5,14 +5,12 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.function.Function;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import uk.ac.dundee.ac41004.team9.Config;
 
 /** Manager for database connections */
+@Slf4j
 public class DBConnManager {
-
-    private static final Logger log = LoggerFactory.getLogger(DBConnManager.class);
 
     private DBConnManager() {} // Static
 

@@ -8,8 +8,6 @@ import java.util.Map;
 
 public class Render {
 
-    private Render() {} // Static utils
-
     public static String mustache(String template, Map<String, Object> model) {
         return new MustacheTemplateEngine().render(new ModelAndView(model, template + ".mustache"));
     }

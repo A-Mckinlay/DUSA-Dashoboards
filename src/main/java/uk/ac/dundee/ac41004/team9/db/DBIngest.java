@@ -1,8 +1,7 @@
 package uk.ac.dundee.ac41004.team9.db;
 
+import lombok.extern.slf4j.Slf4j;
 import org.jooq.lambda.Unchecked;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import uk.ac.dundee.ac41004.team9.util.Pair;
 import uk.ac.dundee.ac41004.team9.xssf.YoyoWeekSpreadsheetRow;
 
@@ -14,9 +13,9 @@ import java.util.List;
 
 import static uk.ac.dundee.ac41004.team9.db.DBConnManager.runWithConnection;
 
+@Slf4j
 public class DBIngest {
 
-    private static final Logger log = LoggerFactory.getLogger(DBIngest.class);
 
     private DBIngest() {} // Static
 

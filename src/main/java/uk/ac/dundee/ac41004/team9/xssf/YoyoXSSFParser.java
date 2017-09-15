@@ -1,9 +1,8 @@
 package uk.ac.dundee.ac41004.team9.xssf;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.IOException;
@@ -15,9 +14,9 @@ import java.util.List;
  */
 @SuppressWarnings("WeakerAccess")
 @ParametersAreNonnullByDefault
+@Slf4j
 public class YoyoXSSFParser {
 
-    private static final Logger log = LoggerFactory.getLogger(YoyoXSSFParser.class);
     private static final String SHEET_NAME = "List of transactions";
 
     private YoyoXSSFParser() {} // Static

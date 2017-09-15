@@ -9,10 +9,10 @@ import java.nio.file.Paths;
 import java.util.Properties;
 
 import lombok.Getter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /** App configuration. */
+@Slf4j
 public class Config {
 
     // Database
@@ -24,7 +24,6 @@ public class Config {
 
     // Internal bookkeeping (DO NOT EDIT THIS BIT)
     private static Properties props = new Properties();
-    private static final Logger log = LoggerFactory.getLogger(Config.class);
 
     static void init() {
         props = new Properties();

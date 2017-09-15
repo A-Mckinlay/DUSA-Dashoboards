@@ -1,8 +1,7 @@
 package uk.ac.dundee.ac41004.team9.controllers;
 
 import io.drakon.spark.autorouter.Routes;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import spark.Request;
 import spark.Response;
 import uk.ac.dundee.ac41004.team9.db.DBIngest;
@@ -19,9 +18,8 @@ import java.util.List;
 import static spark.Spark.halt;
 import static uk.ac.dundee.ac41004.team9.Render.mustache;
 
+@Slf4j
 public class Upload {
-
-    private static final Logger log = LoggerFactory.getLogger(Upload.class);
 
     @Routes.GET(path="/upload")
     public static Object uploadPageRoute(Request req, Response res) {

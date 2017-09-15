@@ -1,11 +1,10 @@
 package uk.ac.dundee.ac41004.team9.xssf;
 
 import com.google.common.base.Preconditions;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.jooq.lambda.Unchecked;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.time.LocalDateTime;
@@ -21,9 +20,9 @@ import java.util.stream.IntStream;
  * Represents a "List of transactions" sheet in an XSSF file.
  */
 @ParametersAreNonnullByDefault
+@Slf4j
 class YoyoTransactionSheet {
 
-    private static final Logger log = LoggerFactory.getLogger(YoyoTransactionSheet.class);
     private static final int START_ROW = 6;
     private static final DateTimeFormatter DT_FMT = new DateTimeFormatterBuilder()
             .appendPattern("dd/MM/yyyy HH:mm")
