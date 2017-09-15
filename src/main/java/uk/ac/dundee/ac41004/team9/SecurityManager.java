@@ -12,7 +12,8 @@ public class SecurityManager {
     private static Syn SYN_INST = null;
 
     public static void init() {
-        getSyn().route();
+        Syn syn = getSyn();
+        syn.route();
     }
 
     public static Syn getSyn() {
