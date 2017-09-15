@@ -21,7 +21,7 @@ public class SecurityManager {
 
     public static void init() {
         Syn syn = getSyn();
-        syn.route();
+        if (Config.isSecEnable()) syn.route();
     }
 
     public static Syn getSyn() {
