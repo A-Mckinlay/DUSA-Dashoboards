@@ -1,15 +1,20 @@
 package uk.ac.dundee.ac41004.team9;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 
 import io.drakon.spark.syn.Syn;
 import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 import spark.Redirect;
+import uk.ac.dundee.ac41004.team9.db.UserManager;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@SuppressWarnings("WeakerAccess")
 @UtilityClass
+@Slf4j
 public class SecurityManager {
 
     private static Syn SYN_INST = null;
@@ -21,7 +26,10 @@ public class SecurityManager {
 
     public static Syn getSyn() {
         if (SYN_INST == null) {
-            SYN_INST = new Syn("/login", new MemeticAuthProvider(), false,
+            Syn.AuthProvider provider =
+                    Config.isSecUseRealDatabase() ? new DatabaseAuthProvider() : new MemeticAuthProvider();
+
+            SYN_INST = new Syn("/login", provider, false,
                     (req, res) -> {
                         Map<String, Object> model = new HashMap<>();
                         if (req.attribute("syn-error") != null) {
@@ -44,11 +52,34 @@ public class SecurityManager {
                         return Render.mustache("login", model);
                     },
                     (req, res) -> { res.redirect("/", Redirect.Status.FOUND.intValue()); return null; });
-            SYN_INST.createUser("test", "test");
+
+            if (!Config.isSecUseRealDatabase()) SYN_INST.createUser("test", "test");
         }
         return SYN_INST;
     }
 
+    @ParametersAreNonnullByDefault
+    private static class DatabaseAuthProvider implements Syn.AuthProvider {
+
+        @Override
+        public String getUser(String username) {
+            UserManager.User user = UserManager.getUser(username);
+            if (user == null) return null;
+            return user.getPassword();
+        }
+
+        @Override
+        public void writeUser(String user, String hashSaltField, @Nullable Object metadata) {
+            if (metadata instanceof UserManager.User) {
+                UserManager.writeUser(((UserManager.User) metadata).withPassword(hashSaltField));
+            } else {
+                throw new IllegalArgumentException("Metadata must be a User object.");
+            }
+        }
+
+    }
+
+    @ParametersAreNonnullByDefault
     private static class MemeticAuthProvider implements Syn.AuthProvider {
 
         String username = null;

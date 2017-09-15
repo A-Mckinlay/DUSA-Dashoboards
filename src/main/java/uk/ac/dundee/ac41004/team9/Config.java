@@ -24,6 +24,10 @@ public class Config {
     @Getter private static String dbPass = "banana";
     @Getter private static String dbName = "dashoboards";
 
+    // Security
+    @Getter private static boolean secEnable = true;
+    @Getter private static boolean secUseRealDatabase = false;
+
     // Internal bookkeeping (DO NOT EDIT THIS BIT)
     private static Properties props = new Properties();
 
@@ -62,14 +66,39 @@ public class Config {
         dbPass = configString("dbPass", dbPass);
         dbName = configString("dbName", dbName);
 
+        // Security
+        secEnable = configBool("secEnable", secEnable);
+        secUseRealDatabase = configBool("secUseRealDatabase", secUseRealDatabase);
+
         // Fin.
         log.info("Configuration loading complete.");
     }
 
     private static String configString(String configName, Object defaultValue) {
-        String env = System.getenv("DASHCFG_" + configName.toUpperCase());
-        if (env != null) return env;
+        String envName = "DASHCFG_" + environmentiseConfString(configName);
+        String env = System.getenv(envName);
+        if (env != null) {
+            log.info("Using {} ({}) value from environment.", configName, envName);
+            return env;
+        }
         return props.getProperty(configName, defaultValue.toString());
+    }
+
+    private static String environmentiseConfString(String configName) {
+        StringBuffer buf = new StringBuffer();
+        StringBuilder out = new StringBuilder();
+        boolean firstBlock = true;
+        for (char c : configName.toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                 if (!firstBlock) out.append('_');
+                 firstBlock = false;
+                out.append(buf.toString());
+                buf = new StringBuffer();
+            }
+            buf.append(c);
+        }
+        if (!firstBlock) out.append('_');
+        return out.append(buf.toString()).toString().toUpperCase();
     }
 
     @SuppressWarnings("SameParameterValue")
