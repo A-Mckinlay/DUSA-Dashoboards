@@ -54,6 +54,11 @@ public class Revenue {
         List<DisbursalsRow> ls = Disbursals.getRowsBetween(start, end);
         Map<String, BigDecimal> outlets = new HashMap<>();
 
+        if (ls == null) {
+            res.status(500);
+            return immutableMapOf("error", "internal server error");
+        }
+
         ls.forEach(row -> {
             BigDecimal current = outlets.getOrDefault(row.getOutlet(),
                     new BigDecimal(0.0).setScale(2, BigDecimal.ROUND_UNNECESSARY));
