@@ -1,5 +1,6 @@
 package uk.ac.dundee.ac41004.team9;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,6 +29,9 @@ public class Config {
     @Getter private static boolean secEnable = true;
     @Getter private static boolean secUseRealDatabase = false;
     @Getter private static boolean secLimitUploadSize = true;
+
+    // Dev utils
+    @Getter private static File devLiveTemplatePath = null;
 
     // Internal bookkeeping (DO NOT EDIT THIS BIT)
     private static Properties props = new Properties();
@@ -71,6 +75,9 @@ public class Config {
         secEnable = configBool("secEnable", secEnable);
         secUseRealDatabase = configBool("secUseRealDatabase", secUseRealDatabase);
         secLimitUploadSize = configBool("secLimitUploadSize", secLimitUploadSize);
+
+        // Dev utils
+        devLiveTemplatePath = configDir("devLiveTemplatePath", devLiveTemplatePath);
 
         // Fin.
         log.info("Configuration loading complete.");
@@ -118,6 +125,15 @@ public class Config {
     private static boolean configBool(String configName, boolean defaultValue) {
         String str = configString(configName, defaultValue).toLowerCase();
         return str.equals("true") || str.equals("yes");
+    }
+
+    private static File configDir(String configName, File defaultValue) {
+        String str = configString(configName, null);
+        if (str == null) return defaultValue;
+        File f = new File(str);
+        if (f.exists() && f.isDirectory()) return f;
+        log.warn("{} was defined as '{}' but was not an existing directory; skipping.", configName, str);
+        return defaultValue;
     }
 
 }

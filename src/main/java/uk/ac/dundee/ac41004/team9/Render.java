@@ -1,21 +1,35 @@
 package uk.ac.dundee.ac41004.team9;
 
+import com.github.mustachejava.DefaultMustacheFactory;
+import com.github.mustachejava.resolver.FileSystemResolver;
 import lombok.experimental.UtilityClass;
 import spark.ModelAndView;
 import spark.Request;
 import spark.template.mustache.MustacheTemplateEngine;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 @UtilityClass
 public class Render {
 
+    private static MustacheTemplateEngine engine = null;
+
+    private MustacheTemplateEngine getEngine() {
+        File f = Config.getDevLiveTemplatePath();
+        if (f == null) {
+            return new MustacheTemplateEngine();
+        } else {
+            return new MustacheTemplateEngine(new DefaultMustacheFactory(new FileSystemResolver(f)));
+        }
+    }
+
     public static String mustache(Request req, String template, Map<String, Object> model) {
         HashMap<String, Object> attrs = new HashMap<>();
         req.attributes().forEach(k -> attrs.put(k, req.attribute(k)));
         model.putAll(attrs);
-        return new MustacheTemplateEngine().render(new ModelAndView(model, template + ".mustache"));
+        return getEngine().render(new ModelAndView(model, template + ".mustache"));
     }
 
     public static String mustache(Request req, String template) {
