@@ -100,3 +100,8 @@ gradle-app.setting
 #### DASHOBOARDS-SPECIFIC ####
 # Don't package config files (may contain passwords!)
 config.properties
+
+# Jetty tmp dir
+/tmp/**/*
+
+!.gitkeep

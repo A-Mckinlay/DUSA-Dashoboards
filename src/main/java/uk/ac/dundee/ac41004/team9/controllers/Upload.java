@@ -5,6 +5,7 @@ import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import spark.Request;
 import spark.Response;
+import uk.ac.dundee.ac41004.team9.Config;
 import uk.ac.dundee.ac41004.team9.db.DBIngest;
 import uk.ac.dundee.ac41004.team9.xssf.YoyoParseException;
 import uk.ac.dundee.ac41004.team9.xssf.YoyoWeekSpreadsheetRow;
@@ -23,7 +24,7 @@ import static uk.ac.dundee.ac41004.team9.Render.mustache;
 @UtilityClass
 public class Upload {
 
-    private static final String FILE_LOCATION = "/temp";
+    private static final String FILE_LOCATION = "tmp";
     private static final int MAX_FILE_SIZE = 1024 * 1024; // 1MB in Bytes.
     private static final int MAX_REQUEST_SIZE = MAX_FILE_SIZE;
     private static final int FILE_SIZE_THRESHOLD = MAX_FILE_SIZE; // No files on disk.
@@ -37,8 +38,13 @@ public class Upload {
     public static Object uploadFileRoute(Request req, Response res) {
         log.info("Hello I am in the controller for Upload");
         // Multipart config via https://groups.google.com/forum/#!msg/sparkjava/fjO64BP1UQw/CsxdNVz7qrAJ
-        MultipartConfigElement multipartConfigElement = new MultipartConfigElement(FILE_LOCATION, MAX_FILE_SIZE,
-                MAX_REQUEST_SIZE, FILE_SIZE_THRESHOLD);
+        MultipartConfigElement multipartConfigElement;
+        if (Config.isSecLimitUploadSize()) {
+            multipartConfigElement = new MultipartConfigElement(FILE_LOCATION, MAX_FILE_SIZE, MAX_REQUEST_SIZE,
+                    FILE_SIZE_THRESHOLD);
+        } else {
+            multipartConfigElement = new MultipartConfigElement(FILE_LOCATION, -1L, -1L, FILE_SIZE_THRESHOLD);
+        }
         req.attribute("org.eclipse.jetty.multipartConfig", multipartConfigElement);
         try (InputStream is = req.raw().getPart("disbursal-file").getInputStream()) {
             List<YoyoWeekSpreadsheetRow> disbursalSheet;

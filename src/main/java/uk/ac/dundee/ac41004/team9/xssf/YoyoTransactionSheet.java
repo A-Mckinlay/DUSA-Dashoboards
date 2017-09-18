@@ -23,16 +23,18 @@ import java.util.stream.IntStream;
 @Slf4j
 class YoyoTransactionSheet {
 
-    private static final int START_ROW = 6;
-    private static final DateTimeFormatter DT_FMT = new DateTimeFormatterBuilder()
+    static final DateTimeFormatter WEEKLY_DT_FMT = new DateTimeFormatterBuilder()
             .appendPattern("dd/MM/yyyy HH:mm")
             .toFormatter();
 
     private final Sheet sheet;
+    private final YoyoExcelType type;
 
-    YoyoTransactionSheet(Sheet sheet) {
+    YoyoTransactionSheet(Sheet sheet, YoyoExcelType type) {
         Preconditions.checkNotNull(sheet);
+        Preconditions.checkNotNull(type);
         this.sheet = sheet;
+        this.type = type;
     }
 
     /**
@@ -44,36 +46,39 @@ class YoyoTransactionSheet {
     YoyoWeekSpreadsheetRow getRow(int rowIndex) throws YoyoParseException {
         Preconditions.checkArgument(rowIndex > 0, "rowIndex must be positive");
 
-        int rowId = START_ROW + rowIndex - 1;
+        int rowId = type.startRow + rowIndex - 1;
         log.trace("getRow {}", rowId);
 
         Row row = sheet.getRow(rowId);
-        if (row == null) return null;
+        if (row == null || row.getCell(type.startCol) == null) return null;
         log.trace("row exists");
 
+        int startCol = type.startCol;
+
         try {
-            LocalDateTime dateTime = LocalDateTime.parse(row.getCell(1).toString(), DT_FMT);
-            int retailerRef = (int)row.getCell(2).getNumericCellValue();
-            int outletRef = (int)row.getCell(3).getNumericCellValue();
-            String outletName = row.getCell(5).toString();
-            String userId = row.getCell(6).toString();
-            String rawTransactionType = row.getCell(7).toString();
-            double cashSpent = Double.parseDouble(row.getCell(8).toString());
-            double discountAmount = Double.parseDouble(row.getCell(9).toString());
-            double totalAmount = Double.parseDouble(row.getCell(10).toString());
+            LocalDateTime dateTime = type.dtFunc.apply(row.getCell(startCol));
+            int retailerRef = (int)row.getCell(startCol + 1).getNumericCellValue();
+            int outletRef = (int)row.getCell(startCol + 2).getNumericCellValue();
+            String outletName = row.getCell(startCol + 4).toString();
+            String userId = row.getCell(startCol + 5).toString();
+            String rawTransactionType = row.getCell(startCol + 6).toString();
+            double cashSpent = Double.parseDouble(row.getCell(startCol + 7).toString());
+            double discountAmount = Double.parseDouble(row.getCell(startCol + 8).toString());
+            double totalAmount = Double.parseDouble(row.getCell(startCol + 9).toString());
 
             YoyoWeekSpreadsheetRow outRow = new YoyoWeekSpreadsheetRow(dateTime, retailerRef, outletRef, outletName,
                     userId, rawTransactionType, cashSpent, discountAmount, totalAmount);
             log.trace("parsed: {}", outRow);
             return outRow;
         } catch (DateTimeParseException | NullPointerException | IllegalStateException ex) {
-            log.error("Error parsing Excel sheet row.", ex);
+            log.error("Error parsing Excel sheet row {}.", rowIndex);
+            log.error("Exception from ^", ex);
             throw new YoyoParseException();
         }
     }
 
     List<YoyoWeekSpreadsheetRow> getAllRows() throws YoyoParseException {
-        return IntStream.rangeClosed(1, sheet.getLastRowNum() + 1 - START_ROW)
+        return IntStream.rangeClosed(1, sheet.getLastRowNum() + 1 - type.startRow)
                 .mapToObj(Unchecked.intFunction(this::getRow))
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
