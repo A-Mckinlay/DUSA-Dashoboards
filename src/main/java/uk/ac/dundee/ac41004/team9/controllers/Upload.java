@@ -1,5 +1,16 @@
 package uk.ac.dundee.ac41004.team9.controllers;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.List;
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletException;
+
 import io.drakon.spark.autorouter.Routes;
 import lombok.Lombok;
 import lombok.experimental.UtilityClass;
@@ -13,18 +24,6 @@ import uk.ac.dundee.ac41004.team9.xssf.YoyoParseException;
 import uk.ac.dundee.ac41004.team9.xssf.YoyoWeekSpreadsheetRow;
 import uk.ac.dundee.ac41004.team9.xssf.YoyoXSSFParser;
 
-import javax.servlet.MultipartConfigElement;
-import javax.servlet.ServletException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-
-import static spark.Spark.halt;
 import static uk.ac.dundee.ac41004.team9.Render.mustache;
 
 @Slf4j
