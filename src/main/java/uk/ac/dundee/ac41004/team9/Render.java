@@ -12,7 +12,9 @@ import java.util.Map;
 public class Render {
 
     public static String mustache(Request req, String template, Map<String, Object> model) {
-        if (req.attribute("user") != null) model.put("user", req.attribute("user"));
+        HashMap<String, Object> attrs = new HashMap<>();
+        req.attributes().forEach(k -> attrs.put(k, req.attribute(k)));
+        model.putAll(attrs);
         return new MustacheTemplateEngine().render(new ModelAndView(model, template + ".mustache"));
     }
 
