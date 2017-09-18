@@ -12,7 +12,7 @@ public class Activity {
 
     @Routes.GET(path="/activity")
     public static Object activityRoute(Request req, Response res) {
-        return mustache("activity");
+        return mustache(req, "activity");
     }
 
 }

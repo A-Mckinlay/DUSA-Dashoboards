@@ -38,7 +38,7 @@ public class Upload {
 
     @Routes.GET(path="/upload")
     public static Object uploadPageRoute(Request req, Response res) {
-        return mustache("upload");
+        return mustache(req, "upload");
     }
 
     @Routes.POST(path="/upload")

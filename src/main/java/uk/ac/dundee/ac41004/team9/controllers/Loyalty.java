@@ -12,7 +12,7 @@ public class Loyalty {
 
     @Routes.GET(path="/loyalty")
     public static Object loyaltyRoute(Request req, Response res) {
-        return mustache("loyalty");
+        return mustache(req, "loyalty");
     }
 
 }

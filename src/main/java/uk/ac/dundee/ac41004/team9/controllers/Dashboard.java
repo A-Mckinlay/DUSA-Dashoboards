@@ -12,7 +12,7 @@ public class Dashboard {
 
     @Routes.GET(path="/")
     public static Object indexRoute(Request req, Response res) {
-        return mustache("dashboard");
+        return mustache(req, "dashboard");
     }
 
 }

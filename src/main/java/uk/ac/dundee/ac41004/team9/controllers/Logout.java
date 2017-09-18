@@ -16,7 +16,7 @@ public class Logout {
     @Routes.GET(path = "/logout")
     public static Object logout(Request req, Response res) {
         SecurityManager.getSyn().logoutUser(req.attribute("user"), req, res);
-        return mustache("logout");
+        return mustache(req, "logout");
     }
 
 }
