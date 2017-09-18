@@ -27,11 +27,12 @@ public class Config {
     // Security
     @Getter private static boolean secEnable = true;
     @Getter private static boolean secUseRealDatabase = false;
+    @Getter private static boolean secLimitUploadSize = true;
 
     // Internal bookkeeping (DO NOT EDIT THIS BIT)
     private static Properties props = new Properties();
 
-    static void init() {
+    public static void init() {
         props = new Properties();
 
         // Compiled into jar
@@ -69,6 +70,7 @@ public class Config {
         // Security
         secEnable = configBool("secEnable", secEnable);
         secUseRealDatabase = configBool("secUseRealDatabase", secUseRealDatabase);
+        secLimitUploadSize = configBool("secLimitUploadSize", secLimitUploadSize);
 
         // Fin.
         log.info("Configuration loading complete.");

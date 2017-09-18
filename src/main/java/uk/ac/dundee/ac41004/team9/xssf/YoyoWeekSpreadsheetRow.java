@@ -34,6 +34,10 @@ public class YoyoWeekSpreadsheetRow {
      * @return The transaction type, or null if the type entry is invalid.
      */
     public @Nullable TransactionType getTransactionType() {
+        // Deal with inconsistencies in Disbursals.xlsx
+        if (transactionType.equalsIgnoreCase("Refund")) return TransactionType.Reversal;
+        if (transactionType.equalsIgnoreCase("Discounted payment")) return TransactionType.Redemption;
+
         Optional<TransactionType> ttype = Arrays.stream(TransactionType.values())
                 .filter(t -> t.name().equalsIgnoreCase(transactionType))
                 .findFirst();

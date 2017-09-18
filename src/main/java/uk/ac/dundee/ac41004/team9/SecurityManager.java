@@ -49,7 +49,7 @@ public class SecurityManager {
                             }
                             model.put("error", s);
                         }
-                        return Render.mustache("login", model);
+                        return Render.mustache(req, "login", model);
                     },
                     (req, res) -> { res.redirect("/", Redirect.Status.FOUND.intValue()); return null; });
 

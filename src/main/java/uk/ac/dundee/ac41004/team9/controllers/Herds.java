@@ -12,7 +12,7 @@ public class Herds {
 
     @Routes.GET(path="/herds")
     public static Object userGroupsRoute(Request req, Response res) {
-        return mustache("herds");
+        return mustache(req, "herds");
     }
 
 }

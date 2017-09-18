@@ -24,6 +24,7 @@ public class DBIngest {
                 conn.setAutoCommit(false);
 
                 // Outlet names
+                log.debug("Generating outlets metadata");
                 final PreparedStatement ps1 = conn.prepareStatement("INSERT INTO outlets(outletref, outletname)" +
                         " VALUES (?, ?) ON CONFLICT DO NOTHING;");
                 data.stream()
@@ -38,8 +39,11 @@ public class DBIngest {
                 final PreparedStatement ps = conn.prepareStatement("INSERT INTO disbursals(datetime, outletref," +
                         " userid, transactiontype, cashspent, discountamount, totalamount)" +
                         " VALUES (?, ?, ?, ?, ?, ?, ?)");
-                for (YoyoWeekSpreadsheetRow row : data) {
-                    ps.setTimestamp(1, new Timestamp(row.getDateTime().toEpochSecond(ZoneOffset.UTC)));
+                log.debug("Transaction start");
+                for (int i = 0; i < data.size(); i++) {
+                    if (i % 1000 == 0) log.debug("Transaction generation {}/{}", i, data.size());
+                    YoyoWeekSpreadsheetRow row = data.get(i);
+                    ps.setTimestamp(1, Timestamp.valueOf(row.getDateTime()));
                     ps.setInt(2, row.getOutletRef());
                     ps.setString(3, row.getUserId());
                     //noinspection ConstantConditions
@@ -49,6 +53,7 @@ public class DBIngest {
                     ps.setDouble(7, row.getTotalAmount());
                     ps.executeUpdate();
                 }
+                log.debug("Transaction end");
                 conn.commit();
                 return true;
             } catch (SQLException ex) {
