@@ -2,43 +2,6 @@
 <html lang="en"></html>
 <head>
     {{>header}}
-    <script>var ctx = document.getElementById("chart_0");
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-            datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
-            }
-        }
-    });</script>
     <title>Activity</title>
 </head>
 
@@ -59,17 +22,15 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#summary">Summary</a></li>
+                        <li><a data-toggle="tab" href="#spectograph">Spectograph</a></li>
+                        <li><a data-toggle="tab" href="#overview">Overview</a></li>
+                    </ul>
                     <div class="panel-body">
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#summary">Summary</a></li>
-                            <li><a data-toggle="tab" href="#spectograph">Spectograph</a></li>
-                            <li><a data-toggle="tab" href="#overview">Overview</a></li>
-                        </ul>
-
-                        <div class="tab-content">
+                        <div class="tab-content" style="position: relative; width:80vw; margin:auto;">
                             <div id="summary" class="tab-pane fade in active">
-                                <h3>Summary</h3>
-                                {{>summaryPage}}
+                                <canvas id="myChart" style="height:80vh;"></canvas>
                             </div>
                             <div id="spectograph" class="tab-pane fade">
                                 <h3>Spectographs</h3>
@@ -86,5 +47,5 @@
         </div>
     </div>
 </body>
-
+{{>lineGraphProfitTime}}
 {{>footer}}
