@@ -41,8 +41,7 @@ public class Revenue {
         ls.forEach(row -> {
             BigDecimal current = outlets.getOrDefault(row.getOutlet(),
                     new BigDecimal(0.0).setScale(2, BigDecimal.ROUND_UNNECESSARY));
-            // TODO: Check whether this should be getCashSpent() instead.
-            current = current.add(row.getTotalAmount());
+            current = current.add(row.getCashSpent());
             outlets.put(row.getOutlet(), current);
         });
 
