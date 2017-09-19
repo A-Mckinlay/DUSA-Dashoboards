@@ -28,7 +28,7 @@ import static uk.ac.dundee.ac41004.team9.util.CollectionUtils.immutableMapOf;
 @Routes.PathGroup(prefix = "/api/revenue")
 public class Revenue {
 
-    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").create();
+    private static final Gson GSON = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").create();
 
     @Data
     private static class RevenueRequest {
