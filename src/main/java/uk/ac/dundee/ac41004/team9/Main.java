@@ -14,6 +14,7 @@ public class Main {
 
         Autorouter autorouter = new Autorouter("uk.ac.dundee.ac41004.team9");
         autorouter.route();
+        if (Config.isDevRouteOverview()) autorouter.enableRouteOverview("/debug/routes");
     }
 
 }

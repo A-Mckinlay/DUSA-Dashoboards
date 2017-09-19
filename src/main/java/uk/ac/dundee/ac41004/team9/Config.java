@@ -32,6 +32,7 @@ public class Config {
 
     // Dev utils
     @Getter private static File devLiveTemplatePath = null;
+    @Getter private static boolean devRouteOverview = true;
 
     // Internal bookkeeping (DO NOT EDIT THIS BIT)
     private static Properties props = new Properties();
@@ -78,6 +79,7 @@ public class Config {
 
         // Dev utils
         devLiveTemplatePath = configDir("devLiveTemplatePath", devLiveTemplatePath);
+        devRouteOverview = configBool("devRouteOverview", devRouteOverview);
 
         // Fin.
         log.info("Configuration loading complete.");
