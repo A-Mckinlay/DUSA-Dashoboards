@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JavaProjectCodeInsightSettings">
+    <excluded-names>
+      <name>jdk.nashorn.internal</name>
+      <name>org.omg.CORBA</name>
+      <name>sun</name>
+    </excluded-names>
+  </component>
+</project>
