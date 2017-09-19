@@ -14,8 +14,6 @@ import java.util.Map;
 @UtilityClass
 public class Render {
 
-    private static MustacheTemplateEngine engine = null;
-
     private MustacheTemplateEngine getEngine() {
         File f = Config.getDevLiveTemplatePath();
         if (f == null) {
