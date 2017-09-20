@@ -1,11 +1,11 @@
 package uk.ac.dundee.ac41004.team9.api;
 
 import io.drakon.spark.autorouter.Routes;
-import lombok.Data;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import spark.Request;
 import spark.Response;
+import uk.ac.dundee.ac41004.team9.data.MoneySummaryRow;
 import uk.ac.dundee.ac41004.team9.db.DBConnManager;
 
 import java.sql.PreparedStatement;
@@ -30,9 +30,9 @@ public class Summary {
             return immutableMapOf("error", "invalid request");
         }
 
-        Map<String, SummaryRow> map = DBConnManager.runWithConnection(conn -> {
+        Map<String, MoneySummaryRow> map = DBConnManager.runWithConnection(conn -> {
             try {
-                Map<String, SummaryRow> out = new HashMap<>();
+                Map<String, MoneySummaryRow> out = new HashMap<>();
                 PreparedStatement ps = conn.prepareStatement("SELECT transactiontypes.transactiontype, " +
                         "SUM(cashspent) as cashspent, " +
                         "SUM(discountamount) AS discountamount, " +
@@ -45,7 +45,7 @@ public class Summary {
                 ps.setTimestamp(2, Timestamp.valueOf(jsonReq.getEndJ8()));
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
-                    out.put(rs.getString(1), new SummaryRow(rs.getDouble(2), rs.getDouble(3), rs.getDouble(4)));
+                    out.put(rs.getString(1), new MoneySummaryRow(rs.getDouble(2), rs.getDouble(3), rs.getDouble(4)));
                 }
                 return out;
             } catch (SQLException ex) {
@@ -98,13 +98,6 @@ public class Summary {
         }
 
         return map;
-    }
-
-    @Data
-    private static class SummaryRow {
-        private final double cashspent;
-        private final double discountamount;
-        private final double totalamount;
     }
 
 }
