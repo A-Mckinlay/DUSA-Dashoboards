@@ -5,6 +5,9 @@
       <item index="0" class="java.lang.String" itemvalue="io.drakon.spark.autorouter.Routes.*" />
     </list>
   </component>
+  <component name="JavaScriptSettings">
+    <option name="languageLevel" value="ES6" />
+  </component>
   <component name="Kotlin2JsCompilerArguments">
     <option name="sourceMapPrefix" value="" />
     <option name="sourceMapEmbedSources" value="inlining" />
