@@ -15,9 +15,15 @@ module.exports = function (grunt) {
                 presets: ['env']
             },
             dist: {
-                files: {
-                    'src/main/resources/static/js/dashoboards.babel.js': 'src/main/resources/static/js/*.js'
-                }
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'src/main/resources/static/js/',
+                        src: ['*.js'],
+                        dest: 'src/main/resources/static/js/',
+                        ext: '.babel.js'
+                    }
+                ]
             }
         },
         uglify: {
@@ -25,8 +31,16 @@ module.exports = function (grunt) {
                 banner: '<%= banner %>'
             },
             dist: {
-                src: 'src/main/resources/static/js/dashoboards.babel.js',
-                dest: 'src/main/resources/static/js/dashoboards.min.js'
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'src/main/resources/static/js/',
+                        src: ['*.babel.js'],
+                        dest: 'src/main/resources/static/js/',
+                        ext: '.min.js',
+                        extDot: 'first'
+                    }
+                ]
             }
         },
         jshint: {
@@ -58,7 +72,7 @@ module.exports = function (grunt) {
                 tasks: ['jshint:gruntfile']
             },
             dashoboards: {
-                files: 'src/main/resources/static/js/*.js',
+                files: ['src/main/resources/static/js/*.js', 'src/main/resources/static/js/*.(babel|min).js'],
                 tasks: ['babel', 'uglify']
             }
         }
