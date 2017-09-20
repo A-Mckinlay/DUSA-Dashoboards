@@ -22,16 +22,26 @@ import static uk.ac.dundee.ac41004.team9.util.CollectionUtils.immutableMapOf;
 public class Metadata {
 
     @Routes.GET(path = "/latestdate", transformer = GSONResponseTransformer.class)
-    public static Object latestDate(Request request, Response res) {
+    public static Object latestDate(Request req, Response res) {
+        return getLatestOrOldestDate(req, res, true);
+    }
+
+    @Routes.GET(path = "/oldestdate", transformer = GSONResponseTransformer.class)
+    public static Object oldestDate(Request req, Response res) {
+        return getLatestOrOldestDate(req, res, false);
+    }
+
+    private static Object getLatestOrOldestDate(Request req, Response res, boolean latest) {
         LocalDateTime dt = DBConnManager.runWithConnection(conn -> {
             try {
-                PreparedStatement ps =
-                        conn.prepareStatement("SELECT datetime FROM disbursals ORDER BY datetime DESC LIMIT 1");
+                String ordering = latest ? "DESC" : "ASC";
+                PreparedStatement ps = conn.prepareStatement("SELECT datetime FROM disbursals " +
+                        "ORDER BY datetime " + ordering + " LIMIT 1");
                 ResultSet results = ps.executeQuery();
                 if (!results.next()) return null;
                 return results.getTimestamp(1).toLocalDateTime();
             } catch (SQLException ex) {
-                log.error("SQL error getting latest date", ex);
+                log.error("SQL error getting latest/oldest date", ex);
                 return null;
             }
         });
