@@ -22,8 +22,8 @@ import static uk.ac.dundee.ac41004.team9.util.CollectionUtils.immutableMapOf;
 @Routes.PathGroup(prefix = "/api/summary")
 public class Summary {
 
-    @Routes.GET(path = "/tx", transformer = GSONResponseTransformer.class)
-    public static Object tx(Request req, Response res) {
+    @Routes.GET(path = "/money", transformer = GSONResponseTransformer.class)
+    public static Object money(Request req, Response res) {
         DateRangeRequest jsonReq = DateRangeRequest.fromBody(req.body());
         if (jsonReq == null) {
             res.status(400);
