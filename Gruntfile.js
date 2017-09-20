@@ -19,7 +19,7 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         cwd: 'src/main/resources/static/js/',
-                        src: ['*.js'],
+                        src: ['*!(.min)!(.babel).js'],
                         dest: 'src/main/resources/static/js/',
                         ext: '.babel.js'
                     }
@@ -64,7 +64,7 @@ module.exports = function (grunt) {
                 sourceMap: true,
                 reporterOutput: ""
             },
-            files: ['Gruntfile.js', 'src/main/resources/static/js/*.js']
+            files: ['Gruntfile.js', 'src/main/resources/static/js/*!(.min)!(.babel).js']
         },
         watch: {
             gruntfile: {
@@ -72,7 +72,9 @@ module.exports = function (grunt) {
                 tasks: ['jshint:gruntfile']
             },
             dashoboards: {
-                files: ['src/main/resources/static/js/*.js', 'src/main/resources/static/js/*.(babel|min).js'],
+                files: ['src/main/resources/static/js/*.js',
+                    '!src/main/resources/static/js/*.babel.js',
+                    '!src/main/resources/static/js/*.min.js'],
                 tasks: ['babel', 'uglify']
             }
         }
