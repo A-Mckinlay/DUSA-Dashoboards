@@ -105,7 +105,7 @@ config.properties
 /tmp/**/*
 
 /node_modules
-/src/main/resources/static/js/*.babel.*
+/src/main/resources/static/js/babel
 /src/main/resources/static/js/*.min.*
 
 !.gitkeep

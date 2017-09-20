@@ -20,7 +20,7 @@ module.exports = function (grunt) {
                         expand: true,
                         cwd: 'src/main/resources/static/js/',
                         src: ['*!(.min)!(.babel).js'],
-                        dest: 'src/main/resources/static/js/',
+                        dest: 'src/main/resources/static/js/babel',
                         ext: '.babel.js'
                     }
                 ]
@@ -34,7 +34,7 @@ module.exports = function (grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: 'src/main/resources/static/js/',
+                        cwd: 'src/main/resources/static/js/babel',
                         src: ['*.babel.js'],
                         dest: 'src/main/resources/static/js/',
                         ext: '.min.js',
