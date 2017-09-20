@@ -17,6 +17,9 @@ CREATE TABLE disbursals
 CREATE UNIQUE INDEX disbursals_id_uindex
   ON disbursals (id);
 
+CREATE INDEX disbursals_datetime_index
+  ON disbursals(datetime);
+
 CREATE TABLE users
 (
   username  TEXT                  NOT NULL
