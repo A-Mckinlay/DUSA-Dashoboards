@@ -19,6 +19,7 @@ plugins {
     id 'idea'
     id 'eclipse'
     id 'com.github.johnrengelman.shadow' version '2.0.1'
+    id "com.moowork.grunt" version '1.2.0'
 }
 
 apply plugin: 'org.junit.platform.gradle.plugin'
@@ -39,6 +40,12 @@ targetCompatibility = 1.8
 group = 'uk.ac.dundee.ac41004.team9'
 mainClassName = 'uk.ac.dundee.ac41004.team9.Main'
 version = '0.0.1'
+
+grunt_build.dependsOn += npmInstall
+grunt_build.dependsOn += installGrunt
+
+// Put Grunt before compile, so we're before Gradle searches for files for packaging.
+compileJava.dependsOn += grunt_build
 
 build.dependsOn += shadowJar
 

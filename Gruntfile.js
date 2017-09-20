@@ -88,5 +88,6 @@ module.exports = function (grunt) {
 
     // Default task.
     grunt.registerTask('default', ['babel', 'uglify']);
+    grunt.registerTask('build', ['babel', 'uglify']);
 
 };
