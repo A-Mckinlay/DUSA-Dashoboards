@@ -1,6 +1,21 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/uk.js"></script>
 <script>
-    function getDateRange() {
-        var currentDate = new Date()
+    function getDateRange(latestDate) {
+        var date = new Date(latestDate);
+        console.log(date);
+        console.log("Moment: " + moment(date))
+    }
+
+    function getLatestDate(){
+        var xhttp;
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200) {
+                getDateRange(this.responseText.substr(1,10))
+            }
+        };
+        xhttp.open("GET", "http://localhost:4567/api/meta/latestdate", true)
+        xhttp.send();
     }
 
     function getData(){
@@ -12,10 +27,11 @@
             }
         };
         xhttp.open("GET", "/api/sales/monthlytx", true)
-        xhttp.send(dateRange);
+        xhttp.send();
     }
 
     var ctx =  document.getElementById("myChart");
+    getLatestDate();
     var myChart = new Chart(ctx, {
         type: 'line',
         data: {
