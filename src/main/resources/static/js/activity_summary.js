@@ -1,5 +1,4 @@
-import moment from "/js/lib/moment.js"
-
+requirejs(["moment"], function (moment) {
 
 function createDateRangeObj(latestDate) {
     const originDate = moment(latestDate).subtract(1, 'month')
@@ -85,4 +84,7 @@ var myChart = new Chart(ctx, {
             }]
         }
     }
+});
+
+// END requirejs
 });
