@@ -9,6 +9,21 @@ module.exports = function (grunt) {
         '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
         '<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %> */\n',
         // Task configuration.
+        // Typescript: Javascript with less explosions.
+        typescript: {
+            base: {
+                src: ['src/main/resources/static/js/*.ts'],
+                dest: 'src/main/resources/static/js/',
+                options: {
+                    module: 'amd',
+                    target: 'es5',
+                    rootDir: 'src/main/resources/static/js/',
+                    sourceMap: true,
+                    declaration: true
+                }
+            }
+        },
+        // I'm still going to keep calling this Babble... -- RT
         babel: {
             options: {
                 sourceMap: true,
@@ -38,6 +53,7 @@ module.exports = function (grunt) {
                 ]
             }
         },
+        // Slash, Burn, Minify!
         uglify: {
             options: {
                 banner: '<%= banner %>'
@@ -67,52 +83,26 @@ module.exports = function (grunt) {
                 ]
             }
         },
-        jshint: {
-            options: {
-                curly: true,
-                eqeqeq: true,
-                immed: true,
-                latedef: true,
-                newcap: true,
-                noarg: true,
-                sub: true,
-                undef: true,
-                unused: true,
-                boss: true,
-                eqnull: true,
-                browser: true,
-                globals: {
-                    jQuery: true
-                },
-                esnext: true,
-                sourceMap: true,
-                reporterOutput: ""
-            },
-            files: ['Gruntfile.js', 'src/main/resources/static/js/*!(.min)!(.babel).js']
-        },
         watch: {
-            gruntfile: {
-                files: 'Gruntfile.js',
-                tasks: ['jshint:gruntfile']
-            },
             dashoboards: {
                 files: ['src/main/resources/static/js/*.js',
+                    'src/main/resources/static/js/*.ts',
                     '!src/main/resources/static/js/*.babel.js',
                     '!src/main/resources/static/js/*.min.js'],
-                tasks: ['babel:dashoboards', 'uglify:dashoboards']
+                tasks: ['typescript', 'babel:dashoboards', 'uglify:dashoboards']
             }
         }
     });
 
     // These plugins provide necessary tasks.
     grunt.loadNpmTasks('grunt-babel');
+    grunt.loadNpmTasks('grunt-typescript');
     grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
-    // Default task.
-    grunt.registerTask('default', ['babel', 'uglify']);
-    grunt.registerTask('build', ['babel', 'uglify']);
+    // Task definitions.
+    grunt.registerTask('default', ['typescript', 'babel', 'uglify']);
+    grunt.registerTask('build', ['typescript', 'babel', 'uglify']);
     grunt.registerTask('libs', ['babel:libs', 'uglify:libs'])
 
 };
