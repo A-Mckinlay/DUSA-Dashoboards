@@ -1,4 +1,4 @@
-requirejs(["moment"], function (moment) {
+requirejs(["moment", "Chart"], function (moment, Chart) {
 
 function createDateRangeObj(latestDate) {
     const originDate = moment(latestDate).subtract(1, 'month')

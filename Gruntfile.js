@@ -14,7 +14,7 @@ module.exports = function (grunt) {
                 sourceMap: true,
                 presets: ['env']
             },
-            dist: {
+            dashoboards: {
                 files: [
                     {
                         expand: true,
@@ -22,6 +22,18 @@ module.exports = function (grunt) {
                         src: ['*!(.min)!(.babel).js'],
                         dest: 'src/main/resources/static/js/babel',
                         ext: '.babel.js'
+                    },
+                ]
+            },
+            libs: {
+                files: [
+                    {
+                        src: 'node_modules/moment/moment.js',
+                        dest: 'src/main/resources/static/js/babel/lib/moment.babel.js'
+                    },
+                    {
+                        src: 'node_modules/chart.js/dist/Chart.js',
+                        dest: 'src/main/resources/static/js/babel/lib/Chart.babel.js'
                     }
                 ]
             }
@@ -30,7 +42,7 @@ module.exports = function (grunt) {
             options: {
                 banner: '<%= banner %>'
             },
-            dist: {
+            dashoboards: {
                 files: [
                     {
                         expand: true,
@@ -39,6 +51,18 @@ module.exports = function (grunt) {
                         dest: 'src/main/resources/static/js/',
                         ext: '.min.js',
                         extDot: 'first'
+                    }
+                ]
+            },
+            libs: {
+                files: [
+                    {
+                        src: 'src/main/resources/static/js/babel/lib/moment.babel.js',
+                        dest: 'src/main/resources/static/js/lib/moment.js'
+                    },
+                    {
+                        src: 'src/main/resources/static/js/babel/lib/Chart.babel.js',
+                        dest: 'src/main/resources/static/js/lib/Chart.js'
                     }
                 ]
             }
@@ -75,7 +99,7 @@ module.exports = function (grunt) {
                 files: ['src/main/resources/static/js/*.js',
                     '!src/main/resources/static/js/*.babel.js',
                     '!src/main/resources/static/js/*.min.js'],
-                tasks: ['babel', 'uglify']
+                tasks: ['babel:dashoboards', 'uglify:dashoboards']
             }
         }
     });
@@ -89,5 +113,6 @@ module.exports = function (grunt) {
     // Default task.
     grunt.registerTask('default', ['babel', 'uglify']);
     grunt.registerTask('build', ['babel', 'uglify']);
+    grunt.registerTask('libs', ['babel:libs', 'uglify:libs'])
 
 };

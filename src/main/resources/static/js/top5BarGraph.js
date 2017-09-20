@@ -1,5 +1,4 @@
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/uk.js"></script>
-<script>
+requirejs(["moment", "Chart"], function (moment, Chart) {
 
     var ctx = document.getElementById("top5BarGraph").getContext('2d');
     var top5BarGraph = new Chart(ctx, {
@@ -28,15 +27,14 @@
         },
         options: {
             scales: {
-                xAxes:[{
-                }],
+                xAxes: [{}],
                 yAxes: [{
                     ticks: {
-                        beginAtZero:true
+                        beginAtZero: true
                     }
                 }]
             }
         }
     });
-</script>-->
-<script src="/js/babel/top5BarGraph.babel.js"></script>
+
+});
