@@ -7,8 +7,10 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class Common {
 
+    static final String DT_FORMAT_JS = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+
     static final Gson GSON = new GsonBuilder()
-            .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+            .setDateFormat(DT_FORMAT_JS)
             .setPrettyPrinting()
             .create();
 

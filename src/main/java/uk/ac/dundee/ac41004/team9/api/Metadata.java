@@ -4,8 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.util.Date;
 
 import io.drakon.spark.autorouter.Routes;
 import lombok.experimental.UtilityClass;
@@ -14,19 +12,17 @@ import spark.Request;
 import spark.Response;
 import uk.ac.dundee.ac41004.team9.db.DBConnManager;
 
-import static uk.ac.dundee.ac41004.team9.util.CollectionUtils.immutableMapOf;
-
 @UtilityClass
 @Slf4j
 @Routes.PathGroup(prefix = "/api/meta")
 public class Metadata {
 
-    @Routes.GET(path = "/latestdate", transformer = GSONResponseTransformer.class)
+    @Routes.GET(path = "/latestdate", transformer = DateResponseTransformer.class)
     public static Object latestDate(Request req, Response res) {
         return getLatestOrOldestDate(req, res, true);
     }
 
-    @Routes.GET(path = "/oldestdate", transformer = GSONResponseTransformer.class)
+    @Routes.GET(path = "/oldestdate", transformer = DateResponseTransformer.class)
     public static Object oldestDate(Request req, Response res) {
         return getLatestOrOldestDate(req, res, false);
     }
@@ -47,9 +43,9 @@ public class Metadata {
         });
         if (dt == null) {
             res.status(500);
-            return immutableMapOf("error", "internal server error");
+            return null;
         }
-        return Date.from(dt.toInstant(ZoneOffset.UTC));
+        return dt;
     }
 
 }
