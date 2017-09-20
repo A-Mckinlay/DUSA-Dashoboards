@@ -4,6 +4,7 @@ Yo, an application to analyse transaction data from YOYO and display it in an ea
 ## Requirements
 - A machine that isn't a potato (x86 or x86_64, in other words, with 2GB+ RAM)
 - Java Development Kit 8+ (*not* the consumer Java Runtime Environment!)
+- NodeJS Current branch (for JS tooling)
 - An IDE to work in (or a lot of patience and using the Gradle wrapper with an editor of your choice)
 - [The Spark Bible](http://sparkjava.com/documentation) (see also the
 [Mustache docs](https://mustache.github.io/mustache.5.html))
