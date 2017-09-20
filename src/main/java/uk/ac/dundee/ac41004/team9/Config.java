@@ -34,6 +34,9 @@ public class Config {
     @Getter private static File devLiveTemplatePath = null;
     @Getter private static boolean devRouteOverview = true;
 
+    // Productions
+    @Getter private static boolean prodUseGzip = false;
+
     // Internal bookkeeping (DO NOT EDIT THIS BIT)
     private static Properties props = new Properties();
 
@@ -73,13 +76,19 @@ public class Config {
         dbName = configString("dbName", dbName);
 
         // Security
+        log.debug("Loading security configuration.");
         secEnable = configBool("secEnable", secEnable);
         secUseRealDatabase = configBool("secUseRealDatabase", secUseRealDatabase);
         secLimitUploadSize = configBool("secLimitUploadSize", secLimitUploadSize);
 
         // Dev utils
+        log.debug("Loading dev utils configuration.");
         devLiveTemplatePath = configDir("devLiveTemplatePath", devLiveTemplatePath);
         devRouteOverview = configBool("devRouteOverview", devRouteOverview);
+
+        // Production
+        log.debug("Loading production configuration.");
+        prodUseGzip = configBool("prodUseGzip", prodUseGzip);
 
         // Fin.
         log.info("Configuration loading complete.");
