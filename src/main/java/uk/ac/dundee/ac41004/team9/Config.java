@@ -31,7 +31,7 @@ public class Config {
     @Getter private static boolean secLimitUploadSize = true;
 
     // Dev utils
-    @Getter private static File devLiveTemplatePath = null;
+    @Getter private static File devResourcesPath = null;
     @Getter private static boolean devRouteOverview = true;
 
     // Productions
@@ -83,7 +83,7 @@ public class Config {
 
         // Dev utils
         log.debug("Loading dev utils configuration.");
-        devLiveTemplatePath = configDir("devLiveTemplatePath", devLiveTemplatePath);
+        devResourcesPath = configDir("devResourcesPath", devResourcesPath);
         devRouteOverview = configBool("devRouteOverview", devRouteOverview);
 
         // Production
@@ -101,7 +101,8 @@ public class Config {
             log.info("Using {} ({}) value from environment.", configName, envName);
             return env;
         }
-        return props.getProperty(configName, defaultValue.toString());
+        String defaultStr = defaultValue != null ? defaultValue.toString() : null;
+        return props.getProperty(configName, defaultStr);
     }
 
     private static String environmentiseConfString(String configName) {

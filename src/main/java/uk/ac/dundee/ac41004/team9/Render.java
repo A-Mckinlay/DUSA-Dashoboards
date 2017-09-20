@@ -15,10 +15,11 @@ import java.util.Map;
 public class Render {
 
     private MustacheTemplateEngine getEngine() {
-        File f = Config.getDevLiveTemplatePath();
+        File f = Config.getDevResourcesPath();
         if (f == null) {
             return new MustacheTemplateEngine();
         } else {
+            f = new File(f.getPath() + File.separator + "templates");
             return new MustacheTemplateEngine(new DefaultMustacheFactory(new FileSystemResolver(f)));
         }
     }
