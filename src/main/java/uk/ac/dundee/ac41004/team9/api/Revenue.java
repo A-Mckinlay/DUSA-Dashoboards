@@ -1,18 +1,18 @@
 package uk.ac.dundee.ac41004.team9.api;
 
-import java.math.BigDecimal;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import io.drakon.spark.autorouter.Routes;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import spark.Request;
 import spark.Response;
-import uk.ac.dundee.ac41004.team9.data.DisbursalsRow;
-import uk.ac.dundee.ac41004.team9.models.Disbursals;
+import uk.ac.dundee.ac41004.team9.db.DBConnManager;
 
 import static uk.ac.dundee.ac41004.team9.util.CollectionUtils.immutableMapOf;
 
@@ -29,26 +29,32 @@ public class Revenue {
             return immutableMapOf("error", "invalid request");
         }
 
-        // TODO: Offload processing to DB better.
-        List<DisbursalsRow> ls = Disbursals.getRowsBetween(jsonReq.getStartJ8(), jsonReq.getEndJ8());
-        Map<String, BigDecimal> outlets = new HashMap<>();
+        Map<String, Double> map = DBConnManager.runWithConnection(conn -> {
+            try {
+                Map<String, Double> out = new HashMap<>();
+                PreparedStatement ps = conn.prepareStatement("SELECT outletname, SUM(cashspent) AS cashspent " +
+                        "FROM disbursals JOIN outlets ON disbursals.outletref = outlets.outletref " +
+                        "WHERE datetime > ? AND datetime < ? " +
+                        "GROUP BY outletname");
+                ps.setTimestamp(1, Timestamp.valueOf(jsonReq.getStartJ8()));
+                ps.setTimestamp(2, Timestamp.valueOf(jsonReq.getEndJ8()));
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    out.put(rs.getString(1), rs.getDouble(2));
+                }
+                return out;
+            } catch (SQLException ex) {
+                log.error("SQL exception fetching top5", ex);
+                return null;
+            }
+        });
 
-        if (ls == null) {
+        if (map == null) {
             res.status(500);
             return immutableMapOf("error", "internal server error");
         }
 
-        ls.forEach(row -> {
-            BigDecimal current = outlets.getOrDefault(row.getOutlet(),
-                    new BigDecimal(0.0).setScale(2, BigDecimal.ROUND_UNNECESSARY));
-            current = current.add(row.getCashSpent());
-            outlets.put(row.getOutlet(), current);
-        });
-
-        return outlets.entrySet().stream()
-                .sorted((a,b) -> - (a.getValue().compareTo(b.getValue())))
-                .limit(5)
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        return map;
     }
 
 }

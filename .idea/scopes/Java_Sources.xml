@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Java Sources" pattern="file[dashoboards]:src/main/java//*||file[dashoboards]:src/test/java//*" />
+</component>
