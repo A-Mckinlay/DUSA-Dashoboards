@@ -49,6 +49,44 @@ public class Summary {
                 }
                 return out;
             } catch (SQLException ex) {
+                log.error("SQL error getting money summary", ex);
+                return null;
+            }
+        });
+
+        if (map == null) {
+            res.status(500);
+            return immutableMapOf("error", "internal server error");
+        }
+
+        return map;
+    }
+
+    @Routes.GET(path = "/tx", transformer = GSONResponseTransformer.class)
+    public static Object tx(Request req, Response res) {
+        DateRangeRequest jsonReq = DateRangeRequest.fromBody(req.body());
+        if (jsonReq == null) {
+            res.status(400);
+            return immutableMapOf("error", "invalid request");
+        }
+
+        Map<String, Integer> map = DBConnManager.runWithConnection(conn -> {
+            try {
+                Map<String, Integer> out = new HashMap<>();
+                PreparedStatement ps = conn.prepareStatement("SELECT transactiontypes.transactiontype, " +
+                        "COUNT(transactiontypes.transactiontype) " +
+                        "FROM disbursals JOIN transactiontypes " +
+                        "ON disbursals.transactiontype = transactiontypes.transactionid " +
+                        "WHERE datetime > ? AND datetime < ? " +
+                        "GROUP BY transactiontypes.transactiontype");
+                ps.setTimestamp(1, Timestamp.valueOf(jsonReq.getStartJ8()));
+                ps.setTimestamp(2, Timestamp.valueOf(jsonReq.getEndJ8()));
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    out.put(rs.getString(1), rs.getInt(2));
+                }
+                return out;
+            } catch (SQLException ex) {
                 log.error("SQL error getting tx summary", ex);
                 return null;
             }
