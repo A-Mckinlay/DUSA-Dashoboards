@@ -153,5 +153,8 @@
     <orderEntry type="library" scope="TEST" name="Gradle: org.junit.platform:junit-platform-launcher:1.0.0" level="project" />
     <orderEntry type="library" name="lodash" level="application" />
     <orderEntry type="library" name="uk" level="application" />
+    <orderEntry type="library" name="Chart" level="application" />
+    <orderEntry type="library" name="uk" level="application" />
+    <orderEntry type="library" name="Chart.bundle" level="application" />
   </component>
 </module>
