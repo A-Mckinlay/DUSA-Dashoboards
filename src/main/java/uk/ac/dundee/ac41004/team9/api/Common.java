@@ -24,8 +24,8 @@ public class Common {
             .create();
 
     public static Pair<LocalDateTime, LocalDateTime> getStartEndFromRequest(Request req) {
-        String startStr = req.params("start");
-        String endStr = req.params("end");
+        String startStr = req.queryParams("start");
+        String endStr = req.queryParams("end");
         if (startStr == null || endStr == null) return null;
         try {
             LocalDateTime start = LocalDateTime.from(DT_FORMATTER_JS.parse(startStr));

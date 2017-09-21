@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import spark.Request;
 import spark.Response;
 import uk.ac.dundee.ac41004.team9.db.DBConnManager;
+import uk.ac.dundee.ac41004.team9.util.Pair;
 
 import static uk.ac.dundee.ac41004.team9.util.CollectionUtils.immutableMapOf;
 
@@ -23,8 +25,8 @@ public class Revenue {
 
     @Routes.GET(path = "/top5", transformer = GSONResponseTransformer.class)
     public static Object topFive(Request req, Response res) {
-        DateRangeRequest jsonReq = DateRangeRequest.fromBody(req.body());
-        if (jsonReq == null) {
+        Pair<LocalDateTime, LocalDateTime> p = Common.getStartEndFromRequest(req);
+        if (p == null) {
             res.status(400);
             return immutableMapOf("error", "invalid request");
         }
@@ -36,8 +38,8 @@ public class Revenue {
                         "FROM disbursals JOIN outlets ON disbursals.outletref = outlets.outletref " +
                         "WHERE datetime > ? AND datetime < ? " +
                         "GROUP BY outletname");
-                ps.setTimestamp(1, Timestamp.valueOf(jsonReq.getStartJ8()));
-                ps.setTimestamp(2, Timestamp.valueOf(jsonReq.getEndJ8()));
+                ps.setTimestamp(1, Timestamp.valueOf(p.first));
+                ps.setTimestamp(2, Timestamp.valueOf(p.second));
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
                     out.put(rs.getString(1), rs.getDouble(2));
