@@ -1,100 +1,82 @@
-requirejs(["query-string", "moment", "Chart"], function (querystring,moment, Chart) {
+requirejs(["moment", "Chart"], function (moment, Chart) {
 
-function createDateRangeObj(latestDate, numberOfDays) {
-    let endDate = new Date(latestDate);
-    let originDate = new Date(latestDate);
-    originDate.setDate(originDate.getDate() - numberOfDays);//TODO: Decide if 28 should be 30/31/somethingelse
-    let dateRange = {
-        start: originDate,
-        end: endDate
+    function createDateRangeObj(latestDate, numberOfDays) {
+        let endDate = new Date(latestDate);
+        let originDate = new Date(latestDate);
+        originDate.setDate(originDate.getDate() - numberOfDays);//TODO: Decide if 28 should be 30/31/somethingelse
+        let dateRange = {
+            start: originDate,
+            end: endDate
+        }
+        console.log(dateRange);
+        return dateRange;
     }
-    console.log(dateRange);
-    return dateRange;
-}
 
-function main(){
-    getData();
-}
+    function getDataDrawGraph() {
 
-function getData() {
-
-    function get(url) {
-        return new Promise(function (resolve, reject) {
-            let xhttp = new XMLHttpRequest();
-            xhttp.open("GET", url, true);
-            xhttp.setRequestHeader("Content-type", "application/json");
-            xhttp.onload = function () {
-                if (xhttp.status == 200) {
-                    resolve(xhttp.response);
-                } else {
+        function get(url) {
+            return new Promise(function (resolve, reject) {
+                let xhttp = new XMLHttpRequest();
+                xhttp.open("GET", url, true);
+                xhttp.onload = function () {
+                    if (xhttp.status == 200) {
+                        resolve(xhttp.response);
+                    } else {
+                        reject(xhttp.statusText);
+                    }
+                };
+                xhttp.onerror = function () {
                     reject(xhttp.statusText);
-                }
-            };
-            xhttp.onerror = function () {
-                reject(xhttp.statusText);
-            };
-            xhttp.send(JSON.stringify());
+                };
+                xhttp.send();
+            });
+        }
+
+        let promise = get("/api/meta/latestdate");
+        promise.then(function (latestDate) {
+            let dateRange = createDateRangeObj(latestDate, 28);
+            const getParams = "start=" + dateRange.start.toISOString() + "&end=" + dateRange.end.toISOString()
+            let url = "/api/sales/dailytx?" + getParams;
+            url = encodeURI(url);
+            return get(url);
+        }).then(function(graphData){
+            drawGraph(graphData);
+        }).catch(function (error) {
+            console.log(error);
         });
     }
-
-    let promise = get("/api/meta/latestdate");//TODO: See Robert about this url
-    promise.then(function (latestDate) {
-        let dateRange = createDateRangeObj(latestDate, 28);
-        const getParams = "start=" + dateRange.start + "&end=" + dateRange.end
-        let url = "/api/sales/monthlytx?" + getParams;
-        url = encodeURI(url);
-        return get(url);
-    }).then(function(graphData){
+    function drawGraph(graphData) {
+        let ctx = document.getElementById("myChart");
         console.log(graphData);
-    }).catch(function (error) {
-        console.log(error);
-    });
-}
-
-// function getData(dateRange){
-//     var xhttp;
-//     xhttp = new XMLHttpRequest();
-//     xhttp.onreadystatechange = function(){
-//         if(this.readyState == 4 && this.status == 200) {
-//
-//         }
-//     };
-//     xhttp.open("GET", "/api/sales/monthlytx", true);
-//     var json = JSON.stringify(dateRange)
-//     console.log(json);
-//     xhttp.send(json);
-// }
-
-var ctx =  document.getElementById("myChart");
-main();
-var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-        datasets: [{
-            label: '# of Votes',
-            data: [2,23,45,2,34,5,6,43],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-            ],
-            borderColor: [
-                'rgba(255,99,132,1)',
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
+        let myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [2, 23, 45, 2, 34, 5, 6, 43],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
                 }
-            }]
-        }
+            }
+        });
     }
-});
-
+    getDataDrawGraph();
 // END requirejs
 });
