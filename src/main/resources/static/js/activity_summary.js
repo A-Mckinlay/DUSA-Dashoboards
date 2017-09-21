@@ -1,4 +1,4 @@
-requirejs(["moment", "Chart"], function (moment, Chart) {
+requirejs(["query-string", "moment", "Chart"], function (querystring,moment, Chart) {
 
 function createDateRangeObj(latestDate, numberOfDays) {
     let endDate = new Date(latestDate);
@@ -18,7 +18,7 @@ function main(){
 
 function getData() {
 
-    function get(url, obj) {
+    function get(url) {
         return new Promise(function (resolve, reject) {
             let xhttp = new XMLHttpRequest();
             xhttp.open("GET", url, true);
@@ -33,15 +33,17 @@ function getData() {
             xhttp.onerror = function () {
                 reject(xhttp.statusText);
             };
-            xhttp.send(JSON.stringify(obj));
+            xhttp.send(JSON.stringify());
         });
     }
 
     let promise = get("/api/meta/latestdate");//TODO: See Robert about this url
     promise.then(function (latestDate) {
         let dateRange = createDateRangeObj(latestDate, 28);
-        const getParams = querystring.stringify(dateRange);
-        return get("/api/sales/monthlytx?" + getParams , dateRange);
+        const getParams = "start=" + dateRange.start + "&end=" + dateRange.end
+        let url = "/api/sales/monthlytx?" + getParams;
+        url = encodeURI(url);
+        return get(url);
     }).then(function(graphData){
         console.log(graphData);
     }).catch(function (error) {
