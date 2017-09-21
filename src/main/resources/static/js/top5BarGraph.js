@@ -1,5 +1,6 @@
-var ctx = document.getElementById("top5BarGraph").getContext('2d');
-var top5BarGraph = new Chart(ctx, {
+requirejs(["moment", "Chart"], function (moment, Chart) {
+    var ctx = document.getElementById("top5BarGraph").getContext('2d');
+    var top5BarGraph = new Chart(ctx, {
         type: 'horizontalBar',
         data: {
             labels: ["Mono", "Library", "Air Bar", "Entertainment", "Food on Four"],
@@ -35,3 +36,4 @@ var top5BarGraph = new Chart(ctx, {
         }
     });
 
+});
