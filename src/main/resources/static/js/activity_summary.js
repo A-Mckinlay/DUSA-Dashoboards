@@ -1,59 +1,63 @@
 requirejs(["moment", "Chart"], function (moment, Chart) {
 
-function createDateRangeObj(latestDate) {
-    const originDate = moment(latestDate).subtract(1, 'month')
+function createDateRangeObj(latestDate, numberOf, units) {
+    const originDate = moment(latestDate).subtract(numberOf, units)
     const dateRange = {
-        start: originDate,
+        start: originDate.format("YYYY, MM, DD, hh:mm:ss, z"),
         end: latestDate
     }
+    console.log(dateRange);
     return dateRange;
 }
 
 function main(){
-    let dateRange = getDateRange("http://localhost:4567/api/meta/latestdate")
-    console.log(dateRange);
+    getData();
 }
 
-function getDateRange(url) {
-    let latestDate =  new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open("GET", url);
-        xhr.onload = () => resolve(xhr.responseText);
-        xhr.onerror = () => reject(xhr.statusText);
-        xhr.send();
-    });
+function getData() {
 
-    latestDate.then(
-        function createDateRangeObj(latestDate) {
-            const originDate = moment(latestDate).subtract(1, 'month')
-            const dateRange = {
-                start: originDate,
-                end: latestDate
-            }
-            return dateRange;
-        }
-    ).catch(
-        (reason) => {
-            console.log('Handle rejected promise ('+reason+') here.');
+    function get(url, obj) {
+        return new Promise(function (resolve, reject) {
+            let xhttp = new XMLHttpRequest();
+            xhttp.open("GET", url, true);
+            xhttp.onload = function () {
+                if (xhttp.status == 200) {
+                    resolve(xhttp.response);
+                } else {
+                    reject(xhttp.statusText);
+                }
+            };
+            xhttp.onerror = function () {
+                reject(xhttp.statusText);
+            };
+            xhttp.send(obj);
         });
-};
+    }
 
-getLatestDate.then()
-
-
-function getData(dateRange){
-    var xhttp;
-    xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function(){
-        if(this.readyState == 4 && this.status == 200) {
-
-        }
-    };
-    xhttp.open("GET", "/api/sales/monthlytx", true);
-    var json = JSON.stringify(dateRange)
-    console.log(json);
-    xhttp.send(json);
+    let promise = get("http://localhost:4567/api/meta/latestdate");//TODO: See Robert about this url
+    promise.then(function (latestDate) {
+        let dateRange = createDateRangeObj(latestDate, 1, 'month');
+        return get("http://localhost:4567/api/sales/monthlytx", dateRange);
+    }).then(function(graphData){
+        console.log(graphData);
+    }).catch(function (error) {
+        console.log(error);
+    });
 }
+
+// function getData(dateRange){
+//     var xhttp;
+//     xhttp = new XMLHttpRequest();
+//     xhttp.onreadystatechange = function(){
+//         if(this.readyState == 4 && this.status == 200) {
+//
+//         }
+//     };
+//     xhttp.open("GET", "/api/sales/monthlytx", true);
+//     var json = JSON.stringify(dateRange)
+//     console.log(json);
+//     xhttp.send(json);
+// }
 
 var ctx =  document.getElementById("myChart");
 main();
