@@ -7,12 +7,14 @@ import spark.Request;
 import spark.Response;
 import uk.ac.dundee.ac41004.team9.data.MoneySummaryRow;
 import uk.ac.dundee.ac41004.team9.db.DBConnManager;
+import uk.ac.dundee.ac41004.team9.util.Pair;
 
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import static uk.ac.dundee.ac41004.team9.util.CollectionUtils.immutableMapOf;
 
@@ -23,8 +25,8 @@ public class Users {
 
     @Routes.GET(path = "/avgspend", transformer = GSONResponseTransformer.class)
     public static Object avgSpend(Request req, Response res) {
-        DateRangeRequest jsonReq = DateRangeRequest.fromBody(req.body());
-        if (jsonReq == null) {
+        Pair<LocalDateTime, LocalDateTime> p = Common.getStartEndFromRequest(req);
+        if (p == null) {
             res.status(400);
             return immutableMapOf("error", "invalid request");
         }
@@ -43,8 +45,8 @@ public class Users {
                         "WHERE datetime > ? AND datetime < ? " +
                         "GROUP BY userid) " +
                         "AS tmptable");
-                ps.setTimestamp(1, Timestamp.valueOf(jsonReq.getStartJ8()));
-                ps.setTimestamp(2, Timestamp.valueOf(jsonReq.getEndJ8()));
+                ps.setTimestamp(1, Timestamp.valueOf(p.first));
+                ps.setTimestamp(2, Timestamp.valueOf(p.second));
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
                     BigDecimal cs = rs.getBigDecimal(1).setScale(2, BigDecimal.ROUND_HALF_UP);
