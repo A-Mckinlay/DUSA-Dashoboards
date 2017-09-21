@@ -1,5 +1,4 @@
 requirejs(["moment", "Chart"], function (moment, Chart) {
-
     var ctx = document.getElementById("top5BarGraph").getContext('2d');
     var top5BarGraph = new Chart(ctx, {
         type: 'horizontalBar',

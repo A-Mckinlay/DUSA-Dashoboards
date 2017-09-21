@@ -49,6 +49,10 @@ module.exports = function (grunt) {
                     {
                         src: 'node_modules/chart.js/dist/Chart.js',
                         dest: 'src/main/resources/static/js/babel/lib/Chart.babel.js'
+                    },
+                    {
+                        src: 'node_modules/query-string/index.js',
+                        dest: 'src/main/resources/static/js/babel/lib/query-string.babel.js'
                     }
                 ]
             }
@@ -79,6 +83,10 @@ module.exports = function (grunt) {
                     {
                         src: 'src/main/resources/static/js/babel/lib/Chart.babel.js',
                         dest: 'src/main/resources/static/js/lib/Chart.js'
+                    },
+                    {
+                        src: 'src/main/resources/static/js/babel/lib/query-string.babel.js',
+                        dest: 'src/main/resources/static/js/lib/query-string.js'
                     }
                 ]
             }
