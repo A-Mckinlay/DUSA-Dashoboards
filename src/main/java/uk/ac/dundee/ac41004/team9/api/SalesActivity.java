@@ -35,14 +35,14 @@ public class SalesActivity {
 
     @Routes.GET(path = "/txsummary", transformer = GSONResponseTransformer.class)
     public static Object txSummary(Request req, Response res) {
-        DateRangeRequest jsonReq = DateRangeRequest.fromBody(req.body());
-        if (jsonReq == null) {
+        Pair<LocalDateTime, LocalDateTime> p = Common.getStartEndFromRequest(req);
+        if (p == null) {
             res.status(400);
             return immutableMapOf("error", "invalid request");
         }
 
         List<OutletSummaryRow> rows = DBConnManager.runWithConnection(conn ->
-                getSummaryBetween(conn, jsonReq.getStartJ8(), jsonReq.getEndJ8()));
+                getSummaryBetween(conn, p.first, p.second));
 
         if (rows == null) {
             res.status(500);
@@ -73,14 +73,13 @@ public class SalesActivity {
     }
 
     private static Object periodTx(Period period, Request req, Response res) {
-        DateRangeRequest jsonReq = DateRangeRequest.fromBody(req.body());
-        if (jsonReq == null) {
+        Pair<LocalDateTime, LocalDateTime> p = Common.getStartEndFromRequest(req);
+        if (p == null) {
             res.status(400);
             return immutableMapOf("error", "invalid request");
         }
 
-        List<Pair<LocalDateTime, LocalDateTime>> intervals = getIntervalsBetween(jsonReq.getStartJ8(),
-                period, jsonReq.getEndJ8());
+        List<Pair<LocalDateTime, LocalDateTime>> intervals = getIntervalsBetween(p.first, period, p.second);
 
         Map<LocalDateTime, List<OutletSummaryRow>> out = getSummaryOverTime(intervals);
         if (out == null) {
