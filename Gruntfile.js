@@ -95,6 +95,10 @@ module.exports = function (grunt) {
                     {
                         src: 'src/main/resources/static/js/babel/lib/c3.babel.js',
                         dest: 'src/main/resources/static/js/lib/c3.js'
+                    },
+                    {
+                        src: 'node_modules/lodash/lodash.js',
+                        dest: 'src/main/resources/static/js/lib/lodash.js'
                     }
                 ]
             }
