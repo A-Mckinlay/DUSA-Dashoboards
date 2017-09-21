@@ -53,6 +53,10 @@ module.exports = function (grunt) {
                     {
                         src: 'node_modules/d3/build/d3.js',
                         dest: 'src/main/resources/static/js/babel/lib/d3.babel.js'
+                    },
+                    {
+                        src: 'node_modules/c3/c3.js',
+                        dest: 'src/main/resources/static/js/babel/lib/c3.babel.js'
                     }
                 ]
             }
@@ -87,6 +91,10 @@ module.exports = function (grunt) {
                     {
                         src: 'src/main/resources/static/js/babel/lib/d3.babel.js',
                         dest: 'src/main/resources/static/js/lib/d3.js'
+                    },
+                    {
+                        src: 'src/main/resources/static/js/babel/lib/c3.babel.js',
+                        dest: 'src/main/resources/static/js/lib/c3.js'
                     }
                 ]
             }

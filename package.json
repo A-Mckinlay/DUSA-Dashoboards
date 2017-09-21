@@ -16,6 +16,7 @@
     "typescript": "^2.5.2"
   },
   "dependencies": {
+    "c3": "^0.4.18",
     "chart.js": "^2.7.0",
     "d3": "^4.10.2",
     "moment": "^2.18.1"
