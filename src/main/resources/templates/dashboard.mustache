@@ -13,10 +13,13 @@
         -webkit-border-radius: 250px;
         -moz-border-radius: 250px;
         border-radius: 250px;
-        background: dodgerblue;
+        background: skyblue;
+        border-style:solid;
+        border-color: dodgerblue;
+        border-width: 5px ;
         margin: 0 auto;
     }
-    p{
+    .pinline{
         font-size: 30px;
         color: white;
         margin: 0 auto;
@@ -48,8 +51,8 @@
                             <br>
                             <br>
                             <br>
-                            <p style=" font-weight:bold;">£12,076</p>
-                            <p>this week</p>
+                            <p class="pinline" style=" font-weight:bold;">£12,076</p>
+                            <p class="pinline">this week</p>
                         </div>
                         <br>
                     </div>
@@ -74,8 +77,8 @@
                             <br>
                             <br>
                             <br>
-                            <p style=" font-weight:bold;">2,303</p>
-                            <p>this week</p>
+                            <p class="pinline" style=" font-weight:bold;">2,303</p>
+                            <p class="pinline">this week</p>
                         </div>
                         <br>
                     </div>
@@ -93,8 +96,8 @@
                         <br>
                         <img style= "float:left; width:140px; height:140px;" src="https://www.yoyowallet.com/assets/img/footer_mark.svg">
                         <div style="width:180px; float: right;">
-                            <p style="color:black; font-weight:bold; text-align:center"> 682 </p>
-                            <p style="color:black"> redemptions this week</p>
+                            <p class="pinline" style="color:black; font-weight:bold; text-align:center"> 682 </p>
+                            <p class="pinline" style="color:black"> redemptions this week</p>
                             <br>
                             <br>
                             <br>
@@ -110,8 +113,8 @@
                         <div id="circle">
                             <br>
                             <br>
-                            <p style=" font-weight:bold;">£1.97</p>
-                            <p>per transaction this week</p>
+                            <p id="averageSpend" style=" font-weight:bold;">{{>dashboardValues}}</p>
+                            <p class="pinline">per transaction this week</p>
 
                         </div>
                         <br>
