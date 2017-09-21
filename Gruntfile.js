@@ -57,6 +57,10 @@ module.exports = function (grunt) {
                     {
                         src: 'node_modules/c3/c3.js',
                         dest: 'src/main/resources/static/js/babel/lib/c3.babel.js'
+                    },
+                    {
+                        src: 'node_modules/color-hash/dist/color-hash.js',
+                        dest: 'src/main/resources/static/js/babel/lib/color-hash.babel.js'
                     }
                 ]
             }
@@ -99,6 +103,10 @@ module.exports = function (grunt) {
                     {
                         src: 'node_modules/lodash/lodash.js',
                         dest: 'src/main/resources/static/js/lib/lodash.js'
+                    },
+                    {
+                        src: 'src/main/resources/static/js/babel/lib/color-hash.babel.js',
+                        dest: 'src/main/resources/static/js/lib/color-hash.js'
                     }
                 ]
             }
