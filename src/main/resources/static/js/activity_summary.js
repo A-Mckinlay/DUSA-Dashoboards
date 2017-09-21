@@ -1,10 +1,12 @@
 requirejs(["moment", "Chart"], function (moment, Chart) {
 
-function createDateRangeObj(latestDate, numberOf, units) {
-    const originDate = moment(latestDate).subtract(numberOf, units)
-    const dateRange = {
-        start: originDate.format("YYYY, MM, DD, hh:mm:ss, z"),
-        end: latestDate
+function createDateRangeObj(latestDate, numberOfDays) {
+    let endDate = new Date(latestDate);
+    let originDate = new Date(latestDate);
+    originDate.setDate(originDate.getDate() - numberOfDays);//TODO: Decide if 28 should be 30/31/somethingelse
+    let dateRange = {
+        start: originDate,
+        end: endDate
     }
     console.log(dateRange);
     return dateRange;
@@ -20,6 +22,7 @@ function getData() {
         return new Promise(function (resolve, reject) {
             let xhttp = new XMLHttpRequest();
             xhttp.open("GET", url, true);
+            xhttp.setRequestHeader("Content-type", "application/json");
             xhttp.onload = function () {
                 if (xhttp.status == 200) {
                     resolve(xhttp.response);
@@ -30,14 +33,15 @@ function getData() {
             xhttp.onerror = function () {
                 reject(xhttp.statusText);
             };
-            xhttp.send(obj);
+            xhttp.send(JSON.stringify(obj));
         });
     }
 
-    let promise = get("http://localhost:4567/api/meta/latestdate");//TODO: See Robert about this url
+    let promise = get("/api/meta/latestdate");//TODO: See Robert about this url
     promise.then(function (latestDate) {
-        let dateRange = createDateRangeObj(latestDate, 1, 'month');
-        return get("http://localhost:4567/api/sales/monthlytx", dateRange);
+        let dateRange = createDateRangeObj(latestDate, 28);
+        const getParams = querystring.stringify(dateRange);
+        return get("/api/sales/monthlytx?" + getParams , dateRange);
     }).then(function(graphData){
         console.log(graphData);
     }).catch(function (error) {

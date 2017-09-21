@@ -73,6 +73,7 @@ public class SalesActivity {
     }
 
     private static Object periodTx(Period period, Request req, Response res) {
+        log.debug(req.body());
         DateRangeRequest jsonReq = DateRangeRequest.fromBody(req.body());
         if (jsonReq == null) {
             res.status(400);
