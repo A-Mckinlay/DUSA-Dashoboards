@@ -1,4 +1,4 @@
-requirejs(["moment", "Chart"], function (moment, Chart) {
+requirejs(["moment", "Chart", "lodash"], function (moment, Chart, _) {
 
     function createDateRangeObj(latestDate, numberOfDays) {
         let endDate = new Date(latestDate);
@@ -8,7 +8,6 @@ requirejs(["moment", "Chart"], function (moment, Chart) {
             start: originDate,
             end: endDate
         }
-        console.log(dateRange);
         return dateRange;
     }
 
@@ -35,23 +34,42 @@ requirejs(["moment", "Chart"], function (moment, Chart) {
         let promise = get("/api/meta/latestdate");
         promise.then(function (latestDate) {
             let dateRange = createDateRangeObj(latestDate, 28);
-            const getParams = "start=" + dateRange.start.toISOString() + "&end=" + dateRange.end.toISOString()
+            const getParams = "start=" + dateRange.start.toISOString() + "&end=" + dateRange.end.toISOString();
             let url = "/api/sales/dailytx?" + getParams;
             url = encodeURI(url);
             return get(url);
-        }).then(function(graphData){
+        }).then(function (graphData) {
             drawGraph(graphData);
         }).catch(function (error) {
             console.log(error);
         });
     }
+
+    function parseLabels(graphData){
+        const data = JSON.parse(graphData);
+        let labels = [];
+        _.each(data, function (key, value) {
+            if (key.length > 0) {
+                let date = moment(key);
+                labels.push(date);
+            }
+        });
+        for(let i=0; i < labels.length; i++){
+            labels[i].unix();
+            console.log(labels[i]);
+        }
+        // .format("DD/MM/YY")
+
+        return labels;
+    }
+
     function drawGraph(graphData) {
+        let labels = parseLabels(graphData);
         let ctx = document.getElementById("myChart");
-        console.log(graphData);
         let myChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                labels: labels,
                 datasets: [{
                     label: '# of Votes',
                     data: [2, 23, 45, 2, 34, 5, 6, 43],
