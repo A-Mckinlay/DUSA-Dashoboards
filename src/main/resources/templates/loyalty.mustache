@@ -7,6 +7,30 @@
     <title>Loyalty</title>
 </head>
 
+<style>
+    #circle {
+        width: 250px;
+        height: 250px;
+        -webkit-border-radius: 250px;
+        -moz-border-radius: 250px;
+        border-radius: 250px;
+        background: skyblue;
+        border-style: solid;
+        border-color: dodgerblue;
+        border-width: 5px;
+        margin: 0 auto;
+    }
+
+    .pinline {
+        font-size: 30px;
+        color: white;
+        margin: 0 auto;
+        text-align: center;
+    }
+</style>
+
+
+
 <body>
 {{>navbar}}
 <div class="container">
@@ -18,6 +42,69 @@
         </div>
     </div>
 </div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h5>Number of Transactions</h5>
+                    <br>
+                    <div id="circle">
+                        <br>
+                        <br>
+                        <br>
+                        <p class="pinline">this week</p>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h5>£ Value of Transactions</h5>
+                    <br>
+                    <div id="circle">
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h5>Average number of redemptions</h5>
+                    <br>
+                    <div id="circle">
+                        <br>
+                        <br>
+                        <br>
+
+                        <p class="pinline">per customer</p>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+<div class="col-md-12">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h5>Number of transactions by location</h5>
+            <canvas id="busiestTimes" width="50" height="50"></canvas>
+            {{>busyTimes}}
+        </div>
+    </div>
+</div>
+</div>
+
 </body>
+
 
 {{>footer}}
