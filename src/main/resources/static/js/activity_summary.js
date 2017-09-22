@@ -45,19 +45,57 @@ requirejs(["moment", "Chart", "lodash", "dashohelper"], function (moment, Chart,
         let labelSet = new Set(possibleLabels);
         let labels = Array.from(labelSet);
 
-        let dataSet = {
-            outletName: "",
-            dataPoints: []
+        let DataPoint = function(date, value){
+            this.date = date;
+            this.value = value;
+        }
+
+        let DataSet = function(outletName, dataPoints){
+            this.outletName = outletName;
+            this.dataPoints = dataPoints;
         };
 
+        let dataSets = [];
         for(let i=0; i<labels.length; i++){
-            _.each(data, function (value, key) {
-                console.log(key);
-                _.each(value, function(value, key){
-                    console.log("data point: " + value.outletname + " " + value.totalamount);
-                });
-            });
+            let dataSet = new DataSet(labels[i], []);
+            dataSets.push(dataSet);
         }
+
+        let mappedArray = _.map(data, function(value, key){
+            return {
+                date: key,
+                entries: value
+            }
+        });
+
+        let dataArray = _.sortBy(mappedArray, function(value){
+            return moment(value.date).unix();
+        });
+        console.log(dataArray);
+        for(let i=0; i<dataArray.length; i++)
+        {
+            for(let j=0; j<dataSets.length; j++)
+            {
+                if(dataArray[i].entries.length === 0)
+                {
+                    dataSets[j].dataPoints.push(new DataPoint(dataArray[i].date, 0))
+                }
+                if(dataArray[i].entries.length > 0){
+                    for(let k=0; k<dataArray[i].entries.length; k++){
+                        for(let z=0; z<dataSets[j].dataPoints.length; z++) {
+                            if (dataSets[j].outletName === dataArray[i].entries[k].outletname) {
+                                if (dataSets[j].dataPoints[z].date === dataArray[i].date){
+                                    dataSets[j].dataPoints[z].value += dataArray[i].entries[k].totalamount;
+                                }else{
+                                    dataSets[j].dataPoints.push(new DataPoint(dataArray[i].date, dataArray[i].entries[k].totalamount));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        // console.log(dataSets);
     }
 
     function drawGraph(graphData) {
