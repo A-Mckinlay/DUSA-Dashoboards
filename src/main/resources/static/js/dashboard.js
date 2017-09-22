@@ -48,8 +48,8 @@ requirejs(["moment"], function (moment) {
     function drawGraph(graphData) {
         let ctx = document.getElementById("averageSpend");
         var parsedData = JSON.parse(graphData);
-        console.log(parsedData[0]);
-        ctx.innerHTML = graphData;
+        console.log(parsedData["cashspent"]);
+        ctx.innerHTML = "£" + parsedData["cashspent"];
 
     }
     getDataDrawGraph();
