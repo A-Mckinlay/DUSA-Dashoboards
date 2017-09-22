@@ -14,8 +14,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static uk.ac.dundee.ac41004.team9.util.CollectionUtils.immutableMapOf;
 
@@ -100,6 +103,54 @@ public class Summary {
         }
 
         return map;
+    }
+
+    @Routes.GET(path = "/busybot", transformer = GSONResponseTransformer.class)
+    public static Object busybot(Request req, Response res) {
+        Pair<LocalDateTime, LocalDateTime> p = Common.getStartEndFromRequest(req);
+        if (p == null) {
+            res.status(400);
+            return immutableMapOf("error", "invalid request");
+        }
+
+        List<Pair<LocalDateTime, String>> timesAndPlaces = DBConnManager.runWithConnection(conn -> {
+            try {
+                List<Pair<LocalDateTime, String>> outLs = new ArrayList<>();
+                PreparedStatement ps = conn.prepareStatement("SELECT datetime, outletname " +
+                        "FROM disbursals JOIN outlets ON disbursals.outletref = outlets.outletref " +
+                        "WHERE datetime > ? AND datetime < ?");
+                ps.setTimestamp(1, Timestamp.valueOf(p.first));
+                ps.setTimestamp(2, Timestamp.valueOf(p.second));
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    outLs.add(new Pair<>(
+                            rs.getTimestamp(1).toLocalDateTime(),
+                            rs.getString(2)
+                    ));
+                }
+                return outLs;
+            } catch (SQLException ex) {
+                log.error("SQL error in busybot", ex);
+                return null;
+            }
+        });
+
+        if (timesAndPlaces == null) {
+            res.status(500);
+            return immutableMapOf("error", "internal server error");
+        }
+
+        Map<Integer, AtomicInteger> hoursTx = new HashMap<>();
+        IntStream.range(0, 24).forEach(i -> hoursTx.putIfAbsent(i, new AtomicInteger(0)));
+
+        timesAndPlaces
+                .parallelStream()
+                .forEach(pair -> hoursTx.get(pair.first.getHour()).incrementAndGet());
+
+        double days = p.first.until(p.second, ChronoUnit.DAYS);
+        return hoursTx.entrySet().stream()
+                .map(ent -> new Pair<>(ent.getKey(), ent.getValue().intValue() / days))
+                .collect(Collectors.toMap(pair -> pair.first, pair -> pair.second));
     }
 
 }

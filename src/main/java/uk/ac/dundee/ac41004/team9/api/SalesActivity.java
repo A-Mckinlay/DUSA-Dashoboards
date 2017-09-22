@@ -79,7 +79,7 @@ public class SalesActivity {
             return immutableMapOf("error", "invalid request");
         }
 
-        List<Pair<LocalDateTime, LocalDateTime>> intervals = getIntervalsBetween(p.first, period, p.second);
+        List<Pair<LocalDateTime, LocalDateTime>> intervals = Common.getIntervalsBetween(p.first, period, p.second);
 
         Map<LocalDateTime, List<OutletSummaryRow>> out = getSummaryOverTime(intervals);
         if (out == null) {
@@ -88,19 +88,6 @@ public class SalesActivity {
         }
 
         return out;
-    }
-
-    private static List<Pair<LocalDateTime, LocalDateTime>> getIntervalsBetween(LocalDateTime start,
-                                                                                Period period,
-                                                                                LocalDateTime end) {
-        List<Pair<LocalDateTime, LocalDateTime>> pairs = new ArrayList<>();
-        LocalDateTime current = start;
-        while (current.isBefore(end)) {
-            LocalDateTime next = current.plus(period);
-            pairs.add(new Pair<>(current, next));
-            current = next;
-        }
-        return pairs;
     }
 
     private static Map<LocalDateTime, List<OutletSummaryRow>> getSummaryOverTime(

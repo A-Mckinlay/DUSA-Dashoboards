@@ -8,8 +8,12 @@ import spark.Request;
 import uk.ac.dundee.ac41004.team9.util.Pair;
 
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.TemporalAmount;
+import java.util.ArrayList;
+import java.util.List;
 
 @UtilityClass
 @Slf4j
@@ -37,4 +41,16 @@ public class Common {
         }
     }
 
+    static List<Pair<LocalDateTime, LocalDateTime>> getIntervalsBetween(LocalDateTime start,
+                                                                        TemporalAmount period,
+                                                                        LocalDateTime end) {
+        List<Pair<LocalDateTime, LocalDateTime>> pairs = new ArrayList<>();
+        LocalDateTime current = start;
+        while (current.isBefore(end)) {
+            LocalDateTime next = current.plus(period);
+            pairs.add(new Pair<>(current, next));
+            current = next;
+        }
+        return pairs;
+    }
 }
