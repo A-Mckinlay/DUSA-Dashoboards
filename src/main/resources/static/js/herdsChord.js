@@ -1,7 +1,7 @@
 requirejs(["d3", "lodash", "color-hash", "dashohelper"], function (d3, _, ColorHash, Helper) {
 
     getAndDrawChord();
-    getAndDrawFlow()
+    getAndDrawFlow();
 
     function getAndDrawChord() {
         let promise = Helper.get("/api/meta/latestdate");
@@ -12,7 +12,7 @@ requirejs(["d3", "lodash", "color-hash", "dashohelper"], function (d3, _, ColorH
             url = encodeURI(url);
             return Helper.get(url);
         }).then(function(graphData){
-            console.log(graphData);
+            //console.log(graphData);
             let datas = JSON.parse(graphData);
             let hasher = new ColorHash();
             datas.outlets = _.map(datas.outlets, function (outlet) {
@@ -21,7 +21,7 @@ requirejs(["d3", "lodash", "color-hash", "dashohelper"], function (d3, _, ColorH
                     data: hasher.hex(outlet)
                 }
             });
-            drawChords(datas.matrix, datas.outlets, "#herds-chords");
+            drawChords(datas.matrix, datas.outlets, "#herds-chords", false);
         }).catch(function (error) {
             console.log(error);
         });
@@ -36,7 +36,7 @@ requirejs(["d3", "lodash", "color-hash", "dashohelper"], function (d3, _, ColorH
             url = encodeURI(url);
             return Helper.get(url);
         }).then(function(graphData){
-            console.log(graphData);
+            //console.log(graphData);
             let datas = JSON.parse(graphData);
             let hasher = new ColorHash();
             datas.outlets = _.map(datas.outlets, function (outlet) {
@@ -45,18 +45,18 @@ requirejs(["d3", "lodash", "color-hash", "dashohelper"], function (d3, _, ColorH
                     data: hasher.hex(outlet)
                 }
             });
-            drawChords(datas.matrix, datas.outlets, "#herds-flows");
+            drawChords(datas.matrix, datas.outlets, "#herds-flows", true);
         }).catch(function (error) {
             console.log(error);
         });
     }
 
-    // Based heavily on https://bl.ocks.org/mbostock/4062006
-    function drawChords(matrix, map, elementSel) {
+    // Based heavily on https://bl.ocks.org/mbostock/4062006 and https://stackoverflow.com/a/42493333
+    function drawChords(matrix, map, elementSel, renderTicks) {
         let svg = d3.select(elementSel),
             width = +svg.attr("width"),
             height = +svg.attr("height"),
-            outerRadius = Math.min(width, height) * 0.4 - 40,
+            outerRadius = Math.min(width, height) * 0.35 - 40,
             innerRadius = outerRadius - 30;
 
         let chord = d3.chord()
@@ -90,29 +90,71 @@ requirejs(["d3", "lodash", "color-hash", "dashohelper"], function (d3, _, ColorH
         group.append("path")
             .style("fill", function(d) { return color(d.index); })
             .style("stroke", function(d) { return d3.rgb(color(d.index)).darker(); })
-            .attr("d", arc);
+            .attr("d", arc)
+            .on("mouseover", fade(.1))
+            .on("mouseout", fade(1));
 
-        let groupNames = group.selectAll(".group-name")
-            .data(function(d) { return [halfPoint(d)]; })
-            .enter().append("g")
-            .attr("class", "group-name")
-            .attr("transform", function(d) { return "rotate(" + (d.angle * 180 / Math.PI - 90) + ") translate(" + outerRadius + ",0)"; });
-
-        groupNames.append("line")
-            .attr("x2", 6);
-
-        groupNames
-            .append("text")
-            .attr("x", 8)
-            .attr("dy", ".35em")
-            .attr("transform", function(d) { return d.angle > Math.PI ? "rotate(180) translate(-16)" : null; })
-            .style("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
+        //Add labels to each group
+        group.append("text")
+            .attr("dy", ".35em") // width
+            .attr("class", "group-label")
+            .attr("text-anchor", function(d) {
+                d.angle = (d.startAngle + d.endAngle) / 2;
+                return d.angle > Math.PI ? "end" : "inherit";
+            })
+            .attr("transform", function(d,i) { // angle
+                d.angle = (d.startAngle + d.endAngle) / 2;
+                d.name = map[i].value;
+                //console.log(d.angle);
+                return "rotate(" + (d.angle * 180 / Math.PI) + ")" +
+                    "translate(0," + -1.1 * (outerRadius + 10) + ")" +
+                    "rotate(270)" + (d.angle > Math.PI ? "rotate(180)" : "");
+            }) //to spin when the angle between 135 to 225 degrees
             .text(function(d) {
-                //console.log(d);
                 return map[d.index].name;
             });
 
-        g.append("g")
+        if (renderTicks) {
+            let groupTick = group.selectAll(".group-tick")
+                .data(function (d) {
+                    return groupTicks(d, 10);
+                })
+                .enter().append("g")
+                .attr("class", "group-tick")
+                .attr("transform", function (d) {
+                    return "rotate(" + (d.angle * 180 / Math.PI - 90) + ") translate(" + outerRadius + ",0)";
+                });
+
+            groupTick.append("line")
+                .attr("x2", 6);
+
+            groupTick
+                .filter(function (d) {
+                    return d.value % 50 === 0;
+                })
+                .append("text")
+                .attr("x", 8)
+                .attr("dy", ".35em")
+                .attr("transform", function (d) {
+                    return d.angle > Math.PI ? "rotate(180) translate(-16)" : null;
+                })
+                .style("text-anchor", function (d) {
+                    return d.angle > Math.PI ? "end" : null;
+                })
+                .text(function (d) {
+                    return d.value;
+                });
+
+            // Returns an array of tick angles and values for a given group and step.
+            function groupTicks(d, step) {
+                var k = (d.endAngle - d.startAngle) / d.value;
+                return d3.range(0, d.value, step).map(function (value) {
+                    return {value: value, angle: value * k + d.startAngle};
+                });
+            }
+        }
+
+        let ribbons = g.append("g")
             .attr("class", "ribbons")
             .selectAll("path")
             .data(function(chords) { return chords; })
@@ -121,10 +163,15 @@ requirejs(["d3", "lodash", "color-hash", "dashohelper"], function (d3, _, ColorH
             .style("fill", function(d) { return color(d.target.index); })
             .style("stroke", function(d) { return d3.rgb(color(d.target.index)).darker(); });
 
-        function halfPoint(d) {
-            console.log(d);
-            let k = (d.endAngle - d.startAngle) / 2;
-            return {value: d.value, angle: k + d.startAngle, index: d.index};
+        function fade(opacity) {
+            return function(d, i) {
+                ribbons
+                    .filter(function(d) {
+                        return d.source.index !== i && d.target.index !== i;
+                    })
+                    .transition()
+                    .style("opacity", opacity);
+            };
         }
     }
 
