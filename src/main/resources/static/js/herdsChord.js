@@ -1,4 +1,5 @@
-requirejs(["d3", "lodash", "color-hash", "dashohelper"], function (d3, _, ColorHash, Helper) {
+requirejs(["d3", "lodash", "dashohelper", "chroma", "distinct-colors"],
+    function (d3, _, Helper, Chroma, distinctColors) {
 
     getAndDrawChord();
     getAndDrawFlow();
@@ -12,16 +13,8 @@ requirejs(["d3", "lodash", "color-hash", "dashohelper"], function (d3, _, ColorH
             url = encodeURI(url);
             return Helper.get(url);
         }).then(function(graphData){
-            //console.log(graphData);
             let datas = JSON.parse(graphData);
-            let hasher = new ColorHash();
-            datas.outlets = _.map(datas.outlets, function (outlet) {
-                return {
-                    name: outlet,
-                    data: hasher.hex(outlet)
-                }
-            });
-            drawChords(datas.matrix, datas.outlets, "#herds-chords", false);
+            render(datas, "#herds-chords", false);
         }).catch(function (error) {
             console.log(error);
         });
@@ -36,19 +29,30 @@ requirejs(["d3", "lodash", "color-hash", "dashohelper"], function (d3, _, ColorH
             url = encodeURI(url);
             return Helper.get(url);
         }).then(function(graphData){
-            //console.log(graphData);
             let datas = JSON.parse(graphData);
-            let hasher = new ColorHash();
-            datas.outlets = _.map(datas.outlets, function (outlet) {
-                return {
-                    name: outlet,
-                    data: hasher.hex(outlet)
-                }
-            });
-            drawChords(datas.matrix, datas.outlets, "#herds-flows", true);
+            render(datas, "#herds-flows", true);
         }).catch(function (error) {
             console.log(error);
         });
+    }
+
+    function render(datas, selector, renderTicks) {
+        let step = 0;
+        const steps = _.size(datas.outlets);
+        let colors = distinctColors({
+            count: steps,
+            lightMin: 25,
+            lightMax: 75
+        });
+        datas.outlets = _.map(datas.outlets, function (outlet) {
+            let v = {
+                name: outlet,
+                data: colors[step].hex()
+            };
+            step += 1;
+            return v;
+        });
+        drawChords(datas.matrix, datas.outlets, selector, renderTicks);
     }
 
     // Based heavily on https://bl.ocks.org/mbostock/4062006 and https://stackoverflow.com/a/42493333

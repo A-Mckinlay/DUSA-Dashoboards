@@ -66,8 +66,12 @@ module.exports = function (grunt) {
                         dest: 'src/main/resources/static/js/babel/lib/c3.babel.js'
                     },
                     {
-                        src: 'node_modules/color-hash/dist/color-hash.js',
-                        dest: 'src/main/resources/static/js/babel/lib/color-hash.babel.js'
+                        src: 'node_modules/chroma-js/chroma.js',
+                        dest: 'src/main/resources/static/js/babel/lib/chroma.babel.js'
+                    },
+                    {
+                        src: 'node_modules/distinct-colors/dist/distinct-colors.js',
+                        dest: 'src/main/resources/static/js/babel/lib/distinct-colors.babel.js'
                     }
                 ]
             }
@@ -101,28 +105,12 @@ module.exports = function (grunt) {
             libs: {
                 files: [
                     {
-                        src: 'src/main/resources/static/js/babel/lib/moment.babel.js',
-                        dest: 'src/main/resources/static/js/lib/moment.js'
-                    },
-                    {
-                        src: 'src/main/resources/static/js/babel/lib/Chart.babel.js',
-                        dest: 'src/main/resources/static/js/lib/Chart.js'
-                    },
-                    {
-                        src: 'src/main/resources/static/js/babel/lib/d3.babel.js',
-                        dest: 'src/main/resources/static/js/lib/d3.js'
-                    },
-                    {
-                        src: 'src/main/resources/static/js/babel/lib/c3.babel.js',
-                        dest: 'src/main/resources/static/js/lib/c3.js'
-                    },
-                    {
-                        src: 'node_modules/lodash/lodash.js',
-                        dest: 'src/main/resources/static/js/lib/lodash.js'
-                    },
-                    {
-                        src: 'src/main/resources/static/js/babel/lib/color-hash.babel.js',
-                        dest: 'src/main/resources/static/js/lib/color-hash.js'
+                        expand: true,
+                        cwd: 'src/main/resources/static/js/babel/lib',
+                        src: ['*.babel.js'],
+                        dest: 'src/main/resources/static/js/lib/',
+                        ext: '.js',
+                        extDot: 'first'
                     }
                 ]
             }
