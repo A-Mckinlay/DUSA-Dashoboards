@@ -1,13 +1,12 @@
 package uk.ac.dundee.ac41004.team9.util;
 
+import lombok.Data;
+import lombok.Getter;
+
+@Data
 public class Pair<A, B> {
 
-    public final A first;
-    public final B second;
-
-    public Pair(A a, B b) {
-        first = a;
-        second = b;
-    }
+    @Getter public final A first;
+    @Getter public final B second;
 
 }

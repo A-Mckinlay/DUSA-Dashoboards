@@ -1,6 +1,7 @@
 requirejs(["d3", "lodash", "color-hash", "dashohelper"], function (d3, _, ColorHash, Helper) {
 
     getAndDrawChord();
+    getAndDrawFlow()
 
     function getAndDrawChord() {
         let promise = Helper.get("/api/meta/latestdate");
@@ -20,15 +21,39 @@ requirejs(["d3", "lodash", "color-hash", "dashohelper"], function (d3, _, ColorH
                     data: hasher.hex(outlet)
                 }
             });
-            drawChords(datas.matrix, datas.outlets);
+            drawChords(datas.matrix, datas.outlets, "#herds-chords");
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+
+    function getAndDrawFlow() {
+        let promise = Helper.get("/api/meta/latestdate");
+        promise.then(function (latestDate) {
+            let dateRange = Helper.createDateRangeObj(latestDate, 28);
+            const getParams = "start=" + dateRange.start.toISOString() + "&end=" + dateRange.end.toISOString();
+            let url = "/api/herds/flows?" + getParams;
+            url = encodeURI(url);
+            return Helper.get(url);
+        }).then(function(graphData){
+            console.log(graphData);
+            let datas = JSON.parse(graphData);
+            let hasher = new ColorHash();
+            datas.outlets = _.map(datas.outlets, function (outlet) {
+                return {
+                    name: outlet,
+                    data: hasher.hex(outlet)
+                }
+            });
+            drawChords(datas.matrix, datas.outlets, "#herds-flows");
         }).catch(function (error) {
             console.log(error);
         });
     }
 
     // Based heavily on https://bl.ocks.org/mbostock/4062006
-    function drawChords(matrix, map) {
-        let svg = d3.select("svg"),
+    function drawChords(matrix, map, elementSel) {
+        let svg = d3.select(elementSel),
             width = +svg.attr("width"),
             height = +svg.attr("height"),
             outerRadius = Math.min(width, height) * 0.4 - 40,
