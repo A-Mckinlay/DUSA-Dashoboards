@@ -38,6 +38,13 @@ module.exports = function (grunt) {
                         dest: 'src/main/resources/static/js/babel',
                         ext: '.babel.js'
                     },
+                    {
+                        expand: true,
+                        cwd: 'src/main/resources/static/js/dashoboard-lib',
+                        src: ['*!(.min)!(.babel).js'],
+                        dest: 'src/main/resources/static/js/babel/dashoboard-lib',
+                        ext: '.babel.js'
+                    }
                 ]
             },
             libs: {
@@ -68,7 +75,8 @@ module.exports = function (grunt) {
         // Slash, Burn, Minify!
         uglify: {
             options: {
-                banner: '<%= banner %>'
+                banner: '<%= banner %>',
+                sourceMap: true
             },
             dashoboards: {
                 files: [
@@ -78,6 +86,14 @@ module.exports = function (grunt) {
                         src: ['*.babel.js'],
                         dest: 'src/main/resources/static/js/',
                         ext: '.min.js',
+                        extDot: 'first'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'src/main/resources/static/js/babel/dashoboard-lib',
+                        src: ['*.babel.js'],
+                        dest: 'src/main/resources/static/js/lib/',
+                        ext: '.js',
                         extDot: 'first'
                     }
                 ]
@@ -114,6 +130,7 @@ module.exports = function (grunt) {
         watch: {
             dashoboards: {
                 files: ['src/main/resources/static/js/*.js',
+                    'src/main/resources/static/js/dashoboard-libs',
                     'src/main/resources/static/js/*.ts',
                     '!src/main/resources/static/js/*.babel.js',
                     '!src/main/resources/static/js/*.min.js'],
@@ -131,6 +148,7 @@ module.exports = function (grunt) {
     // Task definitions.
     grunt.registerTask('default', ['typescript', 'babel', 'uglify']);
     grunt.registerTask('build', ['typescript', 'babel', 'uglify']);
-    grunt.registerTask('libs', ['babel:libs', 'uglify:libs'])
+    grunt.registerTask('libs', ['babel:libs', 'uglify:libs']);
+    grunt.registerTask('dashoboards', ['babel:dashoboards', 'uglify:dashoboards']);
 
 };
