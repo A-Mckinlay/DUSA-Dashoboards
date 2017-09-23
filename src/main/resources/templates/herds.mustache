@@ -24,18 +24,110 @@
 <body>
 {{>navbar}}
 <div class="container">
-    <div class="page-header" id="herds-banner">
+    <div class="page-header" id="dashboard-banner">
         <div class="row">
             <div class="col-md-10">
                 <h1>Herds</h1>
-                <svg id="herds-chords" width="960" height="960"></svg>
-                <script src="/js/herdsChord.js"></script>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-10">
-                <h1>Flows</h1>
-                <svg id="herds-flows" width="960" height="960"></svg>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h5> Tribes Definitions</h5>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <h5> Above Average vs Below Average Spender</h5>
+                                    <p> Needs Explanation</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <h5> Flow of YOYO Transactions</h5>
+                                    <p> Needs Explanation</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <h5> Night vs Day</h5>
+                                    <p> Needs Explanation</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <h5> Do YOYO transactions increase from 9pm-3am? </h5>
+                                    <p> Needs Explanation</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h5> Above Average vs Below Average Spender</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                <h5> Flow of YOYO Transactions</h5>
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#view1">View 1</a></li>
+                        <li><a data-toggle="tab" href="#view2">View 2</a></li>
+                    </ul>
+                    <div class="panel-body">
+                        <div class="tab-content" style="position: relative; width:80vw; margin:auto;">
+                            <div id="view1" class="tab-pane fade in active">
+                                <p>The first shows proportions of people who go to A also go to B</p>
+                                <svg id="herds-chords" width="960" height="960"></svg>
+                                <script src="/js/herdsChord.js"></script>
+                            </div>
+                            <div id="view2" class="tab-pane fade">
+                                <p>The second shows hard numbers - people went from A -> B during a single academic day </p>
+                                <svg id="herds-flows" width="960" height="960"></svg>
+                            </div>
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h5> Night vs Day</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h5>Do transactions increase from 9pm-3am? </h5>
+                </div>
             </div>
         </div>
     </div>
