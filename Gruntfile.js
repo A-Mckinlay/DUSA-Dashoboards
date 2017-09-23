@@ -26,6 +26,7 @@ module.exports = function (grunt) {
         // I'm still going to keep calling this Babble... -- RT
         babel: {
             options: {
+                compact: true,
                 sourceMap: true,
                 presets: ['env']
             },
