@@ -13,7 +13,7 @@
       <excludeFolder url="file://$MODULE_DIR$/../../build" />
       <excludeFolder url="file://$MODULE_DIR$/../../out" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: io.drakon.spark:autorouter:0.0.6" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: com.sparkjava:spark-template-mustache:2.5.5" level="project" />

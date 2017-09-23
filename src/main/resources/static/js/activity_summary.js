@@ -83,9 +83,9 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
                 scales: {
                     yAxes: [{
                         ticks: {
-                            beginAtZero: true,
-                            stacked: true
-                        }
+                            beginAtZero: true
+                        },
+                        stacked: true
                     }]
                 }
             }
