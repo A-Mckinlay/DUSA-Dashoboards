@@ -183,19 +183,19 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
             {
                 label: "Payments",
                 data: rawDsValues[0],
-                backgroundColor: chroma('green').hex(),
+                backgroundColor: chroma('green').brighten().hex(),
                 borderColor: chroma('green').darker().hex()
             },
             {
                 label: "Redemptions",
                 data: rawDsValues[1],
-                backgroundColor: chroma('yellow').hex(),
+                backgroundColor: chroma('yellow').brighten().hex(),
                 borderColor: chroma('yellow').darker().hex()
             },
             {
                 label: "Reversals",
                 data: rawDsValues[2],
-                backgroundColor: chroma('red').hex(),
+                backgroundColor: chroma('red').brighten().hex(),
                 borderColor: chroma('red').darker().hex()
             }
         ];
