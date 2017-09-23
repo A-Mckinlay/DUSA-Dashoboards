@@ -6,11 +6,27 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
         promise.then(function (latestDate) {
             let dateRange = Helper.createDateRangeObj(latestDate, 28);
             const getParams = "start=" + dateRange.start.toISOString() + "&end=" + dateRange.end.toISOString();
-            return Helper.get(encodeURI("/api/sales/dailytx?" + getParams));
-        }).then(function(graphData) {
-            drawTotalSalesGraph(graphData);
-            drawTxSummaryGraph(graphData);
+            getAndDrawTotalSales(getParams);
+            getAndDrawTxSummary(getParams);
         }).catch(function (error) {
+            console.log(error);
+        });
+    }
+
+    function getAndDrawTotalSales(getParams) {
+        Helper.get(encodeURI("/api/sales/dailytx?" + getParams))
+            .then(function(graphData) {
+                drawTotalSalesGraph(graphData);
+            }).catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    function getAndDrawTxSummary(getParams) {
+        Helper.get(encodeURI("/api/summary/tx/daily?" + getParams))
+            .then(function(graphData) {
+                drawTxSummaryGraph(graphData);
+            }).catch(function (error) {
             console.log(error);
         });
     }
@@ -62,7 +78,7 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
         })
     }
 
-    function drawChart(selector, hLabels, datasets) {
+    function drawChart(selector, title, hLabels, datasets) {
         let chartConfig = {
             type: 'line',
             data: {
@@ -74,7 +90,7 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
                 maintainAspectRatio: true,
                 title:{
                     display:true,
-                    text:'Revenue by Venue Over the Last 28 Days'
+                    text: title
                 },
                 scales: {
                     xAxes: [{
@@ -136,15 +152,58 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
             chartDatasets.push(ds);
         }
 
-        drawChart("total-sales-canvas", dateLabels, chartDatasets);
+        drawChart("total-sales-canvas", "Revenue by Venue Over the Last 28 Days", dateLabels, chartDatasets);
     }
 
     function drawTxSummaryGraph(graphData) {
         console.debug("===== START TX SUMMARY =====");
         const rawData = JSON.parse(graphData);
+        console.debug("Raw data:");
         console.debug(rawData);
+
+        const dsLabels = [
+            "Payments",
+            "Redemptions",
+            "Reversals"
+        ];
+        const dateLabels = parseDateLabels(rawData);
+        let remapped = _.map(rawData, function(v, k) {
+            return {
+                date: moment(k),
+                payments: v.payments,
+                redemptions: v.redemptions,
+                reversals: v.reversals
+            }
+        });
+        remapped = _.sortBy(remapped, function(x) { return x.date.unix(); });
+        let rawDsValues = _.map(remapped, function(x) { return [x.payments, x.redemptions, x.reversals]; });
+        rawDsValues = _.zip(...rawDsValues);
+
+        const datasets = [
+            {
+                label: "Payments",
+                data: rawDsValues[0],
+                backgroundColor: chroma('green').hex(),
+                borderColor: chroma('green').darker().hex()
+            },
+            {
+                label: "Redemptions",
+                data: rawDsValues[1],
+                backgroundColor: chroma('yellow').hex(),
+                borderColor: chroma('yellow').darker().hex()
+            },
+            {
+                label: "Reversals",
+                data: rawDsValues[2],
+                backgroundColor: chroma('red').hex(),
+                borderColor: chroma('red').darker().hex()
+            }
+        ];
+
+        drawChart("transaction-types-canvas", "Transactions Over the Last 28 Days", dateLabels, datasets);
     }
 
     window.onload += rebuildAll();
+
 // END requirejs
 });

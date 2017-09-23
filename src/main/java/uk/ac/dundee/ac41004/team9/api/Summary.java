@@ -1,19 +1,19 @@
 package uk.ac.dundee.ac41004.team9.api;
 
 import io.drakon.spark.autorouter.Routes;
+import lombok.Data;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import spark.Request;
 import spark.Response;
 import uk.ac.dundee.ac41004.team9.data.MoneySummaryRow;
+import uk.ac.dundee.ac41004.team9.data.TransactionType;
 import uk.ac.dundee.ac41004.team9.db.DBConnManager;
 import uk.ac.dundee.ac41004.team9.util.Pair;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -105,6 +105,26 @@ public class Summary {
         return map;
     }
 
+    @Routes.GET(path = "/tx/daily", transformer = GSONResponseTransformer.class)
+    public static Object dailyTx(Request req, Response res) {
+        return periodTx(Period.ofDays(1), req, res);
+    }
+
+    @Routes.GET(path = "/tx/weekly", transformer = GSONResponseTransformer.class)
+    public static Object weeklyTx(Request req, Response res) {
+        return periodTx(Period.ofWeeks(1), req, res);
+    }
+
+    @Routes.GET(path = "/tx/monthly", transformer = GSONResponseTransformer.class)
+    public static Object monthlyTx(Request req, Response res) {
+        return periodTx(Period.ofMonths(1), req, res);
+    }
+
+    @Routes.GET(path = "/tx/yearly", transformer = GSONResponseTransformer.class)
+    public static Object yearlyTx(Request req, Response res) {
+        return periodTx(Period.ofYears(1), req, res);
+    }
+
     @Routes.GET(path = "/busybot", transformer = GSONResponseTransformer.class)
     public static Object busybot(Request req, Response res) {
         Pair<LocalDateTime, LocalDateTime> p = Common.getStartEndFromRequest(req);
@@ -186,6 +206,80 @@ public class Summary {
                 return null;
             }
         });
+    }
+
+    private static Object periodTx(Period period, Request req, Response res) {
+        Pair<LocalDateTime, LocalDateTime> p = Common.getStartEndFromRequest(req);
+        if (p == null) {
+            res.status(400);
+            return immutableMapOf("error", "invalid request");
+        }
+
+        List<Pair<LocalDateTime, LocalDateTime>> intervals = Common.getIntervalsBetween(p.first, period, p.second);
+
+        Map<LocalDateTime, TxSummaryRow> out = getSummaryOverTime(intervals);
+        if (out == null) {
+            res.status(500);
+            return immutableMapOf("error", "internal server error");
+        }
+
+        return out;
+    }
+
+    private static Map<LocalDateTime, TxSummaryRow> getSummaryOverTime(
+            List<Pair<LocalDateTime, LocalDateTime>> intervals) {
+        return DBConnManager.runWithConnection(conn -> {
+            Map<LocalDateTime, TxSummaryRow> outMap = new HashMap<>();
+            for (Pair<LocalDateTime, LocalDateTime> interval : intervals) {
+                TxSummaryRow row = getSummaryBetween(conn, interval.first, interval.second);
+                if (row == null) return null; // Error
+                outMap.put(interval.first, row);
+            }
+            return outMap;
+        });
+    }
+
+    private static TxSummaryRow getSummaryBetween(Connection conn, LocalDateTime start, LocalDateTime end) {
+        try {
+            PreparedStatement ps = conn.prepareStatement("SELECT transactiontype, COUNT(transactiontype) AS count " +
+                    "FROM disbursals " +
+                    "WHERE datetime > ? AND datetime < ? GROUP BY transactiontype");
+            ps.setTimestamp(1, Timestamp.valueOf(start));
+            ps.setTimestamp(2, Timestamp.valueOf(end));
+            ResultSet resultSet = ps.executeQuery();
+            int payments = 0;
+            int redemptions = 0;
+            int reversals = 0;
+            while (resultSet.next()) {
+                TransactionType type = TransactionType.fromId(resultSet.getInt(1));
+                int count = resultSet.getInt(2);
+                switch (type) {
+                    case Payment:
+                        payments = count;
+                        break;
+                    case Redemption:
+                        redemptions = count;
+                        break;
+                    case Reversal:
+                        reversals = count;
+                        break;
+                    default:
+                        log.error("Unknown tx type: {}", type);
+                        return null; // Invalid
+                }
+            }
+            return new TxSummaryRow(payments, redemptions, reversals);
+        } catch (SQLException ex) {
+            log.error("SQL error fetching summary row", ex);
+            return null;
+        }
+    }
+
+    @Data
+    private static class TxSummaryRow {
+        public final int payments;
+        public final int redemptions;
+        public final int reversals;
     }
 
 }
