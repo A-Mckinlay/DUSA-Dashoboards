@@ -52,7 +52,7 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
             return x.values;
         });
         return _.map(values, function (x) {
-            console.log(x);
+            //console.log(x);
             let ret = new Array(_.size(outlets));
             ret.fill(0);
             _.forEach(x, function (y) {
@@ -65,13 +65,12 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
 
     function drawGraph(graphData) {
         const rawData = JSON.parse(graphData);
-        console.log(rawData);
         let outlets = parseDataSetLabels(rawData);
         let dateLabels = parseDateLabels(rawData);
         let datasets = parseDatasets(rawData, outlets);
-        console.log(outlets);
-        console.log(dateLabels);
-        console.log(datasets);
+        console.debug("Outlets/dates:");
+        console.debug(outlets);
+        console.debug(dateLabels);
         let chartConfig = {
             type: 'line',
             data: {
@@ -94,7 +93,8 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
 
         // Cheat and use a matrix transpose to rotate the 2D array! From https://stackoverflow.com/a/31001358
         let dsTranspose = _.zip(...datasets);
-        console.log(dsTranspose);
+        console.debug("Transposed values:");
+        console.debug(dsTranspose);
         let colors = distinctColors({
             count: _.size(outlets),
             lightMin: 50,
@@ -110,12 +110,13 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
             //console.log(ds);
             chartConfig.data.datasets.push(ds);
         }
-        console.log(chartConfig);
+        console.debug("CHART CFG:");
+        console.debug(chartConfig);
 
         let ctx = document.getElementById("myChart");
-        console.log(ctx);
+        //console.log(ctx);
         let myChart = new Chart(ctx, chartConfig);
-        console.log(myChart);
+        //console.log(myChart);
     }
     getDataDrawGraph();
 // END requirejs
