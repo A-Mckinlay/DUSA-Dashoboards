@@ -20,7 +20,7 @@ requirejs(["lodash", "d3", "chroma", "mustache", "dashohelper"], function (_, d3
             return Helper.get(url);
         }).then(function (graphData) {
             data = JSON.parse(graphData);
-            console.log(data);
+            //console.log(data);
             handleData(data);
         }).catch(function (error) {
             console.log(error);
@@ -49,17 +49,17 @@ requirejs(["lodash", "d3", "chroma", "mustache", "dashohelper"], function (_, d3
     }
 
     function handleData(raw) {
-        console.log(raw);
+        //console.log(raw);
         _.forEach(raw, function (values, outlet) {
             let id = _.snakeCase(outlet);
-            console.log(id);
+            //console.log(id);
             renderSpectrogramHTML(outlet, id);
 
             let max_value = 0;
             _.forEach(values, function (v, k) {
                 if (v > max_value) max_value = v;
             });
-            console.log("MAX: " + max_value);
+            //console.log("MAX: " + max_value);
 
             let selector = "#spectrogram-" + id;
             let svg = d3.select(selector);
@@ -73,8 +73,7 @@ requirejs(["lodash", "d3", "chroma", "mustache", "dashohelper"], function (_, d3
 
             for (let i = 0; i < 24; i++) {
                 let x = values[i]/max_value;
-                let scalePoint = (i/24.0 * 100);
-                console.log(i + " // " + x);
+                //console.log(i + " // " + x);
                 let g = gradient
                     .append("stop")
                     .attr("offset", (i/24 * 100) + "%")

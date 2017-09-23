@@ -1,16 +1,15 @@
 requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-colors"],
     function (moment, Chart, _, Helper, chroma, distinctColors) {
 
-    function getDataDrawGraph() {
+    function rebuildAll() {
         let promise = Helper.get("/api/meta/latestdate");
         promise.then(function (latestDate) {
             let dateRange = Helper.createDateRangeObj(latestDate, 28);
             const getParams = "start=" + dateRange.start.toISOString() + "&end=" + dateRange.end.toISOString();
-            let url = "/api/sales/dailytx?" + getParams;
-            url = encodeURI(url);
-            return Helper.get(url);
-        }).then(function (graphData) {
-            drawGraph(graphData);
+            return Helper.get(encodeURI("/api/sales/dailytx?" + getParams));
+        }).then(function(graphData) {
+            drawTotalSalesGraph(graphData);
+            drawTxSummaryGraph(graphData);
         }).catch(function (error) {
             console.log(error);
         });
@@ -27,7 +26,7 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
         });
     }
 
-    function parseDataSetLabels(raw) {
+    function parseTotalSalesDataSetLabels(raw) {
         let outlets = [];
         _.each(raw, function (v, k) {
             _.each(v, function (entry) {
@@ -37,7 +36,7 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
         return outlets;
     }
 
-    function parseDatasets(raw, outlets) {
+    function parseTotalSalesDatasets(raw, outlets) {
         let remapped = _.map(raw, function(v, k) {
             return {
                 date: k,
@@ -63,19 +62,12 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
         })
     }
 
-    function drawGraph(graphData) {
-        const rawData = JSON.parse(graphData);
-        let outlets = parseDataSetLabels(rawData);
-        let dateLabels = parseDateLabels(rawData);
-        let datasets = parseDatasets(rawData, outlets);
-        console.debug("Outlets/dates:");
-        console.debug(outlets);
-        console.debug(dateLabels);
+    function drawChart(selector, hLabels, datasets) {
         let chartConfig = {
             type: 'line',
             data: {
-                datasets: [],
-                labels: dateLabels
+                datasets: datasets,
+                labels: hLabels
             },
             options: {
                 responsive: true,
@@ -107,6 +99,23 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
             }
         };
 
+        console.debug("CHART CFG:");
+        console.debug(chartConfig);
+
+        let ctx = document.getElementById(selector);
+        new Chart(ctx, chartConfig);
+    }
+
+    function drawTotalSalesGraph(graphData) {
+        console.debug("===== START TOTAL SALES =====");
+        const rawData = JSON.parse(graphData);
+        let outlets = parseTotalSalesDataSetLabels(rawData);
+        let dateLabels = parseDateLabels(rawData);
+        let datasets = parseTotalSalesDatasets(rawData, outlets);
+        console.debug("Outlets/dates:");
+        console.debug(outlets);
+        console.debug(dateLabels);
+
         // Cheat and use a matrix transpose to rotate the 2D array! From https://stackoverflow.com/a/31001358
         let dsTranspose = _.zip(...datasets);
         console.debug("Transposed values:");
@@ -116,6 +125,7 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
             lightMin: 50,
             lightMax: 90
         });
+        let chartDatasets = [];
         for (let i = 0; i < _.size(outlets); i++) {
             let ds = {
                 label: outlets[i],
@@ -123,17 +133,18 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
                 backgroundColor: colors[i].hex(),
                 borderColor: colors[i].darken().hex(),
             };
-            //console.log(ds);
-            chartConfig.data.datasets.push(ds);
+            chartDatasets.push(ds);
         }
-        console.debug("CHART CFG:");
-        console.debug(chartConfig);
 
-        let ctx = document.getElementById("myChart");
-        //console.log(ctx);
-        let myChart = new Chart(ctx, chartConfig);
-        //console.log(myChart);
+        drawChart("total-sales-canvas", dateLabels, chartDatasets);
     }
-    getDataDrawGraph();
+
+    function drawTxSummaryGraph(graphData) {
+        console.debug("===== START TX SUMMARY =====");
+        const rawData = JSON.parse(graphData);
+        console.debug(rawData);
+    }
+
+    window.onload += rebuildAll();
 // END requirejs
 });
