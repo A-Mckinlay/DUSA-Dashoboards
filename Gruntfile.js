@@ -66,12 +66,20 @@ module.exports = function (grunt) {
                         dest: 'src/main/resources/static/js/babel/lib/c3.babel.js'
                     },
                     {
+                        src: 'node_modules/lodash/lodash.js',
+                        dest: 'src/main/resources/static/js/babel/lib/lodash.babel.js'
+                    },
+                    {
                         src: 'node_modules/chroma-js/chroma.js',
                         dest: 'src/main/resources/static/js/babel/lib/chroma.babel.js'
                     },
                     {
                         src: 'node_modules/distinct-colors/dist/distinct-colors.js',
                         dest: 'src/main/resources/static/js/babel/lib/distinct-colors.babel.js'
+                    },
+                    {
+                        src: 'node_modules/mustache/mustache.js',
+                        dest: 'src/main/resources/static/js/babel/lib/mustache.babel.js'
                     }
                 ]
             }
