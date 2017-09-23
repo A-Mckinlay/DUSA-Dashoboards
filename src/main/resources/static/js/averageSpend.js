@@ -74,24 +74,24 @@ requirejs(["moment"], function (moment) {
         let currentWeekValue = document.getElementById("averageSpend").innerHTML;
         currentWeekValue = currentWeekValue.slice(1);
         console.log("currentWeekValue: " + parseFloat(currentWeekValue));
-        if( averageSpend < averageSpend2 )
+        console.log("previousWeekValue: " + parseFloat(previousWeekValue));
+
+        if( parseFloat(currentWeekValue) >= parseFloat(previousWeekValue ))
         {
             let greenTri = document.getElementById("greenTriangle");
+            console.log("src: " + greenTri.src);
             greenTri.src = "http://www.publicdomainpictures.net/pictures/40000/velka/basic-triangle-shape.jpg";
+            console.log("Green triangle");
         }
-        else (averageSpend2 < averageSpend)
+        else if(parseFloat(currentWeekValue) <= parseFloat(previousWeekValue))
         {
             let greenTri = document.getElementById("greenTriangle");
             greenTri.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Red_Triangle.svg/1200px-Red_Triangle.svg.png";
+
         }
     }
 
-    function checkTrend(){
-
-    }
-
     getDataDrawGraph();
-    checkTrend();
 // END requirejs
 });
 
