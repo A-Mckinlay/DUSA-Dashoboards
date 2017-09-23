@@ -1,6 +1,7 @@
 package uk.ac.dundee.ac41004.team9.api;
 
 import io.drakon.spark.autorouter.Routes;
+import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
@@ -247,28 +248,27 @@ public class Summary {
             ps.setTimestamp(1, Timestamp.valueOf(start));
             ps.setTimestamp(2, Timestamp.valueOf(end));
             ResultSet resultSet = ps.executeQuery();
-            int payments = 0;
-            int redemptions = 0;
-            int reversals = 0;
+            TxSummaryRow.TxSummaryRowBuilder builder = TxSummaryRow.builder();
             while (resultSet.next()) {
                 TransactionType type = TransactionType.fromId(resultSet.getInt(1));
                 int count = resultSet.getInt(2);
+                if (type == null) return null;
                 switch (type) {
                     case Payment:
-                        payments = count;
+                        builder.payments(count);
                         break;
                     case Redemption:
-                        redemptions = count;
+                        builder.redemptions(count);
                         break;
                     case Reversal:
-                        reversals = count;
+                        builder.reversals(count);
                         break;
                     default:
                         log.error("Unknown tx type: {}", type);
                         return null; // Invalid
                 }
             }
-            return new TxSummaryRow(payments, redemptions, reversals);
+            return builder.build();
         } catch (SQLException ex) {
             log.error("SQL error fetching summary row", ex);
             return null;
@@ -276,6 +276,7 @@ public class Summary {
     }
 
     @Data
+    @Builder
     private static class TxSummaryRow {
         public final int payments;
         public final int redemptions;
