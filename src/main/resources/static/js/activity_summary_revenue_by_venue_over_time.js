@@ -80,14 +80,30 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
             options: {
                 responsive: true,
                 maintainAspectRatio: true,
+                title:{
+                    display:true,
+                    text:'Revenue by Venue Over the Last 28 Days'
+                },
                 scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Day'
+                        }
+                    }],
                     yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: '£'
+                        },
                         ticks: {
                             beginAtZero: true
                         },
-                        stacked: true
+                        stacked: true,
                     }]
-                }
+                },
             }
         };
 

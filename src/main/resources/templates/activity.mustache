@@ -6,99 +6,47 @@
 </head>
 
 <body>
-    {{>navbar}}
-    <div class="container">
-        <div class="page-header" id="activity-banner">
-            <div class="row">
-                <div class="col-md-10">
-                    <h1>Activity</h1>
-                </div>
+{{>navbar}}
+<div class="container">
+    <div class="page-header" id="activity-banner">
+        <div class="row">
+            <div class="col-md-10">
+                <h1>Activity</h1>
             </div>
         </div>
     </div>
+</div>
 
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="panel panel-default">
-                    <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#summary">Summary</a></li>
-                        <li><a data-toggle="tab" href="#spectograph">Spectograph</a></li>
-                        <li><a data-toggle="tab" href="#overview">Overview</a></li>
-                    </ul>
-                    <div class="panel-body">
-                        <div class="tab-content" style="position: relative; width:80vw; margin:auto;">
-                            <div id="summary" class="tab-pane fade in active">
-                                <h3>Summary</h3>
-                                <br>
-                                <div class="container" >
-                                    <div class="row">
-                                        <div class="col-md-11">
-                                            <div class="panel panel-default">
-                                                <div class="panel-body">
-                                                    <h5>Total YOYO Sales across Campus </h5>
-                                                    <canvas id="myChart" style="height:200px;"></canvas>
-                                                    <br>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-10">
-                                            <div class="panel panel-default">
-                                                <div class="panel-body">
-                                                    <h5>Venue Popularity </h5>
-                                                    <br>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-10">
-                                            <div class="panel panel-default">
-                                                <div class="panel-body">
-                                                    <h5>Types of Transactions </h5>
-                                                    <br>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="spectograph" class="tab-pane fade">
-                                <h3>Spectographs</h3>
-                                <div class="container" >
-                                    <div class="row">
-                                        <div class="col-md-10">
-                                            <div class="panel panel-default">
-                                                <div class="panel-body">
-                                                    <h5> Title to go in here </h5>
-                                                    <br>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="overview" class="tab-pane fade">
-                                <h3>Overview</h3>
-                                <div class="container" >
-                                    <div class="row">
-                                        <div class="col-md-10">
-                                            <div class="panel panel-default">
-                                                <div class="panel-body">
-                                                    <h5> Title to go in here </h5>
-                                                    <br>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#summary">Summary</a></li>
+                    <li><a data-toggle="tab" href="#spectograph">Spectograph</a></li>
+                    <li><a data-toggle="tab" href="#overview">Overview</a></li>
+                </ul>
+                <div class="panel-body">
+                    <div class="tab-content" style="position: relative;">
+                        <div id="summary" class="tab-pane fade in active">
+                            <canvas id="myChart" style="height:80vh; width: 80vw"></canvas>
+                            <!-- more canvases -->
+                        </div>
+                        <div id="spectograph" class="tab-pane fade">
+                            <h3>Spectographs</h3>
+                            {{>spectographPage}}
+                        </div>
+                        <div id="overview" class="tab-pane fade">
+                            <h3>Overview</h3>
+                            {{>overviewPage}}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </body>
 {{>lineGraphProfitTime}}
 {{>footer}}
