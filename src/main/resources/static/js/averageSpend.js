@@ -42,12 +42,8 @@ requirejs(["moment"], function (moment) {
             return get(url);
         }).then(function(graphData) {
             drawGraph(graphData);
-        }).catch(function (error) {
-            console.log(error);
-        });
-
-        let promiseTrend = get("/api/meta/latestdate");
-        promiseTrend.then(function (latestDate) {
+            return get("/api/meta/latestdate");
+        }).then(function (latestDate) {
             let dateRange = createDateRangeObj(latestDate, 7, 14);
             const getParams = "start=" + dateRange.start.toISOString() + "&end=" + dateRange.end.toISOString()
             let url = "/api/users/avgspend?" + getParams;
@@ -58,8 +54,8 @@ requirejs(["moment"], function (moment) {
         }).catch(function (error) {
             console.log(error);
         });
-    }
 
+    }
 
     function drawGraph(graphData) {
         let ctx = document.getElementById("averageSpend");
@@ -67,18 +63,36 @@ requirejs(["moment"], function (moment) {
         console.log(graphData);
         ctx.innerHTML = "£" + parsedData["cashspent"];
 
-
     }
 
     function drawTrend(trendData) {
         let ctx = document.getElementById("averageSpend2");
         var parsedData = JSON.parse(trendData);
-        console.log(trendData);
-        ctx.innerHTML = "£" + parsedData["cashspent"];
+        let previousWeekValue = parsedData["cashspent"]
+        ctx.innerHTML = "£" + previousWeekValue;
 
+        let currentWeekValue = document.getElementById("averageSpend").innerHTML;
+        currentWeekValue = currentWeekValue.slice(1);
+        console.log("currentWeekValue: " + parseFloat(currentWeekValue));
+        if( averageSpend < averageSpend2 )
+        {
+            let greenTri = document.getElementById("greenTriangle");
+            greenTri.src = "http://www.publicdomainpictures.net/pictures/40000/velka/basic-triangle-shape.jpg";
+        }
+        else (averageSpend2 < averageSpend)
+        {
+            let greenTri = document.getElementById("greenTriangle");
+            greenTri.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Red_Triangle.svg/1200px-Red_Triangle.svg.png";
+        }
+    }
+
+    function checkTrend(){
 
     }
 
     getDataDrawGraph();
+    checkTrend();
 // END requirejs
 });
+
+
