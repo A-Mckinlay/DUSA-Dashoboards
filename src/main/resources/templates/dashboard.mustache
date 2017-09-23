@@ -77,9 +77,17 @@
                         <br>
                         <br>
                         <br>
-                        <p class="pinline" style=" font-weight:bold;">2,303</p>
+                        <p id="numTransactions"class="pinline" style=" font-weight:bold;"> {{>numTransactions}}</p>
                         <p class="pinline">this week</p>
                     </div>
+                    <br>
+                    <div style="width:250px; float: right;">
+                        <p style="text-align: center; font-size: medium; "> vs Previous week</p>
+                        <p class="pinline" style="color:black; font-weight:bold;" id="previousNumTransactions">{{>numTransactions}}</p>
+                    </div>
+                    <img id="numTransactionTrend" style="margin-top:10px; margin-left: 30px; width:50px; height:70px;" src=" ">
+                    <br>
+                    <br>
                     <br>
                 </div>
             </div>
