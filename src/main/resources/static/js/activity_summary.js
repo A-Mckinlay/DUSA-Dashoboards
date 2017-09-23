@@ -1,4 +1,5 @@
-requirejs(["moment", "Chart", "lodash", "dashohelper"], function (moment, Chart, _, Helper) {
+requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-colors"],
+    function (moment, Chart, _, Helper, chroma, distinctColors) {
 
     function getDataDrawGraph() {
         let promise = Helper.get("/api/meta/latestdate");
@@ -15,122 +16,67 @@ requirejs(["moment", "Chart", "lodash", "dashohelper"], function (moment, Chart,
         });
     }
 
-    function parseDateLabels(graphData){
-        const data = JSON.parse(graphData);
-        let unixTimeStamps = [];
-        _.each(data, function (key, value) {
-            if (key.length > 0) {
-                unixTimeStamps.push(moment(value).unix());
-            }
+    function parseDateLabels(raw) {
+        let timestamps = [];
+        _.each(raw, function (key, value) {
+                timestamps.push(moment(value));
         });
-        unixTimeStamps.sort(function(a, b){return a-b});//Sort in ascending order
-        let labels = [];
-        for(let i=0; i<unixTimeStamps.length; i++){
-            labels[i] = moment.unix(unixTimeStamps[i]).format("DD/MM/YY");
-        }
-        return labels;
+        timestamps = _.sortBy(timestamps, function (x) { return x.unix(); });
+        return _.map(timestamps, function (it) {
+            return it.format("DD/MM/YY");
+        });
     }
 
-    function parseDataSetLabels(graphData){
-        const data = JSON.parse(graphData);
-        console.log(data);
-        let possibleLabels = [];
-        _.each(data, function (value, key) {
-            if (key.length > 0) {
-                _.each(value, function(value, key){
-                   possibleLabels.push(value.outletname);
-                });
-            }
+    function parseDataSetLabels(raw) {
+        let outlets = [];
+        _.each(raw, function (v, k) {
+            _.each(v, function (entry) {
+                if (!_.includes(outlets, entry.outletname)) { outlets.push(entry.outletname); }
+            })
         });
-        let labelSet = new Set(possibleLabels);
-        let labels = Array.from(labelSet);
+        return outlets;
+    }
 
-        let DataPoint = function(date, value){
-            this.date = date;
-            this.value = value;
-        }
-
-        let DataSet = function(outletName, dataPoints){
-            this.outletName = outletName;
-            this.dataPoints = dataPoints;
-        };
-
-        let dataSets = [];
-        for(let i=0; i<labels.length; i++){
-            let dataSet = new DataSet(labels[i], []);
-            dataSets.push(dataSet);
-        }
-
-        let mappedArray = _.map(data, function(value, key){
+    function parseDatasets(raw, outlets) {
+        let remapped = _.map(raw, function(v, k) {
             return {
-                date: key,
-                entries: value
-            }
+                date: k,
+                values: v
+            };
+        });
+        remapped = _.sortBy(remapped, function (x) {
+            return moment(x.date).unix();
         });
 
-        let dataArray = _.sortBy(mappedArray, function(value){
-            return moment(value.date).unix();
+        let values = _.map(remapped, function (x) {
+            return x.values;
         });
-        console.log(dataArray);
-        for(let i=0; i<dataArray.length; i++)
-        {
-            for(let j=0; j<dataSets.length; j++)
-            {
-                if(dataArray[i].entries.length === 0)
-                {
-                    dataSets[j].dataPoints.push(new DataPoint(dataArray[i].date, 0))
-                }
-                if(dataArray[i].entries.length > 0){
-                    for(let k=0; k<dataArray[i].entries.length; k++){
-                        for(let z=0; z<dataSets[j].dataPoints.length; z++) {
-                            if (dataSets[j].outletName === dataArray[i].entries[k].outletname) {
-                                if (dataSets[j].dataPoints[z].date === dataArray[i].date){
-                                    dataSets[j].dataPoints[z].value += dataArray[i].entries[k].totalamount;
-                                }else{
-                                    dataSets[j].dataPoints.push(new DataPoint(dataArray[i].date, dataArray[i].entries[k].totalamount));
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        // console.log(dataSets);
+        return _.map(values, function (x) {
+            console.log(x);
+            let ret = new Array(_.size(outlets));
+            ret.fill(0);
+            _.forEach(x, function (y) {
+                let idx = _.indexOf(outlets, y.outletname);
+                ret[idx] = y.totalamount;
+            });
+            return ret;
+        })
     }
 
     function drawGraph(graphData) {
-        let labels = parseDateLabels(graphData);
-        let dataSetLabels = parseDataSetLabels(graphData);
-        let ctx = document.getElementById("myChart");
-        let myChart = new Chart(ctx, {
+        const rawData = JSON.parse(graphData);
+        console.log(rawData);
+        let outlets = parseDataSetLabels(rawData);
+        let dateLabels = parseDateLabels(rawData);
+        let datasets = parseDatasets(rawData, outlets);
+        console.log(outlets);
+        console.log(dateLabels);
+        console.log(datasets);
+        let chartConfig = {
             type: 'line',
             data: {
-                labels: labels,
-                datasets: [
-                    {
-                        label: dataSetLabels,
-                        data: [2, 23, 45, 2, 34, 5, 6, 43],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            // 'rgba(54, 162, 235, 0.2)',
-                            // 'rgba(255, 206, 86, 0.2)',
-                            // 'rgba(75, 192, 192, 0.2)',
-                            // 'rgba(153, 102, 255, 0.2)',
-                            // 'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255,99,132,1)',
-                            // 'rgba(54, 162, 235, 1)',
-                            // 'rgba(255, 206, 86, 1)',
-                            // 'rgba(75, 192, 192, 1)',
-                            // 'rgba(153, 102, 255, 1)',
-                            // 'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                },
-                    {
-
-                    }]
+                datasets: [],
+                labels: dateLabels
             },
             options: {
                 responsive: true,
@@ -138,12 +84,38 @@ requirejs(["moment", "Chart", "lodash", "dashohelper"], function (moment, Chart,
                 scales: {
                     yAxes: [{
                         ticks: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            stacked: true
                         }
                     }]
                 }
             }
+        };
+
+        // Cheat and use a matrix transpose to rotate the 2D array! From https://stackoverflow.com/a/31001358
+        let dsTranspose = _.zip(...datasets);
+        console.log(dsTranspose);
+        let colors = distinctColors({
+            count: _.size(outlets),
+            lightMin: 50,
+            lightMax: 90
         });
+        for (let i = 0; i < _.size(outlets); i++) {
+            let ds = {
+                label: outlets[i],
+                data: dsTranspose[i],
+                backgroundColor: colors[i].hex(),
+                borderColor: colors[i].darken().hex(),
+            };
+            //console.log(ds);
+            chartConfig.data.datasets.push(ds);
+        }
+        console.log(chartConfig);
+
+        let ctx = document.getElementById("myChart");
+        console.log(ctx);
+        let myChart = new Chart(ctx, chartConfig);
+        console.log(myChart);
     }
     getDataDrawGraph();
 // END requirejs
