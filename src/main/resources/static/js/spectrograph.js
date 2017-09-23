@@ -1,9 +1,11 @@
 requirejs(["lodash", "d3", "chroma", "mustache", "dashohelper"], function (_, d3, chroma, Mustache, Helper) {
 
     const SPECTROGRAPH_TEMPLATE = "<div class='spectrograph-div' id='div-{{id}}'>" +
-        "<label for='spectrogram-{{id}}'>{{outletname}}: </label>" +
+        "<label for='spectrogram-{{id}}'><b>{{outletname}}: </b></label>" +
         "<svg height='50px' id='spectrogram-{{id}}'></svg>" +
         "</div>";
+
+    const scale = chroma.scale('Spectral').domain([1,0]);
 
     function rebuild() {
         // Clear the deck
@@ -25,9 +27,29 @@ requirejs(["lodash", "d3", "chroma", "mustache", "dashohelper"], function (_, d3
         });
     }
 
+    function renderLegend() {
+        let svg = d3.select("#spectrogram-legend");
+
+        let g = svg.append("defs")
+            .append("linearGradient")
+            .attr("id", "legend-gradient")
+            .attr("spreadMethod", "pad");
+
+        for (let i = 0; i <= 4; i++) {
+            g.append("stop")
+                .attr("offset", i/4.0 * 100 + "%")
+                .attr("stop-color", scale(i/4.0).hex())
+                .attr("stop-opacity", 1);
+        }
+
+        svg.append("rect")
+            .attr("width", "100%")
+            .attr("height", "100%")
+            .style("fill", "url(#legend-gradient)")
+    }
+
     function handleData(raw) {
         console.log(raw);
-        const scale = chroma.scale('Spectral').domain([1,0]);
         _.forEach(raw, function (values, outlet) {
             let id = _.snakeCase(outlet);
             console.log(id);
@@ -86,6 +108,7 @@ requirejs(["lodash", "d3", "chroma", "mustache", "dashohelper"], function (_, d3
         $('#spectrograph-host').append(html);
     }
 
+    window.onload += renderLegend();
     window.onload += rebuild();
 
 }); // END requirejs()
