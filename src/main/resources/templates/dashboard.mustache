@@ -29,117 +29,129 @@
 </style>
 
 <body>
-    {{>navbar}}
-    <div class="container">
-        <div class="page-header" id="dashboard-banner">
-            <div class="row">
-                <div class="col-md-10">
-                    <h1>Dashboard</h1>
-                    <p class="lead">Your data at a glance.</p>
-                </div>
+{{>navbar}}
+<div class="container">
+    <div class="page-header" id="dashboard-banner">
+        <div class="row">
+            <div class="col-md-10">
+                <h1>Dashboard</h1>
+                <p class="lead">Your data at a glance.</p>
             </div>
         </div>
     </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <h5>YOYO Sales</h5>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h5>YOYO Sales</h5>
+                    <br>
+                    <div id="circle">
                         <br>
-                        <div id="circle">
-                            <br>
-                            <br>
-                            <br>
-                            <p class="pinline" style=" font-weight:bold;">£12,076</p>
-                            <p class="pinline">this week</p>
-                        </div>
                         <br>
+                        <br>
+                        <p class="pinline" style=" font-weight:bold;">£12,076</p>
+                        <p class="pinline">this week</p>
                     </div>
+                    <br>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <h5>Top 5 Venues</h5>
-                        <canvas id="top5BarGraph" width="100" height="83"></canvas>
-                        {{>top5BarGraph}}
-                        <a href="/activity#summary"> See all locations </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <h5>YOYO Transactions</h5>
-                        <br>
-                        <div id="circle">
-                            <br>
-                            <br>
-                            <br>
-                            <p class="pinline" style=" font-weight:bold;">2,303</p>
-                            <p class="pinline">this week</p>
-                        </div>
-                        <br>
-                    </div>
-                </div>
-            </div>
-
         </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <h5>Voucher Redemptions</h5>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h5>Top 5 Venues</h5>
+                    <canvas id="top5BarGraph" width="100" height="83"></canvas>
+                    {{>top5BarGraph}}
+                    <a href="/activity#summary"> See all locations </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h5>YOYO Transactions</h5>
+                    <br>
+                    <div id="circle">
                         <br>
                         <br>
                         <br>
+                        <p class="pinline" style=" font-weight:bold;">2,303</p>
+                        <p class="pinline">this week</p>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h5>Voucher Redemptions</h5>
+                    <br>
+                    <br>
+                    <br>
+                    <div>
                         <img style= "float:left; width:140px; height:140px;" src="https://www.yoyowallet.com/assets/img/footer_mark.svg">
                         <div style="width:180px; float: right;">
-                            <p class="pinline" style="color:black; font-weight:bold; text-align:center"> 682 </p>
+                            <p class="pinline" id="numberRedemptions" style="color:black; font-weight:bold; text-align:center"> </p>
                             <p class="pinline" style="color:black"> redemptions this week</p>
-                            <br>
-                            <br>
-                            <br>
                         </div>
                     </div>
+                    <div style=" width:200px; float: right;">
+                        <br>
+                        <p style="font-size: medium; "> vs Previous week</p>
+                        <p class="pinline" style="color:black; font-weight:bold;" id="previousNumberRedemptions">{{>noRedemptions}}</p>
+                    </div>
+                    <br>
+                    <img id="redemptionTrend" style=" width:50px; height:70px;" src=" ">
+                    <br>
+                    <br>
+                    <br>
+                    <br>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <h5>Average User Spend</h5>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h5>Average User Spend</h5>
+                    <br>
+                    <div id="circle">
                         <br>
-                        <div id="circle">
-                            <br>
-                            <br>
-                            <p id="averageSpend" class="pinline" style=" font-weight:bold;">{{>averageSpend}}</p>
-                            <p class="pinline">per transaction this week</p>
-                        </div>
                         <br>
-                        <div style="width:250px; float: right;">
+                        <p id="averageSpend" class="pinline" style=" font-weight:bold;">{{>averageSpend}}</p>
+                        <p class="pinline">per transaction this week</p>
+                        <br>
+                        <br>
+                    </div>
+                    <br>
+                    <div style="width:250px; float: right;">
                         <p style="text-align: center; font-size: medium; "> vs Previous week</p>
                         <p class="pinline" style="color:black; font-weight:bold;" id="averageSpend2">{{>averageSpend}}</p>
-                        </div>
-                        <img id="greenTriangle" style="margin-top:10px; margin-left: 30px; width:50px; height:70px;" src=" ">
-                        <br>
-                        <br>
                     </div>
+                    <img id="averageSpendTrend" style="margin-top:10px; margin-left: 30px; width:50px; height:70px;" src=" ">
+                    <br>
+                    <br>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <h5>Busiest Times</h5>
-                        <canvas id="busiestTimes" width="50" height="50"></canvas>
-                        {{>busyTimes}}
-                    </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h5>Busiest Times</h5>
+                    <canvas id="busiestTimes" width="50" height="50"></canvas>
+                    {{>busyTimes}}
                 </div>
             </div>
-
         </div>
 
     </div>
+
+</div>
 </body>
 
 {{>footer}}
