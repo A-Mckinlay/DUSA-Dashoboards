@@ -17,36 +17,57 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
         function drawVenuePopGraph(graphData){
             const rawData = JSON.parse(graphData);
             let hlabels = parseTotalSalesDataSetLabels(rawData);
-            console.log(hlabels);
-            drawChart("venue-popularity-canvas", "Number of Transactions by Venue", hlabels, dataset)
+            let dataSet = parseTotalSalesDataSet(rawData);
+            drawChart("venue-popularity-canvas", "Number of Transactions by Venue", hlabels, dataSet);
         }
 
         function parseTotalSalesDataSetLabels(raw) {
             let outlets = [];
-            _.each(raw, function (v, k) {
-                _.each(v, function (entry) {
-                    if (!_.includes(outlets, entry.outletname)) { outlets.push(entry.outletname); }
-                })
+            _.each(raw, function (v) {
+                    outlets.push(v.outletname);
             });
             return outlets;
         }
 
+        function parseTotalSalesDataSet(raw) {
+            _.each(raw, function (v) {
+                delete v.cashspent;
+                delete v.discountamount;
+                v.x = v.outletname;
+                v.y = v.totalamount;
+                delete  v.outletname;
+                delete  v.totalamount;
+            });
+            console.log(raw);
+            return raw;
+        }
+
         function drawChart(selector, title, hLabels, dataset) {
             let chartConfig = {
-                type: 'horizontalBar',
+                type: 'bar',
                 data: {
                     labels: hLabels,
                     datasets: [{
-                        label: 'Total Sales - £',
+                        labels: hLabels,
                         data: dataset,
                         backgroundColor: [
                             'rgb(255, 99, 132)',
                             'rgb(54, 162, 235)',
                             'rgb(255, 206, 86)',
                             'rgb(75, 192, 192)',
-                            'rgb(153, 102, 255)'
+                            'rgb(153, 102, 255)',
+                            'rgb(76, 99, 132)',
+                            'rgb(34, 162, 235)',
+                            'rgb(255, 123, 86)',
+                            'rgb(75, 17, 192)',
+                            'rgb(153, 188, 255)'
                         ],
                         borderColor: [
+                            'rgba(255,99,132,1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
                             'rgba(255,99,132,1)',
                             'rgba(54, 162, 235, 1)',
                             'rgba(255, 206, 86, 1)',
@@ -57,13 +78,14 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
                     }]
                 },
                 options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    barPercentage: 2.0,
+                    categoryPercentage: 1.0,
                     scales: {
-                        xAxes: [{}],
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }],
+                        xAxes: [{ticks: {
+                            beginAtZero: true
+                        }}],
                         title:{
                             display:true,
                             text: title
