@@ -57,25 +57,26 @@ requirejs(["moment"], function (moment) {
     }
 
     function drawGraph(graphData) {
-        let ctx = document.getElementById("transactionValue");
+        let ctx = document.getElementById("valueTransactions");
         var parsedData = JSON.parse(graphData);
-        ctx.innerHTML = "£" + parsedData["Payment"]["cashspent"];
-        console.log(graphData);
+        ctx.innerHTML = "£" + parsedData["Redemption"]["discountamount"];
 
     }
 
     function drawTrend(trendData) {
-        let ctx = document.getElementById("previousTransactionValue");
+        let ctx = document.getElementById("previousValueTransactions");
         var parsedData = JSON.parse(trendData);
-        let previousWeekValue = "£" + parsedData["Payment"]["cashspent"];
+        let previousWeekValue = "£" + parsedData["Redemption"]["discountamount"];
         ctx.innerHTML = previousWeekValue;
 
-        let currentWeekValue = document.getElementById("transactionValue").innerHTML;
+        let currentWeekValue = document.getElementById("valueTransactions").innerHTML;
         currentWeekValue = currentWeekValue.slice(1);
         previousWeekValue = previousWeekValue.slice(1);
-        if( parseFloat(currentWeekValue) > parseFloat(previousWeekValue ))
+
+        if( parseFloat(currentWeekValue) > parseFloat(previousWeekValue))
         {
             let greenTri = document.getElementById("valueTransactionTrend");
+            console.log(greenTri);
             greenTri.src = "http://www.publicdomainpictures.net/pictures/40000/velka/basic-triangle-shape.jpg";
         }
         else if(parseFloat(currentWeekValue) < parseFloat(previousWeekValue))
