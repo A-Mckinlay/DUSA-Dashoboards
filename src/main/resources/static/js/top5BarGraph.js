@@ -26,12 +26,18 @@ requirejs(["moment", "Chart"], function (moment, Chart) {
         },
         options: {
             scales: {
-                xAxes: [{}],
+                xAxes: [{scaleLabel:{
+                    display: true,
+                    labelString: "Total Sales - £"
+                }}],
                 yAxes: [{
                     ticks: {
                         beginAtZero: true
                     }
                 }]
+            },
+            legend:{
+                display: false
             }
         }
     });

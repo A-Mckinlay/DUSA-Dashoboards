@@ -18,7 +18,7 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
             const rawData = JSON.parse(graphData);
             let hlabels = parseTotalSalesDataSetLabels(rawData);
             let dataSet = parseTotalSalesDataSet(rawData);
-            drawChart("venue-popularity-canvas", "Number of Transactions by Venue", hlabels, dataSet);
+            drawChart("venue-popularity-canvas", "Revenue by Venue Over the Last 7 Days", hlabels, dataSet);
         }
 
         function parseTotalSalesDataSetLabels(raw) {
@@ -38,17 +38,17 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
                 delete  v.outletname;
                 delete  v.totalamount;
             });
-            console.log(raw);
             return raw;
         }
 
         function drawChart(selector, title, hLabels, dataset) {
+            console.log(hLabels)
             let chartConfig = {
                 type: 'bar',
                 data: {
                     labels: hLabels,
                     datasets: [{
-                        labels: hLabels,
+                        label: "BarchartData",
                         data: dataset,
                         backgroundColor: [
                             'rgb(255, 99, 132)',
@@ -80,17 +80,27 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
                 options: {
                     responsive: true,
                     maintainAspectRatio: true,
-                    barPercentage: 2.0,
-                    categoryPercentage: 1.0,
+                    title:{
+                        display: true,
+                        text: title
+                    },
+                    legend: {
+                        display: false
+                    },
                     scales: {
                         xAxes: [{ticks: {
-                            beginAtZero: true
+                            autoSkip: false
                         }}],
-                        title:{
-                            display:true,
-                            text: title
-                        }
-                    }
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            },
+                            scaleLabel:{
+                                display: true,
+                                labelString: "£"
+                            }
+                        }]
+                    },
                 }
             };
 

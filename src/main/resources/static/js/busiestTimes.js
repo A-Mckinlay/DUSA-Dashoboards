@@ -29,10 +29,22 @@ requirejs(["moment", "Chart"], function (moment, Chart) {
             }]
         },
         options: {
+            legend:{
+                display: false
+            },
             scales: {
                 yAxes: [{
                     ticks: {
                         beginAtZero: true
+                    },
+                    scaleLabel:{
+                        display: true,
+                        labelString: "# of Transactions"
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        autoSkip: false
                     }
                 }]
             }
