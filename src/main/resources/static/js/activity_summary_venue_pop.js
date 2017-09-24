@@ -17,8 +17,9 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
         function drawVenuePopGraph(graphData){
             const rawData = JSON.parse(graphData);
             let hlabels = parseTotalSalesDataSetLabels(rawData);
+            let colourPallete = getColorPallete(hlabels.length);
             let dataSet = parseTotalSalesDataSet(rawData);
-            drawChart("venue-popularity-canvas", "Revenue by Venue Over the Last 7 Days", hlabels, dataSet);
+            drawChart("venue-popularity-canvas", "Revenue by Venue Over the Last 7 Days", hlabels, colourPallete, dataSet);
         }
 
         function parseTotalSalesDataSetLabels(raw) {
@@ -41,8 +42,18 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
             return raw;
         }
 
-        function drawChart(selector, title, hLabels, dataset) {
-            console.log(hLabels)
+        function getColorPallete(numOfColours){
+            let chartPallete = distinctColors({count: numOfColours, lightMin: 50, chromaMin: 50});
+            let flattenedPallete = [];
+            _.each(chartPallete, function(value){
+                let rgbCode = value._rgb.toString();
+                let palleteEntry = "rgba("+rgbCode+")";
+                flattenedPallete.push(palleteEntry);
+            });
+            return flattenedPallete;
+        }
+
+        function drawChart(selector, title, hLabels, colourPallete, dataset) {
             let chartConfig = {
                 type: 'bar',
                 data: {
@@ -50,30 +61,8 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
                     datasets: [{
                         label: "BarchartData",
                         data: dataset,
-                        backgroundColor: [
-                            'rgb(255, 99, 132)',
-                            'rgb(54, 162, 235)',
-                            'rgb(255, 206, 86)',
-                            'rgb(75, 192, 192)',
-                            'rgb(153, 102, 255)',
-                            'rgb(76, 99, 132)',
-                            'rgb(34, 162, 235)',
-                            'rgb(255, 123, 86)',
-                            'rgb(75, 17, 192)',
-                            'rgb(153, 188, 255)'
-                        ],
-                        borderColor: [
-                            'rgba(255,99,132,1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255,99,132,1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)'
-                        ],
+                        backgroundColor: colourPallete,
+                        borderColor: colourPallete,
                         borderWidth: 1
                     }]
                 },
