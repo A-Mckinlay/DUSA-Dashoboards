@@ -51,10 +51,15 @@
                         <br>
                         <br>
                         <br>
-                        <p class="pinline" style=" font-weight:bold;">£12,076</p>
+                        <p id="transactionValue" class="pinline" style=" font-weight:bold;"></p>
                         <p class="pinline">this week</p>
                     </div>
                     <br>
+                    <div style="width:250px; float: right;">
+                        <p style="text-align: center; font-size: medium; "> vs Previous week</p>
+                        <p class="pinline" style="color:black; font-weight:bold;" id="previousTransactionValue">{{>valueTransactions}}</p>
+                    </div>
+                    <img id="valueTransactionTrend" style="margin-top:10px; margin-left: 30px; width:50px; height:70px;" src=" ">
                 </div>
             </div>
         </div>

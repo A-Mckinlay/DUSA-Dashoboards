@@ -36,7 +36,7 @@ requirejs(["moment"], function (moment) {
         promise.then(function (latestDate) {
             let dateRange = createDateRangeObj(latestDate,0, 7);
             const getParams = "start=" + dateRange.start.toISOString() + "&end=" + dateRange.end.toISOString()
-            let url = "/api/summary/tx?" + getParams;
+            let url = "/api/summary/money?" + getParams;
             url = encodeURI(url);
             return get(url);
         }).then(function(graphData) {
@@ -45,7 +45,7 @@ requirejs(["moment"], function (moment) {
         }).then(function (latestDate) {
             let dateRange = createDateRangeObj(latestDate, 7, 14);
             const getParams = "start=" + dateRange.start.toISOString() + "&end=" + dateRange.end.toISOString()
-            let url = "/api/summary/tx?" + getParams;
+            let url = "/api/summary/money?" + getParams;
             url = encodeURI(url);
             return get(url);
         }).then(function(trendData) {
@@ -57,34 +57,37 @@ requirejs(["moment"], function (moment) {
     }
 
     function drawGraph(graphData) {
-        let ctx = document.getElementById("numTransactions");
+        let ctx = document.getElementById("transactionValue");
         var parsedData = JSON.parse(graphData);
-        ctx.innerHTML = parsedData["Payment"];
+        ctx.innerHTML = "£" + parsedData["Payment"]["cashspent"];
+        console.log(graphData);
 
     }
 
     function drawTrend(trendData) {
-        let ctx = document.getElementById("previousNumTransactions");
+        let ctx = document.getElementById("previousTransactionValue");
         var parsedData = JSON.parse(trendData);
-        let previousWeekValue = parsedData["Payment"];
+        let previousWeekValue = "£" + parsedData["Payment"]["cashspent"];
         ctx.innerHTML = previousWeekValue;
+        console.log(trendData);
 
-        let currentWeekValue = document.getElementById("numTransactions").innerHTML;
-
+        let currentWeekValue = document.getElementById("transactionValue").innerHTML;
+        currentWeekValue = currentWeekValue.slice(1);
+        previousWeekValue = previousWeekValue.slice(1);
         if( parseFloat(currentWeekValue) > parseFloat(previousWeekValue ))
         {
-            let greenTri = document.getElementById("numTransactionTrend");
+            let greenTri = document.getElementById("valueTransactionTrend");
             greenTri.src = "http://www.publicdomainpictures.net/pictures/40000/velka/basic-triangle-shape.jpg";
         }
         else if(parseFloat(currentWeekValue) < parseFloat(previousWeekValue))
         {
-            let greenTri = document.getElementById("numTransactionTrend");
+            let greenTri = document.getElementById("valueTransactionTrend");
             greenTri.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Red_Triangle.svg/1200px-Red_Triangle.svg.png";
 
         }
         else if(parseFloat(currentWeekValue) === parseFloat(previousWeekValue))
         {
-            let greenTri = document.getElementById("numTransactionsTrend");
+            let greenTri = document.getElementById("valueTransactionsTrend");
             greenTri.src = "http://www.charbase.com/images/glyph/9644";
         }
     }

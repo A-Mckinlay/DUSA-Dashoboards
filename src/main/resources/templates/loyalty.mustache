@@ -53,9 +53,17 @@
                     <div id="circle">
                         <br>
                         <br>
-                        <br>
+                        <p class="pinline" id="numTransactions"></p>
                         <p class="pinline">this week</p>
                     </div>
+                    <br>
+                    <div style="width:250px; float: right;">
+                        <p style="text-align: center; font-size: medium; "> vs Previous week</p>
+                        <p class="pinline" style="color:black; font-weight:bold;" id="previousNumTransactions">{{>loyaltyNumTransactions}}</p>
+                    </div>
+                    <img id="numTransactionTrend" style="margin-top:10px; margin-left: 30px; width:50px; height:70px;" src=" ">
+                    <br>
+                    <br>
                     <br>
                 </div>
             </div>
@@ -63,7 +71,7 @@
         <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <h5>£ Value of Transactions</h5>
+                    <h5>Value of Transactions</h5>
                     <br>
                     <div id="circle">
                         <br>
@@ -71,6 +79,7 @@
                         <br>
                     </div>
                     <br>
+
                 </div>
             </div>
         </div>
@@ -86,22 +95,23 @@
 
                         <p class="pinline">per customer</p>
                     </div>
+
                     <br>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="row">
-<div class="col-md-12">
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <h5>Number of transactions by location</h5>
-            <canvas id="busiestTimes" width="50" height="50"></canvas>
-            {{>busyTimes}}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h5>Number of transactions by location</h5>
+                    <canvas id="busiestTimes" width="50" height="50"></canvas>
+                    {{>busyTimes}}
+                </div>
+            </div>
         </div>
     </div>
-</div>
 </div>
 
 </body>

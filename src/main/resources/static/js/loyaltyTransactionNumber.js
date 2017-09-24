@@ -59,14 +59,15 @@ requirejs(["moment"], function (moment) {
     function drawGraph(graphData) {
         let ctx = document.getElementById("numTransactions");
         var parsedData = JSON.parse(graphData);
-        ctx.innerHTML = parsedData["Payment"];
+        console.log(graphData);
+        ctx.innerHTML = parsedData["Redemption"];
 
     }
 
     function drawTrend(trendData) {
         let ctx = document.getElementById("previousNumTransactions");
         var parsedData = JSON.parse(trendData);
-        let previousWeekValue = parsedData["Payment"];
+        let previousWeekValue = parsedData["Redemption"];
         ctx.innerHTML = previousWeekValue;
 
         let currentWeekValue = document.getElementById("numTransactions").innerHTML;
