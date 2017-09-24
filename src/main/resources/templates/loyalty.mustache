@@ -100,11 +100,19 @@
                     <div id="circle">
                         <br>
                         <br>
+                        <p id="averageSpend" class="pinline" style=" font-weight:bold;">{{>loyaltyAverageSpend}}</p>
+                        <p class="pinline">per transaction this week</p>
                         <br>
-
-                        <p class="pinline">per customer</p>
+                        <br>
                     </div>
-
+                    <br>
+                    <div style="width:250px; float: right;">
+                        <p style="text-align: center; font-size: medium; "> vs Previous week</p>
+                        <p class="pinline" style="color:black; font-weight:bold;" id="averageSpend2">{{>loyaltyAverageSpend}}</p>
+                    </div>
+                    <img id="averageSpendTrend" style="margin-top:10px; margin-left: 30px; width:50px; height:70px;" src=" ">
+                    <br>
+                    <br>
                     <br>
                 </div>
             </div>
