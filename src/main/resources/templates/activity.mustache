@@ -12,6 +12,7 @@
         <div class="row">
             <div class="col-md-10">
                 <h1>Activity</h1>
+                <p class="lead">A breakdown of all the ins and outs.</p>
             </div>
         </div>
     </div>
@@ -29,9 +30,16 @@
                 <div class="panel-body">
                     <div class="tab-content" style="position: relative;">
                         <div id="summary" class="tab-pane fade in active">
+                            <!-- SUMMARY TAB CONTENT -->
+                            <h3>Revenue</h3>
                             <canvas id="total-sales-canvas" style="height:80vh; width: 80vw"></canvas>
+                            <hr />
+                            <h3>Transactions</h3>
                             <canvas id="transaction-types-canvas" style="height:80vh; width: 80vw;"></canvas>
+                            <hr />
+                            <h3>Popularity</h3>
                             <canvas id="venue-popularity-canvas" style="height:80vh; width: 80vw;"></canvas>
+
                         </div>
                         <div id="spectrograph" class="tab-pane fade">
                             <h3>Spectrographs</h3>
