@@ -2,9 +2,19 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "dateranger", "chroma", "
     function (moment, Chart, _, Helper, Dateranger, chroma, distinctColors) {
 
         const dateranger = Dateranger();
+        let totalSalesChart = null;
+        let txSummaryChart = null;
+        let venuePopChart = null;
 
         function rebuildAll() {
             const getParams = "start=" + dateranger.getStart().toISOString() + "&end=" + dateranger.getEnd().toISOString();
+
+            // Clear the deck
+            if (totalSalesChart !== null) totalSalesChart.destroy();
+            if (txSummaryChart !== null) txSummaryChart.destroy();
+            if (venuePopChart !== null) venuePopChart.destroy();
+
+            // Redraw
             getAndDrawTotalSales(getParams);
             getAndDrawTxSummary(getParams);
             getAndDrawVenuePop(getParams);
@@ -159,7 +169,7 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "dateranger", "chroma", "
             console.debug(chartConfig);
 
             let ctx = document.getElementById(selector);
-            new Chart(ctx, chartConfig);
+            return new Chart(ctx, chartConfig);
         }
 
         function drawBarChart(selector, title, hLabels, colourPallete, dataset) {
@@ -208,7 +218,7 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "dateranger", "chroma", "
             console.debug(chartConfig);
 
             let ctx = document.getElementById(selector);
-            new Chart(ctx, chartConfig);
+            return new Chart(ctx, chartConfig);
         }
 
         function drawTotalSalesGraph(graphData) {
@@ -241,7 +251,7 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "dateranger", "chroma", "
                 chartDatasets.push(ds);
             }
 
-            drawLineChart("total-sales-canvas", "Revenue by Venue Over the Last 28 Days", dateLabels, chartDatasets);
+            totalSalesChart = drawLineChart("total-sales-canvas", "Revenue by Venue Over the Last 28 Days", dateLabels, chartDatasets);
         }
 
         function drawTxSummaryGraph(graphData) {
@@ -293,7 +303,7 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "dateranger", "chroma", "
                 }
             ];
 
-            drawLineChart("transaction-types-canvas", "Transactions Over the Last 28 Days", dateLabels, datasets);
+            txSummaryChart = drawLineChart("transaction-types-canvas", "Transactions Over the Last 28 Days", dateLabels, datasets);
         }
 
         function drawVenuePopGraph(graphData){
@@ -301,7 +311,7 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "dateranger", "chroma", "
             let hlabels = parseVenuePopDataSetLabels(rawData);
             let colourPallete = getColorPallete(hlabels.length);
             let dataSet = parseVenuePopDatasets(rawData);
-            drawBarChart("venue-popularity-canvas", "Revenue by Venue Over the Last 7 Days", hlabels, colourPallete, dataSet);
+            venuePopChart = drawBarChart("venue-popularity-canvas", "Revenue by Venue Over the Last 7 Days", hlabels, colourPallete, dataSet);
         }
 
         dateranger.addOnChangeHandler(rebuildAll)
