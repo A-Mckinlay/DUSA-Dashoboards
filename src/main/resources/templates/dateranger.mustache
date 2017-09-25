@@ -1,0 +1,32 @@
+<!-- Dateranger - saving the world, one div at a time! -->
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Time Range</h3>
+    </div>
+    <div class="panel-body">
+        <strong>Showing data from <span id="dr-start-date">DD/MM/YYYY</span> to
+            <span id="dr-end-date">DD/MM/YYYY</span>.</strong>
+        <div id="dr-date-rangeslider"></div>
+        <br/>
+        <a data-toggle="collapse" href="#dr-dateRangeCollapse" aria-expanded="false" aria-controls="dr-dateRangeCollapse">
+            Custom...
+        </a>
+        <div class="collapse" id="dr-dateRangeCollapse">
+            <div class="alert alert-warning" role="alert" id="dr-input-alert" hidden>
+                Shhh... This doesn't exist.
+            </div>
+            <label for="dr-start-date-selector">Start: </label>
+            <div class="form-group">
+                <input type="date" id="dr-start-date-selector"/>
+            </div>
+            <label for="end-date-selector">End: </label>
+            <div class="form-group">
+                <input type="date" id="dr-end-date-selector"/>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" id="dr-custom-apply-btn">Apply</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END Dateranger -->

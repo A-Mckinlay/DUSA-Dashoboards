@@ -1,17 +1,14 @@
-requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-colors"],
-    function (moment, Chart, _, Helper, chroma, distinctColors) {
+requirejs(["moment", "Chart", "lodash", "dashohelper", "dateranger", "chroma", "distinct-colors"],
+    function (moment, Chart, _, Helper, Dateranger, chroma, distinctColors) {
+
+        const dateranger = Dateranger();
 
         function rebuildAll() {
-            let promise = Helper.get("/api/meta/latestdate");
-            promise.then(function (latestDate) {
-                let dateRange = Helper.createDateRangeObj(latestDate, 28);
-                const getParams = "start=" + dateRange.start.toISOString() + "&end=" + dateRange.end.toISOString();
-                getAndDrawTotalSales(getParams);
-                getAndDrawTxSummary(getParams);
-                getAndDrawVenuePop(getParams);
-            }).catch(function (error) {
-                console.log(error);
-            });
+            console.log(dateranger);
+            const getParams = "start=" + dateranger.getStart().toISOString() + "&end=" + dateranger.getEnd().toISOString();
+            getAndDrawTotalSales(getParams);
+            getAndDrawTxSummary(getParams);
+            getAndDrawVenuePop(getParams);
         }
 
         function getAndDrawTotalSales(getParams) {
@@ -308,6 +305,7 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
             drawBarChart("venue-popularity-canvas", "Revenue by Venue Over the Last 7 Days", hlabels, colourPallete, dataSet);
         }
 
-        window.onload += rebuildAll();
+        dateranger.addOnChangeHandler(rebuildAll)
+
 // END requirejs
     });

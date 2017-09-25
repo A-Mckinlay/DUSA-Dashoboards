@@ -127,7 +127,7 @@ module.exports = function (grunt) {
         watch: {
             dashoboards: {
                 files: ['src/main/resources/static/js/*.js',
-                    'src/main/resources/static/js/dashoboard-libs',
+                    'src/main/resources/static/js/dashoboard-lib/*.js',
                     'src/main/resources/static/js/*.ts',
                     '!src/main/resources/static/js/*.babel.js',
                     '!src/main/resources/static/js/*.min.js'],
