@@ -70,4 +70,42 @@ public class Users {
         return moneySummaryRow;
     }
 
+    @Routes.GET(path = "/avgdiscount", transformer = GSONResponseTransformer.class)
+    public static Object avgDiscount(Request req, Response res) {
+        Pair<LocalDateTime, LocalDateTime> p = Common.getStartEndFromRequest(req);
+        if (p == null) {
+            res.status(400);
+            return immutableMapOf("error", "invalid request");
+        }
+
+        BigDecimal money = DBConnManager.runWithConnection(conn -> {
+            try {
+                PreparedStatement ps = conn.prepareStatement("SELECT " +
+                        "AVG(tmptable.discountamount) as discountamount " +
+                        "FROM (SELECT userid, " +
+                        "SUM(discountamount) AS discountamount " +
+                        "FROM disbursals " +
+                        "WHERE datetime > ? AND datetime < ? " +
+                        "GROUP BY userid) " +
+                        "AS tmptable " +
+                        "WHERE tmptable.discountamount <> 0");
+                ps.setTimestamp(1, Timestamp.valueOf(p.first));
+                ps.setTimestamp(2, Timestamp.valueOf(p.second));
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) return rs.getBigDecimal(1).setScale(2, BigDecimal.ROUND_HALF_UP);
+                return null;
+            } catch (SQLException ex) {
+                log.error("SQL exception in average discount", ex);
+                return null;
+            }
+        });
+
+        if (money == null) {
+            res.status(500);
+            return immutableMapOf("error", "internal server error");
+        }
+
+        return immutableMapOf("avgdiscount", money.doubleValue());
+    }
+
 }
