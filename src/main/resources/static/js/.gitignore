@@ -1,5 +1,4 @@
 lib/*
 !lib/require.js
-babel/
 /*.d.ts
 /*.map

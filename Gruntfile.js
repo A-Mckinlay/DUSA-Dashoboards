@@ -5,9 +5,7 @@ module.exports = function (grunt) {
     grunt.initConfig({
         // Metadata.
         pkg: grunt.file.readJSON('package.json'),
-        banner: '/*! Dashoboards - ' +
-        '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
-        '<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %> */\n',
+        banner: '/* Dashoboards - File built <%= grunt.template.today("dd/mm/yyyy") %> */\n',
         // Task configuration.
         // Typescript: Javascript with less explosions.
         typescript: {
@@ -36,15 +34,15 @@ module.exports = function (grunt) {
                         expand: true,
                         cwd: 'src/main/resources/static/js/',
                         src: ['*!(.min)!(.babel).js'],
-                        dest: 'src/main/resources/static/js/babel',
-                        ext: '.babel.js'
+                        dest: 'src/main/resources/static/js/',
+                        ext: '.min.js'
                     },
                     {
                         expand: true,
                         cwd: 'src/main/resources/static/js/dashoboard-lib',
                         src: ['*!(.min)!(.babel).js'],
-                        dest: 'src/main/resources/static/js/babel/dashoboard-lib',
-                        ext: '.babel.js'
+                        dest: 'src/main/resources/static/js/lib',
+                        ext: '.js'
                     }
                 ]
             },
@@ -52,74 +50,35 @@ module.exports = function (grunt) {
                 files: [
                     {
                         src: 'node_modules/moment/moment.js',
-                        dest: 'src/main/resources/static/js/babel/lib/moment.babel.js'
+                        dest: 'src/main/resources/static/js/lib/moment.js'
                     },
                     {
                         src: 'node_modules/chart.js/dist/Chart.js',
-                        dest: 'src/main/resources/static/js/babel/lib/Chart.babel.js'
+                        dest: 'src/main/resources/static/js/lib/Chart.js'
                     },
                     {
                         src: 'node_modules/d3/build/d3.js',
-                        dest: 'src/main/resources/static/js/babel/lib/d3.babel.js'
+                        dest: 'src/main/resources/static/js/lib/d3.js'
                     },
                     {
                         src: 'node_modules/c3/c3.js',
-                        dest: 'src/main/resources/static/js/babel/lib/c3.babel.js'
+                        dest: 'src/main/resources/static/js/lib/c3.js'
                     },
                     {
                         src: 'node_modules/lodash/lodash.js',
-                        dest: 'src/main/resources/static/js/babel/lib/lodash.babel.js'
+                        dest: 'src/main/resources/static/js/lib/lodash.js'
                     },
                     {
                         src: 'node_modules/chroma-js/chroma.js',
-                        dest: 'src/main/resources/static/js/babel/lib/chroma.babel.js'
+                        dest: 'src/main/resources/static/js/lib/chroma.js'
                     },
                     {
                         src: 'node_modules/distinct-colors/dist/distinct-colors.js',
-                        dest: 'src/main/resources/static/js/babel/lib/distinct-colors.babel.js'
+                        dest: 'src/main/resources/static/js/lib/distinct-colors.js'
                     },
                     {
                         src: 'node_modules/mustache/mustache.js',
-                        dest: 'src/main/resources/static/js/babel/lib/mustache.babel.js'
-                    }
-                ]
-            }
-        },
-        // Slash, Burn, Minify!
-        uglify: {
-            options: {
-                banner: '<%= banner %>',
-                sourceMap: true
-            },
-            dashoboards: {
-                files: [
-                    {
-                        expand: true,
-                        cwd: 'src/main/resources/static/js/babel',
-                        src: ['*.babel.js'],
-                        dest: 'src/main/resources/static/js/',
-                        ext: '.min.js',
-                        extDot: 'first'
-                    },
-                    {
-                        expand: true,
-                        cwd: 'src/main/resources/static/js/babel/dashoboard-lib',
-                        src: ['*.babel.js'],
-                        dest: 'src/main/resources/static/js/lib/',
-                        ext: '.js',
-                        extDot: 'first'
-                    }
-                ]
-            },
-            libs: {
-                files: [
-                    {
-                        expand: true,
-                        cwd: 'src/main/resources/static/js/babel/lib',
-                        src: ['*.babel.js'],
-                        dest: 'src/main/resources/static/js/lib/',
-                        ext: '.js',
-                        extDot: 'first'
+                        dest: 'src/main/resources/static/js/lib/mustache.js'
                     }
                 ]
             }
@@ -131,7 +90,7 @@ module.exports = function (grunt) {
                     'src/main/resources/static/js/*.ts',
                     '!src/main/resources/static/js/*.babel.js',
                     '!src/main/resources/static/js/*.min.js'],
-                tasks: ['typescript', 'babel:dashoboards', 'uglify:dashoboards']
+                tasks: ['typescript', 'babel:dashoboards']
             }
         }
     });
@@ -139,13 +98,12 @@ module.exports = function (grunt) {
     // These plugins provide necessary tasks.
     grunt.loadNpmTasks('grunt-babel');
     grunt.loadNpmTasks('grunt-typescript');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     // Task definitions.
-    grunt.registerTask('default', ['typescript', 'babel', 'uglify']);
-    grunt.registerTask('build', ['typescript', 'babel', 'uglify']);
-    grunt.registerTask('libs', ['babel:libs', 'uglify:libs']);
-    grunt.registerTask('dashoboards', ['babel:dashoboards', 'uglify:dashoboards']);
+    grunt.registerTask('default', ['typescript', 'babel']);
+    grunt.registerTask('build', ['typescript', 'babel']);
+    grunt.registerTask('libs', ['babel:libs']);
+    grunt.registerTask('dashoboards', ['babel:dashoboards']);
 
 };

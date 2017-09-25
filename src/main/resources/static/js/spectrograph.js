@@ -19,7 +19,7 @@ requirejs(["lodash", "d3", "chroma", "mustache", "dashohelper"], function (_, d3
             url = encodeURI(url);
             return Helper.get(url);
         }).then(function (graphData) {
-            data = JSON.parse(graphData);
+            const data = JSON.parse(graphData);
             //console.log(data);
             handleData(data);
         }).catch(function (error) {

@@ -4,7 +4,6 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "dateranger", "chroma", "
         const dateranger = Dateranger();
 
         function rebuildAll() {
-            console.log(dateranger);
             const getParams = "start=" + dateranger.getStart().toISOString() + "&end=" + dateranger.getEnd().toISOString();
             getAndDrawTotalSales(getParams);
             getAndDrawTxSummary(getParams);
