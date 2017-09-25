@@ -60,6 +60,7 @@
                         <p class="pinline" style="color:black; font-weight:bold;" id="previousTransactionValue">{{>valueTransactions}}</p>
                     </div>
                     <img id="valueTransactionTrend" style="margin-top:10px; margin-left: 30px; width:50px; height:70px;" src=" ">
+                    <br>
                 </div>
             </div>
         </div>
@@ -67,8 +68,11 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <h5>Top 5 Venues</h5>
-                    <canvas id="top5BarGraph" width="100" height="83"></canvas>
+                    <br>
+                    <canvas id="top5BarGraph" width="100" height="93"></canvas>
                     {{>top5BarGraph}}
+                    <br>
+                    <br>
                     <a href="/activity#summary"> See all locations </a>
                 </div>
             </div>
@@ -93,7 +97,6 @@
                     <img id="numTransactionTrend" style="margin-top:10px; margin-left: 30px; width:50px; height:70px;" src=" ">
                     <br>
                     <br>
-                    <br>
                 </div>
             </div>
         </div>
@@ -114,14 +117,15 @@
                             <p class="pinline" style="color:black"> redemptions this week</p>
                         </div>
                     </div>
+                    <br>
+                    <br>
                     <div style=" width:200px; float: right;">
-                        <br>
                         <p style="font-size: medium; "> vs Previous week</p>
                         <p class="pinline" style="color:black; font-weight:bold;" id="previousNumberRedemptions">{{>noRedemptions}}</p>
                     </div>
                     <br>
-                    <img id="redemptionTrend" style=" width:50px; height:70px;" src=" ">
                     <br>
+                    <img id="redemptionTrend" style=" width:50px; height:70px;" src=" ">
                     <br>
                     <br>
                     <br>
@@ -156,7 +160,10 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <h5>Busiest Times</h5>
+                    <br>
+                    <br>
                     <canvas id="busiestTimes" width="50" height="50"></canvas>
+                    <br>
                     {{>busyTimes}}
                 </div>
             </div>
