@@ -94,8 +94,6 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
                 }
             }
         };
-        console.debug("CHART CFG:");
-        console.debug(chartConfig);
         let ctx = document.getElementById(selector);
         new Chart(ctx, chartConfig);
     }
