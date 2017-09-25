@@ -78,6 +78,7 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
             options: {
                 responsive: true,
                 maintainAspectRatio: true,
+                scaleBeginAtZero: true,
                 scales: {
                     xAxes: [{scaleLabel:{
                         display: true,

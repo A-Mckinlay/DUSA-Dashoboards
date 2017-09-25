@@ -92,7 +92,6 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
                 return x.values;
             });
             return _.map(values, function (x) {
-                //console.log(x);
                 let ret = new Array(_.size(outlets));
                 ret.fill(0);
                 _.forEach(x, function (y) {
@@ -310,6 +309,5 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
         }
 
         window.onload += rebuildAll();
-
 // END requirejs
     });
