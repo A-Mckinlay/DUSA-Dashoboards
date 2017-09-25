@@ -60,7 +60,6 @@ requirejs(["moment"], function (moment) {
         let ctx = document.getElementById("averageSpend");
         var parsedData = JSON.parse(graphData);
         ctx.innerHTML = "£" + parsedData["avgdiscount"];
-        console.log("Discount: " + graphData);
     }
 
     function drawTrend(trendData) {

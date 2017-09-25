@@ -14,10 +14,8 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
     }
 
     function drawVenuePopGraph(graphData) {
-        console.log("GraphData: " + graphData);
         const rawData = JSON.parse(graphData);
         let dataSets = parseTotalSalesDataSet(rawData);
-        console.log("rawData" + rawData["Library"]["0"]);
         drawChart("nightVsDay");
     }
 
@@ -40,15 +38,6 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
         console.log(valueArray);
 
     }
-
-    function objToArray(obj){
-        let array = [];
-        _.each(obj, function (value, key) {
-            array.push(value)
-        })
-        return array;
-    }
-
 
     function drawChart(selector) {
         let chartConfig =

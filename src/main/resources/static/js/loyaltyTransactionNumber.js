@@ -59,7 +59,6 @@ requirejs(["moment"], function (moment) {
     function drawGraph(graphData) {
         let ctx = document.getElementById("numTransactions");
         var parsedData = JSON.parse(graphData);
-        console.log(graphData);
         ctx.innerHTML = parsedData["Redemption"];
 
     }

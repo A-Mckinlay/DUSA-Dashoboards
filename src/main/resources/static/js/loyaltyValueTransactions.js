@@ -76,7 +76,6 @@ requirejs(["moment"], function (moment) {
         if( parseFloat(currentWeekValue) > parseFloat(previousWeekValue))
         {
             let greenTri = document.getElementById("valueTransactionTrend");
-            console.log(greenTri);
             greenTri.src = "http://www.publicdomainpictures.net/pictures/40000/velka/basic-triangle-shape.jpg";
         }
         else if(parseFloat(currentWeekValue) < parseFloat(previousWeekValue))
