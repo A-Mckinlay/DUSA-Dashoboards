@@ -1,31 +1,81 @@
 requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-colors"], function (moment, Chart, _, Helper, chroma, distinctColors) {
 
-    var ctx = document.getElementById("nightVsDay");
-    var nightVsDay = new Chart(ctx, {
-        type: 'radar',
-        data: {
-            labels: ['12am', '1am', '2am', '3am', '4am', '5am', '6am', '7am','9am', '10am', '11am', '12pm','1pm', '2pm', '3pm', '4pm','5pm', '6pm', '7pm', '8pm', '9pm', '10pm','11pm'],
-            datasets: [{
-                label:"Mono",
-                backgroundColor: "rgba(200,0,0,0.2)",
-                data: [20, 10, 4, 2,5,12,4,23,16,13,16,19,3,14,2,5,4,2,8,10,20,24,20]
-            }, {
-                label: "Liar",
-                backgroundColor: "rgba(0,0,200,0.2)",
-                data: [2, 1, 24, 20, 25, 10, 30, 3, 6, 3, 6, 19, 13, 23, 20, 15, 14, 12, 18, 15, 24, 24, 2]
-            }
+    function rebuild() {
+        let promise = Helper.get("/api/meta/latestdate");
+        promise.then(function (latestDate) {
+            let dateRange = Helper.createDateRangeObj(latestDate, 7);
+            const getParams = "start=" + dateRange.start.toISOString() + "&end=" + dateRange.end.toISOString();
+            return Helper.get(encodeURI("/api/summary/busybot/venues?" + getParams));
+        }).then(function (graphData) {
+            drawVenuePopGraph(graphData);
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
 
-        ]
-        },
+    function drawVenuePopGraph(graphData) {
+        console.log("GraphData: " + graphData);
+        const rawData = JSON.parse(graphData);
+        let dataSets = parseTotalSalesDataSet(rawData);
+        console.log("rawData" + rawData["Library"]["0"]);
+        drawChart("nightVsDay");
+    }
 
-        options: {
-            maintainAspectRatio: true,
-            scale: {
-                    display: true
+    function parseTimeDataSetLabels(rawData) {
+        let times = [];
 
-            }
-        }
+    }
+
+    function parseTotalSalesDataSet(rawData) {
+        let locationData = [];
+        _.each(rawData, function(value, key){
+            let locationDataObject = {};
+            locationDataObject[key] = value;
+            locationData.push(locationDataObject);
+        });
+        console.log(locationData);
+
+        let valueArray = [];
+
+        console.log(valueArray);
+
+    }
+
+    function objToArray(obj){
+        let array = [];
+        _.each(obj, function (value, key) {
+            array.push(value)
+        })
+        return array;
+    }
 
 
-    });
+    function drawChart(selector) {
+        let chartConfig =
+            {
+                type: 'radar',
+                data: {
+                    labels: null,
+                    datasets: [{
+                        label: '# of Transactions',
+                        data: null,
+                        backgroundColor: null,
+                        borderColor: null,
+                        borderWidth: 1
+                    }]
+                },
+
+                options: {
+                    maintainAspectRatio: true,
+                    scale: {
+                        display: true
+
+                    }
+                }
+            };
+        let ctx = document.getElementById(selector);
+        new Chart(ctx, chartConfig);
+    }
+
+    window.onload += rebuild();
 });
