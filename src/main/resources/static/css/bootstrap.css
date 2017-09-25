@@ -4501,22 +4501,22 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   border-color: transparent;
 }
 .navbar-default .navbar-brand {
-  color: #666666;
+  color: #ffffff;
 }
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus {
-  color: #212121;
+  color: #CCD1D1;
   background-color: transparent;
 }
 .navbar-default .navbar-text {
   color: #bbbbbb;
 }
 .navbar-default .navbar-nav > li > a {
-  color: #666666;
+  color: #ffffff;
 }
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
-  color: #212121;
+  color: #CCD1D1;
   background-color: transparent;
 }
 .navbar-default .navbar-nav > .active > a,
