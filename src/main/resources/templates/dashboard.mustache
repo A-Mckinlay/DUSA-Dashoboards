@@ -8,12 +8,13 @@
 </head>
 <style>
     #circle {
-        width: 250px;
-        height: 250px;
-        -webkit-border-radius: 250px;
-        -moz-border-radius: 250px;
-        border-radius: 250px;
-        background: skyblue;
+        width: 20em;
+        height: 20em;
+        -webkit-border-radius: 100%;
+        -moz-border-radius: 100%;
+        border-radius: 100%;
+        background: #FFFFFF;
+
         border-style:solid;
         border-color: dodgerblue;
         border-width: 5px ;
@@ -21,29 +22,38 @@
     }
     .pinline{
         font-size: 30px;
-        color: white;
+        color: black;
         margin: 0 auto;
         text-align: center;
+        line-height: 1.25em;
+    }
+
+    .undertext{
+
     }
 
 </style>
 
 <body>
+
 {{>navbar}}
+
 <div class="container">
     <div class="page-header" id="dashboard-banner">
         <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <h1>Dashboard</h1>
                 <p class="lead">Your data at a glance.</p>
             </div>
         </div>
     </div>
 </div>
+
 <div class="container">
     <div class="row">
         <div class="col-md-4">
-            <div class="panel panel-default">
+            <a href="/activity" style="text-decoration: none;">
+            <div class="panel panel-default" style="min-height: 40em; max-height: 40em;">
                 <div class="panel-body">
                     <h5>YOYO Sales</h5>
                     <br>
@@ -51,34 +61,42 @@
                         <br>
                         <br>
                         <br>
+                        <br>
                         <p id="transactionValue" class="pinline" style=" font-weight:bold;"></p>
                         <p class="pinline">this week</p>
                     </div>
                     <br>
-                    <div style="width:250px; float: right;">
-                        <p style="text-align: center; font-size: medium; "> vs Previous week</p>
-                        <p class="pinline" style="color:black; font-weight:bold;" id="previousTransactionValue">{{>valueTransactions}}</p>
+                    <div style=" align:center;">
+
+                        <p style="text-align: center; font-size: medium; "> vs. previous week</p>
+
+                        <div style="text-align: center; font-size: larger; font-weight:bold;">
+                            <span id="averageSpendTrend"></span>
+                            <span id="previousTransactionValue" style="color: black">{{>valueTransactions}}</span>
+                        </div>
+
                     </div>
-                    <img id="valueTransactionTrend" style="margin-top:10px; margin-left: 30px; width:50px; height:70px;" src=" ">
-                    <br>
+
                 </div>
-            </div>
+            </div> <!-- END WIDGET (YOYO SALES) -->
+            </a> <!-- END LINK -->
         </div>
         <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <h5>Top 5 Venues</h5>
-                    <br>
-                    <canvas id="top5BarGraph" width="100" height="93"></canvas>
-                    {{>top5BarGraph}}
-                    <br>
-                    <br>
-                    <a href="/activity#summary"> See all locations </a>
+            <a href="/activity#venue-popularity-canvas" style="text-decoration: none">
+                <div class="panel panel-default" style="min-height: 40em;">
+                    <div class="panel-body">
+                        <h5>Top 5 Venues</h5>
+                        <br>
+                        <canvas id="top5BarGraph" width="100" height="93"></canvas>
+                        {{>top5BarGraph}}
+                        <br>
+                        <br>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
         <div class="col-md-4">
-            <div class="panel panel-default">
+            <div class="panel panel-default" style="min-height: 40em; max-height: 40em">
                 <div class="panel-body">
                     <h5>YOYO Transactions</h5>
                     <br>
@@ -86,15 +104,18 @@
                         <br>
                         <br>
                         <br>
+                        <br>
                         <p id="numTransactions"class="pinline" style=" font-weight:bold;"> {{>numTransactions}}</p>
                         <p class="pinline">this week</p>
                     </div>
                     <br>
-                    <div style="width:250px; float: right;">
-                        <p style="text-align: center; font-size: medium; "> vs Previous week</p>
-                        <p class="pinline" style="color:black; font-weight:bold;" id="previousNumTransactions">{{>numTransactions}}</p>
+                    <div class="pinline" style="color:black; font-weight:bold;">
+                        <span id="numTransactionsTrend"></span>
+                        <span id="previousNumTransactions">{{>numTransactions}}</span>
+                        <br>
+                        <span>vs. previous week</span>
+
                     </div>
-                    <img id="numTransactionTrend" style="margin-top:10px; margin-left: 30px; width:50px; height:70px;" src=" ">
                     <br>
                     <br>
                 </div>
@@ -104,28 +125,29 @@
     </div>
     <div class="row">
         <div class="col-md-4">
-            <div class="panel panel-default">
+            <div class="panel panel-default" style="min-height: 40em; max-height: 40em">
                 <div class="panel-body">
                     <h5>Voucher Redemptions</h5>
                     <br>
                     <br>
                     <br>
-                    <div>
-                        <img style= "float:left; width:140px; height:140px;" src="https://www.yoyowallet.com/assets/img/footer_mark.svg">
-                        <div style="width:180px; float: right;">
+                    <div style="margin-bottom: 5em">
+                        <img style= "float:left; margin-right: -5em; width:10em; height:10em;" src="https://www.yoyowallet.com/assets/img/footer_mark.svg">
+                        <div style="width:20em; float: right;">
                             <p class="pinline" id="numberRedemptions" style="color:black; font-weight:bold; text-align:center"> </p>
-                            <p class="pinline" style="color:black"> redemptions this week</p>
+                            <p class="pinline" style="color:black"> redemptions</br>this week</p>
                         </div>
                     </div>
                     <br>
                     <br>
-                    <div style=" width:200px; float: right;">
-                        <p style="font-size: medium; "> vs Previous week</p>
+                    <div style="text-align: center">
+                        <br>
+                        <br>
                         <p class="pinline" style="color:black; font-weight:bold;" id="previousNumberRedemptions">{{>noRedemptions}}</p>
+                        <p style="font-size: medium; "> vs. previous week</p>
                     </div>
                     <br>
                     <br>
-                    <img id="redemptionTrend" style=" width:50px; height:70px;" src=" ">
                     <br>
                     <br>
                     <br>
@@ -133,11 +155,12 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="panel panel-default">
+            <div class="panel panel-default" style="min-height: 40em; max-height: 40em">
                 <div class="panel-body">
                     <h5>Average User Spend</h5>
                     <br>
                     <div id="circle">
+                        <br>
                         <br>
                         <br>
                         <p id="averageSpend" class="pinline" style=" font-weight:bold;">{{>averageSpend}}</p>
@@ -157,7 +180,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="panel panel-default">
+            <div class="panel panel-default" style="min-height: 40em; max-height: 40em">
                 <div class="panel-body">
                     <h5>Busiest Times</h5>
                     <br>
