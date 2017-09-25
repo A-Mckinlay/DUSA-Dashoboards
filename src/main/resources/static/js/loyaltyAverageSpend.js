@@ -36,7 +36,7 @@ requirejs(["moment"], function (moment) {
         promise.then(function (latestDate) {
             let dateRange = createDateRangeObj(latestDate,0, 7);
             const getParams = "start=" + dateRange.start.toISOString() + "&end=" + dateRange.end.toISOString()
-            let url = "/api/users/avgspend?" + getParams;
+            let url = "/api/users/avgdiscount?" + getParams;
             url = encodeURI(url);
             return get(url);
         }).then(function(graphData) {
@@ -45,7 +45,7 @@ requirejs(["moment"], function (moment) {
         }).then(function (latestDate) {
             let dateRange = createDateRangeObj(latestDate, 7, 14);
             const getParams = "start=" + dateRange.start.toISOString() + "&end=" + dateRange.end.toISOString()
-            let url = "/api/users/avgspend?" + getParams;
+            let url = "/api/users/avgdiscount?" + getParams;
             url = encodeURI(url);
             return get(url);
         }).then(function(trendData) {
@@ -59,13 +59,14 @@ requirejs(["moment"], function (moment) {
     function drawGraph(graphData) {
         let ctx = document.getElementById("averageSpend");
         var parsedData = JSON.parse(graphData);
-        ctx.innerHTML = "£" + parsedData["discountamount"];
+        ctx.innerHTML = "£" + parsedData["avgdiscount"];
+        console.log("Discount: " + graphData);
     }
 
     function drawTrend(trendData) {
         let ctx = document.getElementById("averageSpend2");
         var parsedData = JSON.parse(trendData);
-        let previousWeekValue = parsedData["discountamount"]
+        let previousWeekValue = parsedData["avgdiscount"]
         ctx.innerHTML = "£" + previousWeekValue;
 
         let currentWeekValue = document.getElementById("averageSpend").innerHTML;
