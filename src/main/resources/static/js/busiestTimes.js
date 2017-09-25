@@ -5,7 +5,7 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
         promise.then(function (latestDate) {
             let dateRange = Helper.createDateRangeObj(latestDate, 7);
             const getParams = "start=" + dateRange.start.toISOString() + "&end=" + dateRange.end.toISOString();
-            return Helper.get(encodeURI("/api/summary/busybot/venues?" + getParams));
+            return Helper.get(encodeURI("/api/summary/busybot?" + getParams));
         }).then(function(graphData) {
             drawVenuePopGraph(graphData);
         }).catch(function (error) {
@@ -17,18 +17,44 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
         const rawData = JSON.parse(graphData);
         console.log(rawData);
         let busiestTimeData = parseRawDataSet(rawData);
-        // let vlabels = parseTotalSalesDataSetLabels(topFiveData);
-        // let colourPallete = getColorPallete(vlabels.length);
-        // drawChart("busiestTimes", "Revenue by Venue Over the Last 7 Days", vlabels, colourPallete, topFiveData);
+        let hLabels = generateLabels(busiestTimeData);
+        let colourPallete = getColorPallete(hLabels.length);
+         drawChart("busiestTimes", "Average number of transactions per hour of the day", hLabels, colourPallete, busiestTimeData);
+    }
+
+    function getColorPallete(numOfColours){
+        let chartPallete = distinctColors({count: numOfColours, lightMin: 50, chromaMin: 50});
+        let flattenedPallete = [];
+        _.each(chartPallete, function(value){
+            let rgbCode = value.rgba();
+            let palleteEntry = "rgba("+rgbCode+")";
+            flattenedPallete.push(palleteEntry);
+        });
+        return flattenedPallete;
+    }
+
+    function generateLabels(busiestTimeGraphData){
+        let hLabels = [];
+        _.each(busiestTimeGraphData, function (dataPoint) {
+            if(dataPoint.y >= 1){
+                hLabels.push(dataPoint.x);
+            }
+        });
+        console.log(hLabels);
+        return hLabels;
+    }
+
+    function dataPoint(x, y) {
+        this.x = x;
+        this.y = y;
     }
 
     function parseRawDataSet(raw) {
         let times = [];
-        _.map(raw, function (v) {
-            console.log(v);
-            _.reduce(v, function(){
-
-            })
+        _.each(raw, function (value, key) {
+            if(value >= 1){
+                times.push(new dataPoint(key, value.toPrecision(1)));
+            }
         });
         return times;
     }
@@ -59,10 +85,14 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
                         },
                         scaleLabel:{
                             display: true,
-                            labelString: "# of Transactions"
+                            labelString: "Average # of Transactions"
                         }
                     }],
                     xAxes: [{
+                        scaleLabel:{
+                          display: true,
+                          labelString: "Time of day (24hr)"
+                        },
                         ticks: {
                             autoSkip: false
                         }
