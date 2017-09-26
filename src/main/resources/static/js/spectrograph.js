@@ -50,7 +50,11 @@ requirejs(["lodash", "d3", "chroma", "mustache", "dashohelper"], function (_, d3
 
     function handleData(raw) {
         //console.log(raw);
-        _.forEach(raw, function (values, outlet) {
+        // Alphabetical order the raw data.
+        raw = _.sortBy(_.toPairs(raw), function (x) { return x[0]; });
+        _.forEach(raw, function (x) {
+            let outlet = x[0];
+            let values = x[1];
             let id = _.snakeCase(outlet);
             //console.log(id);
             renderSpectrogramHTML(outlet, id);

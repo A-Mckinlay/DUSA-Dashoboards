@@ -19,7 +19,7 @@ plugins {
     id 'idea'
     id 'eclipse'
     id 'com.github.johnrengelman.shadow' version '2.0.1'
-    id "com.moowork.grunt" version '1.2.0'
+    id 'com.moowork.grunt' version '1.2.0'
 }
 
 apply plugin: 'org.junit.platform.gradle.plugin'
@@ -27,7 +27,7 @@ apply plugin: 'org.junit.platform.gradle.plugin'
 repositories {
     mavenCentral()
     maven { // Sonatype Snapshots (JUnit 5)
-        url "https://oss.sonatype.org/content/repositories/snapshots"
+        url 'https://oss.sonatype.org/content/repositories/snapshots'
     }
     maven {
         name 'Tethys'
