@@ -15,46 +15,63 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
 
     function drawVenuePopGraph(graphData) {
         const rawData = JSON.parse(graphData);
-        let dataSets = parseTotalSalesDataSet(rawData);
-        drawChart("nightVsDay");
+        let dataSets = parseRawData(rawData);
+        let hlabels = getHLabels();
+        drawChart("nightVsDay", "number of transactions by venue by hour", hlabels, dataSets);
     }
 
-    function parseTimeDataSetLabels(rawData) {
-        let times = [];
 
+    function getHLabels(){
+        let hLables = new Array(24);
+        for(let i=0; i<hLables.length; i++){
+            hLables[i] = i;
+        }
+        return hLables;
     }
 
-    function parseTotalSalesDataSet(rawData) {
+    function parseRawData(rawData){
         let locationData = [];
         _.each(rawData, function(value, key){
             let locationDataObject = {};
             locationDataObject[key] = value;
             locationData.push(locationDataObject);
         });
-        console.log(locationData);
 
-        let valueArray = [];
+        let colours = distinctColors({
+            count: locationData.length,
+            lightMin: 50,
+            lightMax: 90
+        });
 
-        console.log(valueArray);
-
+        let marshalled = _.map(locationData, function(value) {
+            let obj = _.toPairs(value);
+            obj = _.first(obj);
+            let vals = _.map(obj[1], function(v) { return v; });
+            return {
+                label: obj[0],
+                data: vals,
+                backgroundColor: colours.pop().alpha(0.5).css()
+            }
+        });
+        console.log(marshalled);
+        return marshalled;
     }
 
-    function drawChart(selector) {
+    function drawChart(selector, title, hlabels, dataSets) {
         let chartConfig =
             {
                 type: 'radar',
                 data: {
-                    labels: null,
-                    datasets: [{
-                        label: '# of Transactions',
-                        data: null,
-                        backgroundColor: null,
-                        borderColor: null,
-                        borderWidth: 1
-                    }]
+                    labels: hlabels,
+                    datasets: dataSets
                 },
 
                 options: {
+                    title:{
+                        display: true,
+                        text: title
+                    },
+                    responsive: true,
                     maintainAspectRatio: true,
                     scale: {
                         display: true

@@ -18,11 +18,11 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
         console.log(rawData);
         let busiestTimeData = parseRawDataSet(rawData);
         let hLabels = generateLabels(busiestTimeData);
-        let colourPallete = getColorPallete(hLabels.length);
+        let colourPallete = getColourPallete(hLabels.length);
          drawChart("busiestTimes", "Average number of transactions per hour of the day", hLabels, colourPallete, busiestTimeData);
     }
 
-    function getColorPallete(numOfColours){
+    function getColourPallete(numOfColours){
         let chartPallete = distinctColors({count: numOfColours, lightMin: 50, chromaMin: 50});
         let flattenedPallete = [];
         _.each(chartPallete, function(value){
