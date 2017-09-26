@@ -92,7 +92,7 @@ public class SalesActivity {
 
     private static Map<LocalDateTime, List<OutletSummaryRow>> getSummaryOverTime(
             List<Pair<LocalDateTime, LocalDateTime>> intervals) {
-        Map<LocalDateTime, List<OutletSummaryRow>> map = DBConnManager.runWithConnection(conn -> {
+        return DBConnManager.runWithConnection(conn -> {
             Map<LocalDateTime, List<OutletSummaryRow>> outMap = new HashMap<>();
             for (Pair<LocalDateTime, LocalDateTime> interval : intervals) {
                 List<OutletSummaryRow> rows = getSummaryBetween(conn, interval.first, interval.second);
@@ -101,8 +101,6 @@ public class SalesActivity {
             }
             return outMap;
         });
-
-        return map;
     }
 
     private static List<OutletSummaryRow> getSummaryBetween(Connection conn, LocalDateTime start, LocalDateTime end) {

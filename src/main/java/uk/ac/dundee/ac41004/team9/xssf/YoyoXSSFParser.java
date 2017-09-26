@@ -63,6 +63,14 @@ public class YoyoXSSFParser {
         }
     }
 
+    /**
+     * Actually runs the parse job for either of the parseSheet methods.
+     *
+     * @param workbook The workbook to extract data from.
+     * @param type The sheet type.
+     * @return A list of spreadsheet row objects.
+     * @throws YoyoParseException if a parser error occurs.
+     */
     private static List<YoyoWeekSpreadsheetRow> parse(Workbook workbook, YoyoExcelType type) throws YoyoParseException {
         Sheet sheet = workbook.getSheet(type.sheetName);
         if (sheet == null) throw new IllegalArgumentException("No sheet '" + type.sheetName + "' in Excel file!");

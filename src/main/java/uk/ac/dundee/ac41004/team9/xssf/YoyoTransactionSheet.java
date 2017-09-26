@@ -56,6 +56,8 @@ class YoyoTransactionSheet {
         int startCol = type.startCol;
 
         try {
+            // For datetime, the way to get a java.time object varies depending on the sheet origin - weekly ones are
+            // not the same as big Disbursals.xlsx-style ones, annoyingly. We use the fn in the type object to do it.
             LocalDateTime dateTime = type.dtFunc.apply(row.getCell(startCol));
             int retailerRef = (int)row.getCell(startCol + 1).getNumericCellValue();
             int outletRef = (int)row.getCell(startCol + 2).getNumericCellValue();
@@ -77,6 +79,11 @@ class YoyoTransactionSheet {
         }
     }
 
+    /**
+     * Parses the sheet for all rows of data.
+     * @return All the rows in the sheet.
+     * @throws YoyoParseException if a parse error occurs.
+     */
     List<YoyoWeekSpreadsheetRow> getAllRows() throws YoyoParseException {
         return IntStream.rangeClosed(1, sheet.getLastRowNum() + 1 - type.startRow)
                 .mapToObj(Unchecked.intFunction(this::getRow))

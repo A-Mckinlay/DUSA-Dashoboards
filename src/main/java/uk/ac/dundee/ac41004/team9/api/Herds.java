@@ -1,6 +1,5 @@
 package uk.ac.dundee.ac41004.team9.api;
 
-import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.MultimapBuilder;
 import com.google.common.collect.Multimaps;
@@ -29,6 +28,9 @@ import java.util.stream.Collectors;
 
 import static uk.ac.dundee.ac41004.team9.util.CollectionUtils.immutableMapOf;
 
+/**
+ * API routes related to herds.
+ */
 @UtilityClass
 @Slf4j
 @Routes.PathGroup(prefix = "/api/herds")

@@ -66,6 +66,9 @@ public class SecurityManager {
         return SYN_INST;
     }
 
+    /**
+     * DB provider for Syn that uses real data from the database.
+     */
     @ParametersAreNonnullByDefault
     private static class DatabaseAuthProvider implements Syn.AuthProvider {
 
@@ -87,6 +90,11 @@ public class SecurityManager {
 
     }
 
+    /**
+     * Fake data provider for Syn, that uses whatever value was written to it last.
+     *
+     * DO NOT USE IN PRODUCTION!
+     */
     @ParametersAreNonnullByDefault
     private static class MemeticAuthProvider implements Syn.AuthProvider {
 

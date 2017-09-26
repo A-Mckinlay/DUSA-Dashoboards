@@ -7,6 +7,10 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
+/**
+ * Spark transformer to render datetimes into JS-compatible date format. Does not wrap in JSON, just returns the date
+ * string directly.
+ */
 public class DateResponseTransformer implements ResponseTransformer {
 
     @Override

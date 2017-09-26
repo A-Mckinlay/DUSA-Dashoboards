@@ -7,8 +7,6 @@ import lombok.Data;
  */
 @Data
 public class Outlet {
-
     private final int id;
     private final String name;
-
 }

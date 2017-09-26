@@ -108,6 +108,12 @@ public class Config {
         return props.getProperty(configName, defaultStr);
     }
 
+    /**
+     * Converts a config name in camelCase to upper snake_case for env vars.
+     *
+     * @param configName The config name to convert.
+     * @return An env-var style string for this config name.
+     */
     private static String environmentiseConfString(String configName) {
         StringBuffer buf = new StringBuffer();
         StringBuilder out = new StringBuilder();

@@ -46,6 +46,7 @@ public class Upload {
     @Routes.POST(path="/upload")
     public static Object uploadFileRoute(Request req, Response res) {
         // Multipart config via https://groups.google.com/forum/#!msg/sparkjava/fjO64BP1UQw/CsxdNVz7qrAJ
+        // This seems to control how Jetty handles multipart file uploads.
         MultipartConfigElement multipartConfigElement;
         if (Config.isSecLimitUploadSize()) {
             multipartConfigElement = new MultipartConfigElement(FILE_LOCATION, MAX_FILE_SIZE, MAX_REQUEST_SIZE,
@@ -54,6 +55,7 @@ public class Upload {
             multipartConfigElement = new MultipartConfigElement(FILE_LOCATION, -1L, -1L, FILE_SIZE_THRESHOLD);
         }
         req.attribute("org.eclipse.jetty.multipartConfig", multipartConfigElement);
+
         try (InputStream is = req.raw().getPart("disbursal-file").getInputStream()) {
             List<YoyoWeekSpreadsheetRow> disbursalSheet = YoyoXSSFParser.parseSheet(is);
             if (alreadyExists(disbursalSheet)) {
@@ -68,26 +70,31 @@ public class Upload {
             }
             return renderStatus(req, res, 200, "Success",
                     "Your file has been uploaded. The new data should appear in your dashboards shortly.", "success");
+
         } catch (IOException | ServletException e) {
             log.error("upload failed", e);
             return renderStatus(req, res, 500,
                     "Upload Failed", "The server was unable to receive your file.", "danger");
+
         } catch (YoyoParseException e) {
             log.error("upload failed; parse error.", e);
             res.status(400);
             return renderStatus(req, res, 400,
                     "Invalid File", "The file you uploaded could not be parsed. Check the file you selected is a " +
                             "valid Yoyo transactions Excel file.", "warning");
+
         } catch (SQLException ex) {
             log.error("SQL exception in upload.", ex);
             return renderStatus(req, res, 500,
                     "Server Error", "The server was unable to upload your data to its database. Ask your system " +
                             "administrator for assistance if this persists.", "danger");
+
         } catch (IllegalStateException ex) {
             // File too large
             log.error("File too large!");
             return renderStatus(req, res, 400,
                     "File Too Large", "The file you selected is too large to upload through this page.", "warning");
+
         } catch (Exception ex) {
             log.error("error in upload; unrecognised exception type.", ex);
             return renderStatus(req, res, 500,
@@ -96,6 +103,17 @@ public class Upload {
         }
     }
 
+    /**
+     * Returns a rendered template with the alert dialog added, with the given details/text.
+     *
+     * @param req Spark Request object.
+     * @param res Spark Response object.
+     * @param status The HTTP status code to return.
+     * @param renderTitle The title of the alert box.
+     * @param renderText The text inside the alert box.
+     * @param renderClass The Bootstrap render class of the box (e.g. success, danger)
+     * @return A rendered view to return.
+     */
     private static Object renderStatus(Request req, Response res, int status, String renderTitle, String renderText,
                                        String renderClass) {
         res.status(status);
@@ -106,6 +124,15 @@ public class Upload {
         return mustache(req, "upload", model);
     }
 
+    /**
+     * Checks if a given file already exists in the database using a foolproof* algorithm,
+     *
+     * (* may not be foolproof, just checks if a value in the middle matches the date/time of one in the DB.)
+     *
+     * @param data The rows of the sheet.
+     * @return True if the file has (probably) already been uploaded, else false.
+     * @throws SQLException if a DB error occurs while doing the lookup.
+     */
     @SuppressWarnings("ConstantConditions")
     private static boolean alreadyExists(List<YoyoWeekSpreadsheetRow> data) throws SQLException {
         // Pick something from the middle.

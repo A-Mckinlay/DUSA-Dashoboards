@@ -8,6 +8,9 @@ import java.io.File;
 
 public class Main {
 
+    /**
+     * Main entrypoint - sets everything up and runs Spark.
+     */
     public static void main(String[] argv) {
         // Init components
         Config.init();

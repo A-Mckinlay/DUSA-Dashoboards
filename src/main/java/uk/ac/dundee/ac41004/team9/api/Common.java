@@ -15,19 +15,31 @@ import java.time.temporal.TemporalAmount;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Utilities useful in most/all API classes.
+ */
 @UtilityClass
 @Slf4j
 public class Common {
 
+    /** The datetime formatter string for JS-style date objects. */
     static final String DT_FORMAT_JS = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+    /** A datetime formatter based on the JS-style format. */
     static final DateTimeFormatter DT_FORMATTER_JS = DateTimeFormatter.ofPattern(DT_FORMAT_JS);
 
+    /** A common instance of Gson, with appropriate settings preconfigured. */
     static final Gson GSON = new GsonBuilder()
             .setDateFormat(DT_FORMAT_JS)
             .setPrettyPrinting()
             .create();
 
-    public static Pair<LocalDateTime, LocalDateTime> getStartEndFromRequest(Request req) {
+    /**
+     * Gets the start and end datetime values from a request.
+     *
+     * @param req The Spark request.
+     * @return A pair of start and end datetimes, or null if a parse error occurs.
+     */
+    static Pair<LocalDateTime, LocalDateTime> getStartEndFromRequest(Request req) {
         String startStr = req.queryParams("start");
         String endStr = req.queryParams("end");
         if (startStr == null || endStr == null) return null;
@@ -41,6 +53,14 @@ public class Common {
         }
     }
 
+    /**
+     * Gets all datetimes within a range that are a multiple of the period (e.g. every day within the set)
+     *
+     * @param start The start of the range.
+     * @param period Period between values.
+     * @param end The end of the range.
+     * @return A list of start-end datetime pairs for each duration.
+     */
     static List<Pair<LocalDateTime, LocalDateTime>> getIntervalsBetween(LocalDateTime start,
                                                                         TemporalAmount period,
                                                                         LocalDateTime end) {

@@ -3,6 +3,7 @@ package uk.ac.dundee.ac41004.team9.db;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.jooq.lambda.Unchecked;
+import uk.ac.dundee.ac41004.team9.data.TransactionType;
 import uk.ac.dundee.ac41004.team9.util.Pair;
 import uk.ac.dundee.ac41004.team9.xssf.YoyoWeekSpreadsheetRow;
 
@@ -51,11 +52,15 @@ public class DBIngest {
                 for (int i = 0; i < data.size(); i++) {
                     if (i % 1000 == 0) log.debug("Transaction generation {}/{}", i, data.size());
                     YoyoWeekSpreadsheetRow row = data.get(i);
+
+                    // Check it's not null (even if we know it always isn't) to shut up a warning below.
+                    TransactionType ttype = row.getTransactionType();
+                    if (ttype == null) continue;
+
                     ps.setTimestamp(1, Timestamp.valueOf(row.getDateTime()));
                     ps.setInt(2, row.getOutletRef());
                     ps.setString(3, row.getUserId());
-                    //noinspection ConstantConditions
-                    ps.setInt(4, row.getTransactionType().ordinal());
+                    ps.setInt(4, ttype.ordinal());
                     ps.setDouble(5, row.getCashSpent());
                     ps.setDouble(6, row.getDiscountAmount());
                     ps.setDouble(7, row.getTotalAmount());

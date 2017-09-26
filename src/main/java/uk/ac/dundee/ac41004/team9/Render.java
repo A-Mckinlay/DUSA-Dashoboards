@@ -16,7 +16,11 @@ import java.util.Map;
 @ParametersAreNonnullByDefault
 public class Render {
 
-    // Get a new template engine to use.
+    /**
+     * Gets a new template engine instance.
+     *
+     * @return A template engine.
+     */
     private MustacheTemplateEngine getEngine() {
         File f = Config.getDevResourcesPath();
         if (f == null) {
