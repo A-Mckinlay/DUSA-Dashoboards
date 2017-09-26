@@ -31,19 +31,19 @@
                     <div class="tab-content" style="position: relative;">
                         <div id="summary" class="tab-pane fade in active">
                             <!-- SUMMARY TAB CONTENT -->
-                            <h3>Revenue</h3>
+                            <h3 id="Revenue">Revenue</h3>
                             <p class="lead">You can click on labels to show/hide their content from the graph.</p>
                             {{>dateranger}}
                             <canvas id="total-sales-canvas" style="height:80vh; width: 80vw;"></canvas>
                             <hr />
-                            <h3>Transactions</h3>
+                            <h3 id="Transactions">Transactions</h3>
                             <canvas id="transaction-types-canvas" style="height:80vh; width: 80vw;"></canvas>
                             <hr />
-                            <h3>Popularity</h3>
+                            <h3 id="Popularity">Popularity</h3>
                             <canvas id="venue-popularity-canvas" style="height:80vh; width: 80vw;"></canvas>
                         </div>
                         <div id="spectrograph" class="tab-pane fade">
-                            <h3>Spectrographs</h3>
+                            <h3 id="Heatmaps">Heatmaps</h3>
                             {{>spectrographPage}}
                         </div>
                     </div>
