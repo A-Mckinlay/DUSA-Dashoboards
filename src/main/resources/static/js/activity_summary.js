@@ -251,7 +251,7 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "dateranger", "chroma", "
                 chartDatasets.push(ds);
             }
 
-            totalSalesChart = drawLineChart("total-sales-canvas", "Revenue by Venue Over the Last 28 Days", dateLabels, chartDatasets);
+            totalSalesChart = drawLineChart("total-sales-canvas", "Revenue by Venue", dateLabels, chartDatasets);
         }
 
         function drawTxSummaryGraph(graphData) {
@@ -303,7 +303,7 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "dateranger", "chroma", "
                 }
             ];
 
-            txSummaryChart = drawLineChart("transaction-types-canvas", "Transactions Over the Last 28 Days", dateLabels, datasets);
+            txSummaryChart = drawLineChart("transaction-types-canvas", "Transactions", dateLabels, datasets);
         }
 
         function drawVenuePopGraph(graphData){
@@ -311,7 +311,7 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "dateranger", "chroma", "
             let hlabels = parseVenuePopDataSetLabels(rawData);
             let colourPallete = getColorPallete(hlabels.length);
             let dataSet = parseVenuePopDatasets(rawData);
-            venuePopChart = drawBarChart("venue-popularity-canvas", "Revenue by Venue Over the Last 7 Days", hlabels, colourPallete, dataSet);
+            venuePopChart = drawBarChart("venue-popularity-canvas", "Revenue by Venue", hlabels, colourPallete, dataSet);
         }
 
         dateranger.addOnChangeHandler(rebuildAll)
