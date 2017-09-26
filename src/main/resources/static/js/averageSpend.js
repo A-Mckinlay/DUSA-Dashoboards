@@ -72,17 +72,22 @@ requirejs(["moment"], function (moment) {
         let currentWeekValue = document.getElementById("averageSpend").innerHTML;
         currentWeekValue = currentWeekValue.slice(1);
 
-        if( parseFloat(currentWeekValue) >= parseFloat(previousWeekValue ))
+        if( parseFloat(currentWeekValue) > parseFloat(previousWeekValue))
         {
-            let greenTri = $("#averageSpendTrend");
+            let greenTri = $("#avgSpendTrend");
             greenTri.html("⯅");
             greenTri.css('color', 'green');
         }
-        else if(parseFloat(currentWeekValue) <= parseFloat(previousWeekValue))
+        else if(parseFloat(currentWeekValue) < parseFloat(previousWeekValue))
         {
-            let greenTri = $("averageSpendTrend");
-            greenTri.html = ("⯆");
-            greenTri.css('color', 'red');
+            let redTri = $("#avgSpendTrend");
+            redTri.html = ("⯆");
+            redTri.css('color', 'red');
+        }
+        else if(parseFloat(currentWeekValue) === parseFloat(previousWeekValue))
+        {
+            let noTrend = $("#avgSpendTrend");
+            noTrend.src = "http://www.charbase.com/images/glyph/9644";
         }
     }
 
