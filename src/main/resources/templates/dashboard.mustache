@@ -58,32 +58,32 @@
     <div class="row">
         <div class="col-md-4">
             <a href="/activity" style="text-decoration: none;">
-            <div class="panel panel-default" style="min-height: 40em; max-height: 40em;">
-                <div class="panel-body">
-                    <h5>YOYO Sales</h5>
-                    <br>
-                    <div id="circle">
+                <div class="panel panel-default" style="min-height: 40em; max-height: 40em;">
+                    <div class="panel-body">
+                        <h5>Sales</h5>
                         <br>
+                        <div id="circle">
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <p id="transactionValue" class="pinline" style=" font-weight:bold;"></p>
+                            <p class="pinline">this week</p>
+                        </div>
                         <br>
-                        <br>
-                        <br>
-                        <p id="transactionValue" class="pinline" style=" font-weight:bold;"></p>
-                        <p class="pinline">this week</p>
-                    </div>
-                    <br>
-                    <div style=" align:center;">
+                        <div style=" align:center;">
 
-                        <p style="text-align: center; font-size: medium; "> vs. previous week</p>
+                            <p style="text-align: center; font-size: medium; "> vs. previous week</p>
 
-                        <div style="text-align: center; font-size: larger; font-weight:bold;">
-                            <span id="valTransactionsSpend"></span>
-                            <span id="previousTransactionValue" style="color: black">{{>valueTransactions}}</span>
+                            <div style="text-align: center; font-size: larger; font-weight:bold;">
+                                <span id="valTransactionsSpend"></span>
+                                <span id="previousTransactionValue" style="color: black">{{>valueTransactions}}</span>
+                            </div>
+
                         </div>
 
                     </div>
-
-                </div>
-            </div> <!-- END WIDGET (YOYO SALES) -->
+                </div> <!-- END WIDGET (YOYO SALES) -->
             </a> <!-- END LINK -->
         </div>
         <div class="col-md-4">
@@ -134,34 +134,34 @@
 
     <div class="row">
         <div class="col-md-4">
-            <div class="panel panel-default" style="min-height: 40em; max-height: 40em">
-                <div class="panel-body">
-                    <h5>Voucher Redemptions</h5>
-                    <br>
-                    <br>
-                    <br>
-                    <div style="margin-bottom: 5em">
-                        <img style= "float:left; margin-right: -5em; width:10em; height:10em;" src="https://www.yoyowallet.com/assets/img/footer_mark.svg">
-                        <div style="width:20em; float: right;">
-                            <p class="pinline" id="numberRedemptions" style="color:black; font-weight:bold; text-align:center"> </p>
-                            <p class="pinline" style="color:black"> redemptions</br>this week</p>
+            <a href="/loyalty" style="text-decoration: none;">
+                <div class="panel panel-default" style="min-height: 40em; max-height: 40em">
+                    <div class="panel-body">
+                        <h5>Voucher Redemptions</h5>
+                        <br>
+                        <div id="circle">
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <p id="numberRedemptions" class="pinline" style=" font-weight:bold;"></p>
+                            <p class="pinline">this week</p>
                         </div>
-                    </div>
-                    <br>
-                    <br>
-                    <div style="text-align: center">
                         <br>
-                        <br>
-                        <p class="pinline" style="color:black; font-weight:bold;" id="previousNumberRedemptions">{{>noRedemptions}}</p>
-                        <p style="font-size: medium; "> vs. previous week</p>
+                        <div style=" align:center;">
+
+                            <p style="text-align: center; font-size: medium; "> vs. previous week</p>
+
+                            <div style="text-align: center; font-size: larger; font-weight:bold;">
+                                <span id="redemptionsTrend"></span>
+                                <span id="prevRedemptionsVal" style="color: black">{{>noRedemptions}}</span>
+                            </div>
+
+                        </div>
+
                     </div>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
                 </div>
-            </div>
+            </a>
         </div>
         <div class="col-md-4">
             <a href="/activity" style="text-decoration: none">

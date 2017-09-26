@@ -88,7 +88,8 @@ requirejs(["moment"], function (moment) {
         else if(parseFloat(currentWeekValue) === parseFloat(previousWeekValue))
         {
             let noTrend = $("#valTransactionsSpend");
-            noTrend.src = "http://www.charbase.com/images/glyph/9644";
+            noTrend.addClass('glyphicon-minus');
+            noTrend.css('color', 'black');
         }
     }
 
