@@ -1,5 +1,8 @@
 package uk.ac.dundee.ac41004.team9.data;
 
+/**
+ * Yoyo transaction types (payment, redemption, reversal)
+ */
 public enum TransactionType {
     Payment,
     Redemption,

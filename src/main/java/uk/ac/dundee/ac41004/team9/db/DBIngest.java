@@ -9,15 +9,23 @@ import uk.ac.dundee.ac41004.team9.xssf.YoyoWeekSpreadsheetRow;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.ZoneOffset;
 import java.util.List;
 
 import static uk.ac.dundee.ac41004.team9.db.DBConnManager.runWithConnection;
 
+/**
+ * Utilities to handle uploading data to the database.
+ */
 @Slf4j
 @UtilityClass
 public class DBIngest {
 
+    /**
+     * Uploads a list of spreadsheet rows to the database.
+     *
+     * @param data Rows to upload.
+     * @return True if successful, else false.
+     */
     public static boolean uploadRowsToDB(List<YoyoWeekSpreadsheetRow> data) {
         Boolean bool = runWithConnection(conn -> {
             try {

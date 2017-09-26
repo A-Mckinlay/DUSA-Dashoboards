@@ -44,6 +44,11 @@ public class YoyoWeekSpreadsheetRow {
         return ttype.orElse(null);
     }
 
+    /**
+     * Gets the raw transaction type ID number.
+     *
+     * @return Raw TX type ID.
+     */
     @Nullable String getRawTransactionType() {
         return transactionType;
     }

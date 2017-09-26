@@ -10,7 +10,6 @@ import uk.ac.dundee.ac41004.team9.SecurityManager;
 import static uk.ac.dundee.ac41004.team9.Render.mustache;
 
 @UtilityClass
-@Slf4j
 public class Logout {
 
     @Routes.GET(path = "/logout")

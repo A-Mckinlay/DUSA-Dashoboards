@@ -19,11 +19,19 @@ public class SecurityManager {
 
     private static Syn SYN_INST = null;
 
+    /**
+     * Sets up this manager instance by fetching a Syn instance and enabling it if configured to do so.
+     */
     public static void init() {
         Syn syn = getSyn();
         if (Config.isSecEnable()) syn.route();
     }
 
+    /**
+     * Gets the Syn instance backing this manager.
+     *
+     * @return A Syn instance.
+     */
     public static Syn getSyn() {
         if (SYN_INST == null) {
             Syn.AuthProvider provider =

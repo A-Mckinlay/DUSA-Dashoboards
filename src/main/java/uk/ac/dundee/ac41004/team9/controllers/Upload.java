@@ -26,6 +26,9 @@ import uk.ac.dundee.ac41004.team9.xssf.YoyoXSSFParser;
 
 import static uk.ac.dundee.ac41004.team9.Render.mustache;
 
+/**
+ * Handler for upload routes.
+ */
 @Slf4j
 @UtilityClass
 public class Upload {

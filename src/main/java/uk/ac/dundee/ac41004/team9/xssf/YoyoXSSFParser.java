@@ -28,7 +28,7 @@ public class YoyoXSSFParser {
     /**
      * Parses a complete XLSX file stream into YoyoWeekSpreadsheetRow objects.
      *
-     * @implNote Does NOT check for size, so ensure any user provided data is checked for max size.
+     * Does NOT check for size, so ensure any user provided data is checked for max size.
      *
      * @param strm The stream which provides the sheet.
      * @return A list of spreadsheet row objects.
@@ -47,7 +47,7 @@ public class YoyoXSSFParser {
     /**
      * Parses a complete XLSX file stream into YoyoWeekSpreadsheetRow objects.
      *
-     * @implNote Does NOT check for size, so ensure any user provided data is checked for max size.
+     * Does NOT check for size, so ensure any user provided data is checked for max size.
      *
      * @param path Path of the file which contains the sheet.
      * @return A list of spreadsheet row objects.
@@ -72,6 +72,10 @@ public class YoyoXSSFParser {
         return rows;
     }
 
+    /**
+     * Main method that can be run to load a larger Disbursals file, rather than a weekly file, from a file on disk.
+     * Takes a single parameter, which is a path to the file to load.
+     */
     public static void main(String[] argv) throws Exception {
         if (argv.length < 1) {
             System.out.println("Must provide a path/file name.");

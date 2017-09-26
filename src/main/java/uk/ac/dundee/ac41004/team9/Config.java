@@ -40,6 +40,9 @@ public class Config {
     // Internal bookkeeping (DO NOT EDIT THIS BIT)
     private static Properties props = new Properties();
 
+    /**
+     * Loads all configs from env/disk/classpath
+     */
     public static void init() {
         props = new Properties();
 

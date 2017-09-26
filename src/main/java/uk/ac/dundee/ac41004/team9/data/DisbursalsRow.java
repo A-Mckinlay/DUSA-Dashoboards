@@ -5,6 +5,9 @@ import java.time.LocalDateTime;
 
 import lombok.Data;
 
+/**
+ * A complete row from the Disbursals database table.
+ */
 @Data
 public class DisbursalsRow {
     private final LocalDateTime datetime;

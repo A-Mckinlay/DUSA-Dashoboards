@@ -9,6 +9,7 @@ import java.io.File;
 public class Main {
 
     public static void main(String[] argv) {
+        // Init components
         Config.init();
         DBConnManager.init();
 
@@ -20,6 +21,7 @@ public class Main {
         }
         SecurityManager.init();
 
+        // Setup and trigger Autorouter
         Autorouter autorouter = new Autorouter("uk.ac.dundee.ac41004.team9");
         autorouter.route();
         if (Config.isDevRouteOverview()) autorouter.enableRouteOverview("/debug/routes");

@@ -12,11 +12,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Utilities for dealing with user objects.
+ */
 @UtilityClass
 @Slf4j
 @ParametersAreNonnullByDefault
 public class UserManager {
 
+    /**
+     * Fetch a given user from the database.
+     *
+     * @param username Username of user to fetch.
+     * @return A user object, or null if no such user exists.
+     */
     public @Nullable User getUser(String username) {
         return DBConnManager.runWithConnection(conn -> {
             try {
@@ -40,6 +49,12 @@ public class UserManager {
         });
     }
 
+    /**
+     * Adds or updates a user in the database.
+     *
+     * @param user The user object to write to the database.
+     * @return True on success, false otherwise.
+     */
     @SuppressWarnings("ConstantConditions")
     public boolean writeUser(User user) {
         return DBConnManager.runWithConnection(conn -> {
@@ -69,12 +84,14 @@ public class UserManager {
         });
     }
 
+    /**
+     * A user. Nothing less, nothing more.
+     */
     @Data
     @RequiredArgsConstructor
     public static class User {
         private final String username;
-        @Wither
-        private final String password;
+        @Wither private final String password;
         private final String email;
         private final boolean isAdmin;
         private final String firstName;
