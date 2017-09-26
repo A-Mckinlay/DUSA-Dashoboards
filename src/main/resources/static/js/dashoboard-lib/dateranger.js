@@ -6,6 +6,7 @@ define(["moment", "lodash", "dashohelper"], function (moment, _, Helper) {
             this.dates = [];
             this.latest = new Date();
             this.onChangeHandlers = [];
+            this.warnThreshold = -1;
             this.setupDone = false;
 
             this.start = moment();
@@ -26,6 +27,10 @@ define(["moment", "lodash", "dashohelper"], function (moment, _, Helper) {
                 });
                 $( "#dr-custom-apply-btn" ).click(function() { thisObj.onCustomApply(); });
             });
+        }
+
+        setWarningThreshold(num) {
+            this.warnThreshold = num;
         }
 
         setup(latestDateRaw) {
@@ -94,6 +99,14 @@ define(["moment", "lodash", "dashohelper"], function (moment, _, Helper) {
 
             this.start = min.clone().endOf('day');
             this.end = max.clone().endOf('day');
+
+            let days = this.end.diff(this.start, 'days');
+            let warnPanel = $( "#dr-warning-panel" );
+            if (this.warnThreshold !== -1 && days > this.warnThreshold) {
+                warnPanel.show();
+            } else {
+                warnPanel.hide();
+            }
 
             $( "#dr-date-rangeslider" ).slider("values", [minIdx, maxIdx]);
             $( "#dr-start-date").html(this.start.format("DD/MM/YYYY"));

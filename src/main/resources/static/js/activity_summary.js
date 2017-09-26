@@ -2,6 +2,8 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "dateranger", "chroma", "
     function (moment, Chart, _, Helper, Dateranger, chroma, distinctColors) {
 
         const dateranger = Dateranger();
+        dateranger.setWarningThreshold(60);
+
         let totalSalesChart = null;
         let txSummaryChart = null;
         let venuePopChart = null;
