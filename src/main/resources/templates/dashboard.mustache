@@ -7,39 +7,6 @@
     <title>DUSA Dashboards</title>
 </head>
 
-<style>
-    #circle {
-        width: 20em;
-        height: 20em;
-        -webkit-border-radius: 100%;
-        -moz-border-radius: 100%;
-        border-radius: 100%;
-        background: #FFFFFF;
-
-        border-style:solid;
-        border-color: dodgerblue;
-        border-width: 5px ;
-        margin: 0 auto;
-    }
-    .pinline{
-        font-size: 30px;
-        color: black;
-        margin: 0 auto;
-        text-align: center;
-        line-height: 1.25em;
-    }
-
-    .panel:hover{
-        box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-        transition: box-shadow 0.3s ease-in-out;
-    }
-
-    .undertext{
-
-    }
-
-</style>
-
 <body>
 
 {{>navbar}}
@@ -69,12 +36,10 @@
                     <br>
 
                     <div id="circle">
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <p id="transactionValue" class="pinline" style=" font-weight:bold;"></p>
-                        <p class="pinline">this week</p>
+                        <div id="circle-text">
+                            <p id="transactionValue" class="pinline" style=" font-weight:bold;"></p>
+                            <p class="pinline">this week</p>
+                        </div>
                     </div>
 
                     <br>
@@ -119,14 +84,10 @@
                         <br>
 
                         <div id="circle">
-
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-
-                            <p id="numTransactions"class="pinline" style="font-weight:bold;"> {{>numTransactions}}</p>
-                            <p class="pinline">this week</p>
+                            <div id="circle-text">
+                                <p id="numTransactions"class="pinline" style="font-weight:bold;"> {{>numTransactions}}</p>
+                                <p class="pinline">this week</p>
+                            </div>
                         </div>
 
                         <br>
@@ -144,9 +105,8 @@
 
                         <br>
                         <br>
-                        
-                    </div>
 
+                    </div>
                 </div>
             </a>
         </div>
@@ -158,43 +118,49 @@
                 <div class="panel panel-default" style="min-height: 40em; max-height: 40em">
                     <div class="panel-body">
                         <h5>Voucher Redemptions</h5>
+
                         <br>
+
                         <div id="circle">
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <p id="numberRedemptions" class="pinline" style="font-weight:bold;"></p>
-                            <p class="pinline">this week</p>
+                            <div id="circle-text">
+                                <p id="numberRedemptions" class="pinline" style="font-weight:bold;"></p>
+                                <p class="pinline">this week</p>
+                            </div>
                         </div>
+
                         <br>
+
                         <div style=" align:center;">
                             <p style="text-align: center; font-size: medium; "> vs. previous week</p>
+
                             <div style="text-align: center; font-size: larger; font-weight:bold;">
                                 <span id="redemptionsTrend"></span>
                                 <span id="prevRedemptionsVal" style="color: black">{{>noRedemptions}}</span>
                             </div>
 
                         </div>
-
                     </div>
                 </div>
             </a>
         </div>
+
         <div class="col-md-4">
             <a href="/activity" style="text-decoration: none">
                 <div class="panel panel-default" style="min-height: 40em; max-height: 40em">
                     <div class="panel-body">
                         <h5>Average User Spend</h5>
+
                         <br>
+
                         <div id="circle">
-                            <br>
-                            <br>
-                            <br>
-                            <p id="averageSpend" class="pinline" style=" font-weight:bold;">{{>averageSpend}}</p>
-                            <p class="pinline">per transaction this week</p>
+                            <div id="circle-text">
+                                <p id="averageSpend" class="pinline" style=" font-weight:bold;">{{>averageSpend}}</p>
+                                <p class="pinline">per transaction this week</p>
+                            </div>
                         </div>
+
                         <br>
+
                         <div style="align: center;">
 
                             <p style="text-align: center; font-size: medium; "> vs Previous week</p>
@@ -205,11 +171,11 @@
                             </div>
 
                         </div>
-
                     </div>
                 </div>
             </a>
         </div>
+
         <div class="col-md-4">
             <div class="panel panel-default" style="min-height: 40em; max-height: 40em">
                 <div class="panel-body">
@@ -226,6 +192,7 @@
     </div>
 
 </div>
+
 </body>
 
 {{>footer}}
