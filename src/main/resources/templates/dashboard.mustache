@@ -6,6 +6,7 @@
 <head>
     <title>DUSA Dashboards</title>
 </head>
+
 <style>
     #circle {
         width: 20em;
@@ -41,22 +42,27 @@
 <div class="container">
     <div class="page-header" id="dashboard-banner">
         <div class="row">
+
             <div class="col-md-12">
                 <h1>Dashboard</h1>
                 <p class="lead">Your data at a glance.</p>
             </div>
+
         </div>
     </div>
 </div>
 
 <div class="container">
     <div class="row">
+
         <div class="col-md-4">
             <a href="/activity" style="text-decoration: none;">
-            <div class="panel panel-default" style="min-height: 40em; max-height: 40em;">
+            <div class="panel panel-default" id="SalesWidget" style="min-height: 40em; max-height: 40em;">
+
                 <div class="panel-body">
                     <h5>YOYO Sales</h5>
                     <br>
+
                     <div id="circle">
                         <br>
                         <br>
@@ -65,9 +71,10 @@
                         <p id="transactionValue" class="pinline" style=" font-weight:bold;"></p>
                         <p class="pinline">this week</p>
                     </div>
-                    <br>
-                    <div style=" align:center;">
 
+                    <br>
+
+                    <div style="align:center;">
                         <p style="text-align: center; font-size: medium; "> vs. previous week</p>
 
                         <div style="text-align: center; font-size: larger; font-weight:bold;">
@@ -81,9 +88,11 @@
             </div> <!-- END WIDGET (YOYO SALES) -->
             </a> <!-- END LINK -->
         </div>
+
         <div class="col-md-4">
             <a href="/activity#Popularity" style="text-decoration: none">
-                <div class="panel panel-default" style="min-height: 40em;">
+                <div class="panel panel-default" id="PopularityWidget" style="min-height: 40em;">
+
                     <div class="panel-body">
                         <h5>Top 5 Venues</h5>
                         <br>
@@ -92,37 +101,46 @@
                         <br>
                         <br>
                     </div>
+
                 </div>
             </a>
         </div>
-        <div class="col-md-4">
-            <div class="panel panel-default" style="min-height: 40em; max-height: 40em">
-                <div class="panel-body">
-                    <h5>YOYO Transactions</h5>
-                    <br>
-                    <div id="circle">
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <p id="numTransactions"class="pinline" style=" font-weight:bold;"> {{>numTransactions}}</p>
-                        <p class="pinline">this week</p>
-                    </div>
-                    <br>
-                    <div class="pinline" style="color:black; font-weight:bold;">
-                        <span id="numTransactionsTrend"></span>
-                        <span id="previousNumTransactions">{{>numTransactions}}</span>
-                        <br>
-                        <span>vs. previous week</span>
 
+        <div class="col-md-4">
+            <a href="/activity#Transactions" style="text-decoration: none">
+                <div class="panel panel-default" id="TransactionWidget" style="min-height: 40em; max-height: 40em">
+
+                    <div class="panel-body">
+                        <h5>YOYO Transactions</h5>
+                        <br>
+
+                        <div id="circle">
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <p id="numTransactions"class="pinline" style="font-weight:bold;"> {{>numTransactions}}</p>
+                            <p class="pinline">this week</p>
+                        </div>
+
+                        <br>
+
+                        <div class="pinline" style="color:black; font-weight:bold;">
+                            <span id="numTransactionsTrend"></span>
+                            <span id="previousNumTransactions">{{>numTransactions}}</span>
+                            <br>
+                            <span>vs. previous week</span>
+                        </div>
+                        <br>
+                        <br>
                     </div>
-                    <br>
-                    <br>
+
                 </div>
-            </div>
+            </a>
         </div>
 
     </div>
+
     <div class="row">
         <div class="col-md-4">
             <div class="panel panel-default" style="min-height: 40em; max-height: 40em">

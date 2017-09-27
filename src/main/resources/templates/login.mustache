@@ -9,39 +9,50 @@
         <div class="page-header" id="dashboard-banner">
             <div class="row">
                 <div class="col-md-10">
+                    <br>
                     <h1>Login</h1>
                 </div>
             </div>
         </div>
     </div>
+
     {{>navbar}}
+
     {{#error}}
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
                     <div class="panel panel-warning">
+
                         <div class="panel-heading">
                             <h3 class="panel-title">Login Failure: {{error}}</h3>
                         </div>
+
                         <div class="panel-body">
                             {{>loginForm}}
                         </div>
+
                     </div>
                 </div>
             </div>
         </div>
     {{/error}}
+
     {{^error}}
         <div class="container">
             <div class="row">
+
                 <div class="col-md-6 col-md-offset-3">
                     <div class="panel panel-primary">
+
                         <div class="panel-heading">
                             <h3 class="panel-title">Login</h3>
                         </div>
+
                         <div class="panel-body">
                             {{>loginForm}}
                         </div>
+
                     </div>
                 </div>
             </div>
