@@ -17,6 +17,7 @@
         <div class="row">
             <div class="col-md-10">
                 <h1>Loyalty</h1>
+                <p class="lead">It feels good to be appreciated.</p>
             </div>
         </div>
 
@@ -46,12 +47,14 @@
                     <br>
 
                     <div style=" align:center;">
-                        <p style="text-align: center; font-size: medium; "> vs. previous week</p>
 
-                        <div style="text-align: center; font-size: larger; font-weight:bold;">
+                        <p class="trendtext"> vs. previous week</p>
+
+                        <div class="trendtext" style="font-weight:bold;">
                             <span id="transTrend"></span>
                             <span id="prevNumTrans" style="color: black">{{>loyaltyNumTransactions}}</span>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -74,8 +77,10 @@
                     <br>
 
                     <div style="align:center;">
-                        <p style="text-align: center; font-size: medium; "> vs. previous week</p>
-                        <div style="text-align: center; font-size: larger; font-weight:bold;">
+
+                        <p class="trendtext"> vs. previous week</p>
+
+                        <div class="trendtext" style="font-weight:bold;">
                             <span id="valTransTrend"></span>
                             <span id="previousValueTransactions" style="color: black">{{>loyaltyValueTransactions}}</span>
                         </div>
@@ -100,9 +105,9 @@
                     <br>
 
                     <div style="align:center;">
-                        <p style="text-align: center; font-size: medium; "> vs. previous week</p>
+                        <p class="trendtext"> vs. previous week</p>
 
-                        <div style="text-align: center; font-size: larger; font-weight:bold;">
+                        <div class="trendtext" style="font-weight: bold">
                             <span id="avgTrend"></span>
                             <span id="averageSpend2" style="color: black">{{>loyaltyAverageSpend}}</span>
                         </div>
@@ -118,7 +123,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
 
-                    <h5 id="Redemptions" style="margin-bottom: 5vh">Number of Redemptions by Location For the Past Week</h5>
+                    <h5 id="Redemptions" style="margin-bottom: 5vh">Redemptions by Location (Current Week)</h5>
 
                     <canvas id="redemptions-by-location" style="width: 80vw; height: 80vh; max-height: 1500px"></canvas>
                     {{>redemptionsByLocation}}

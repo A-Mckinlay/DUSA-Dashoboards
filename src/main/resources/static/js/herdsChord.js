@@ -93,13 +93,22 @@ requirejs(["d3", "lodash", "dashohelper", "chroma", "distinct-colors"],
             drawChords(datas.matrix, datas.outlets, selector, renderTicks);
         }
 
+        function getWidth() {
+            const w1 = $("#herds-chords-div").width() * 1.0;
+            const w2 = $("#herds-flows-div").width() * 1.0;
+            return Math.round(Math.max(w1, w2));
+        }
+
         // Based heavily on https://bl.ocks.org/mbostock/4062006 and https://stackoverflow.com/a/42493333
         function drawChords(matrix, map, elementSel, renderTicks) {
             let svg = d3.select(elementSel),
-                width = $(elementSel).width(),
-                height = $(elementSel).height(),
+                width = getWidth(),
+                height = Math.round($(window).height()),
                 outerRadius = Math.min(width, height) * 0.35 - 40,
                 innerRadius = outerRadius - 30;
+
+            $(elementSel).width(width + "px");
+            $(elementSel).height(height + "px");
 
             let chord = d3.chord()
                 .padAngle(0.05)
