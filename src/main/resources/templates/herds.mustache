@@ -22,6 +22,10 @@
         .chord-svg {
 
         }
+
+        div.panel-body :below-level {
+            width: inherit;
+        }
     </style>
 </head>
 
@@ -83,14 +87,18 @@
                     <li><a data-toggle="tab" href="#view2">View 2</a></li>
                 </ul>
                 <div class="panel-body">
-                    <div class="tab-content" style="position: relative; width:80vw; margin:auto;">
+                    <div class="tab-content">
                         <div id="view1" class="tab-pane fade in active">
                             <p>The first shows proportions of people who go to A also go to B</p>
-                            <svg class="chord-svg" id="herds-chords" width="80vw" height="80vh"></svg>
+                            <div class="chord-svg-div" id="herds-chords-div">
+                                <svg class="chord-svg" id="herds-chords"></svg>
+                            </div>
                         </div>
                         <div id="view2" class="tab-pane fade">
                             <p>The second shows hard numbers - people went from A -> B during a single academic day </p>
-                            <svg class="chord-svg" id="herds-flows" width="80vw" height="80vh"></svg>
+                            <div class="chord-svg-div" id="herds-flows-div">
+                                <svg class="chord-svg" id="herds-flows"></svg>
+                            </div>
                             <script src="/js/herdsChord.min.js"></script>
                         </div>
                     </div>
