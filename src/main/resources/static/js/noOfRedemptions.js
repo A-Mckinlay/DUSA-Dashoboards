@@ -66,7 +66,7 @@ requirejs(["moment"], function (moment) {
     function drawTrend(trendData) {
         let ctx = document.getElementById("prevRedemptionsVal");
         var parsedData = JSON.parse(trendData);
-        let previousWeekValue = parsedData["Redemption"]
+        let previousWeekValue = parsedData["Redemption"];
         ctx.innerHTML = previousWeekValue;
 
         let currentWeekValue = document.getElementById("numberRedemptions").innerHTML;
@@ -74,13 +74,13 @@ requirejs(["moment"], function (moment) {
         if(parseFloat(currentWeekValue) > parseFloat(previousWeekValue ))
         {
             let greenTri = $("#redemptionsTrend");
-            greenTri.html("⯅");
+            greenTri.addClass('glyphicon-triangle-top');
             greenTri.css('color', 'green');
         }
         else if(parseFloat(currentWeekValue) < parseFloat(previousWeekValue))
         {
             let redTri = $("#redemptionsTrend");
-            redTri.html("⯆");
+            redTri.addClass('glyphicon-triangle-bottom');
             redTri.css('color', 'red');
         }
         else if(parseFloat(currentWeekValue) === parseFloat(previousWeekValue))

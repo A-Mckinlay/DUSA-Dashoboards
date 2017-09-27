@@ -49,6 +49,10 @@ compileJava.dependsOn += grunt_build
 
 build.dependsOn += shadowJar
 
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
 dependencies {
     // Spark
     compile group: 'com.sparkjava', name: 'spark-core', version: '2.6.0'
