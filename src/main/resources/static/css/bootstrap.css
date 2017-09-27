@@ -6544,15 +6544,9 @@ button.close {
 .affix {
   position: fixed;
 }
-<<<<<<< HEAD:src/main/resources/static/css/bootstrap.css
 @-ms-viewport {
   width: auto;
 }
-=======
-/*@-ms-viewport {*/
-  /*width: device-width;*/
-/*}*/
->>>>>>> 1fbe1de8d8af78acd227992fad5f91e83370a074:src/main/resources/static/bootstrap.css
 .visible-xs,
 .visible-sm,
 .visible-md,

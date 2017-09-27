@@ -29,7 +29,7 @@
 
         <div class="col-md-4">
             <a href="/activity" style="text-decoration: none;">
-            <div class="panel panel-default" id="SalesWidget" style="min-height: 40em; max-height: 40em;">
+            <div class="panel panel-dashboard" id="SalesWidget">
 
                 <div class="panel-body">
                     <h5>YOYO Sales</h5>
@@ -45,9 +45,9 @@
                     <br>
 
                     <div style="align:center;">
-                        <p style="text-align: center; font-size: medium; "> vs. previous week</p>
+                        <p class="trendtext"> vs. previous week</p>
 
-                        <div style="text-align: center; font-size: larger; font-weight:bold;">
+                        <div style="text-align: center; font-size: larger; font-weight:bold; ">
                             <span id="valTransactionsSpend" class="glyphicon"></span>
                             <span id="previousTransactionValue" style="color: black">{{>valueTransactions}}</span>
                         </div>
@@ -60,7 +60,7 @@
 
         <div class="col-md-4">
             <a href="/activity#Popularity" style="text-decoration: none">
-                <div class="panel panel-default" id="PopularityWidget" style="min-height: 40em;">
+                <div class="panel panel-dashboard" id="PopularityWidget">
 
                     <div class="panel-body">
                         <h5>Top 5 Venues</h5>
@@ -77,7 +77,7 @@
 
         <div class="col-md-4">
             <a href="/activity#Transactions" style="text-decoration: none">
-                <div class="panel panel-default" id="TransactionWidget" style="min-height: 40em; max-height: 40em">
+                <div class="panel panel-dashboard" id="TransactionWidget">
 
                     <div class="panel-body">
                         <h5>YOYO Transactions</h5>
@@ -94,17 +94,14 @@
 
                         <div style=" align:center;">
 
-                            <p style="text-align: center; font-size: medium; "> vs. previous week</p>
+                            <p class="trendtext"> vs. previous week</p>
 
-                            <div style="text-align: center; font-size: larger; font-weight:bold;">
+                            <div class="trendtext" style="font-weight: bold">
                                 <span id="numTransactionsTrend" class="glyphicon"></span>
                                 <span id="previousNumTransactions" style="color: black">{{>numTransactions}}</span>
                             </div>
 
                         </div>
-
-                        <br>
-                        <br>
 
                     </div>
                 </div>
@@ -115,7 +112,7 @@
     <div class="row">
         <div class="col-md-4">
             <a href="/loyalty#Redemptions" style="text-decoration: none;">
-                <div class="panel panel-default" style="min-height: 40em; max-height: 40em">
+                <div class="panel panel-dashboard">
                     <div class="panel-body">
                         <h5>Voucher Redemptions</h5>
 
@@ -131,7 +128,7 @@
                         <br>
 
                         <div style=" align:center;">
-                            <p style="text-align: center; font-size: medium; "> vs. previous week</p>
+                            <p class="trendtext"> vs. previous week</p>
 
                             <div style="text-align: center; font-size: larger; font-weight:bold;">
                                 <span id="redemptionsTrend" class="glyphicon"></span>
@@ -146,7 +143,7 @@
 
         <div class="col-md-4">
             <a href="/activity" style="text-decoration: none">
-                <div class="panel panel-default" style="min-height: 40em; max-height: 40em">
+                <div class="panel panel-dashboard">
                     <div class="panel-body">
                         <h5>Average User Spend</h5>
 
@@ -163,11 +160,11 @@
 
                         <div style="align: center;">
 
-                            <p style="text-align: center; font-size: medium; "> vs Previous week</p>
+                            <p class="trendtext"> vs. previous week</p>
 
                             <div style="text-align: center; font-size: larger; font-weight:bold;">
                                 <span id="avgSpendTrend" class="glyphicon"></span>
-                                <span  id="averageSpend2" style="color:black;">{{>averageSpend}}</span>
+                                <span id="averageSpend2" style="color:black;">{{>averageSpend}}</span>
                             </div>
 
                         </div>
@@ -177,13 +174,11 @@
         </div>
 
         <div class="col-md-4">
-            <div class="panel panel-default" style="min-height: 40em; max-height: 40em">
+            <div class="panel panel-dashboard">
                 <div class="panel-body">
                     <h5>Busiest Times</h5>
                     <br>
-                    <br>
                     <canvas id="busiestTimes" width="50" height="50"></canvas>
-                    <br>
                     {{>busyTimes}}
                 </div>
             </div>

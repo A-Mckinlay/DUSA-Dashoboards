@@ -8,14 +8,18 @@
 </head>
 
 <body>
+
 {{>navbar}}
+
 <div class="container">
     <div class="page-header" id="loyalty-banner">
+
         <div class="row">
             <div class="col-md-10">
                 <h1>Loyalty</h1>
             </div>
         </div>
+
     </div>
 </div>
 
@@ -27,6 +31,7 @@
 
                 <div class="panel-body">
                     <h5>Number of Transactions</h5>
+
                     <br>
 
                     <div id="circle" style="margin: auto">
@@ -41,7 +46,7 @@
                     <br>
 
                     <div style=" align:center;">
-                        <p style="text-align: center; font-size: medium; "> vs Previous week</p>
+                        <p style="text-align: center; font-size: medium; "> vs. previous week</p>
 
                         <div style="text-align: center; font-size: larger; font-weight:bold;">
                             <span id="transTrend"></span>
@@ -69,7 +74,7 @@
                     <br>
 
                     <div style="align:center;">
-                        <p style="text-align: center; font-size: medium; "> vs Previous week</p>
+                        <p style="text-align: center; font-size: medium; "> vs. previous week</p>
                         <div style="text-align: center; font-size: larger; font-weight:bold;">
                             <span id="valTransTrend"></span>
                             <span id="previousValueTransactions" style="color: black">{{>loyaltyValueTransactions}}</span>
@@ -95,7 +100,7 @@
                     <br>
 
                     <div style="align:center;">
-                        <p style="text-align: center; font-size: medium; "> vs Previous week</p>
+                        <p style="text-align: center; font-size: medium; "> vs. previous week</p>
 
                         <div style="text-align: center; font-size: larger; font-weight:bold;">
                             <span id="avgTrend"></span>
@@ -114,6 +119,7 @@
                 <div class="panel-body">
 
                     <h5 id="Redemptions" style="margin-bottom: 5vh">Number of Redemptions by Location For the Past Week</h5>
+
                     <canvas id="redemptions-by-location" style="width: 80vw; height: 80vh; max-height: 1500px"></canvas>
                     {{>redemptionsByLocation}}
 

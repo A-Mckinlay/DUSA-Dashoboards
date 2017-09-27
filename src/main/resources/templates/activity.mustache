@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-md-10">
                 <h1>Activity</h1>
-                <p class="lead">A breakdown of all the ins and outs.</p>
+                <p class="lead">Your DUSA data breakdown.</p>
             </div>
         </div>
     </div>
@@ -39,8 +39,10 @@
 
                             <h2>Summary</h2>
                             <p class="lead">An overview of YOYO data across campus.</p>
-                            <p>You can click on the chart labels at the top of each chart to show/hide their content from the graph.</p>
-                            <p>You can also choose how many weeks of data you're viewing for all of the graphs using the controls under this text.</p>
+                            <p style="line-height: 1em">You can click on the chart labels at the top of each chart to show/hide their content from the graph.</p>
+                            <p style="line-height: 1em">You can also choose how many weeks of data you're viewing for all of the graphs using the controls under this text.</p>
+
+                            <br>
 
                             {{>dateranger}}
 
@@ -58,6 +60,7 @@
 
                             <div id="Popularity">
                                 <h3 id="Popularity">Popularity</h3>
+                                <br>
                                 <canvas id="venue-popularity-canvas" style="height:80vh; width: 80vw;"></canvas>
                             </div>
                             <!-- END SUMMARY TAB -->
