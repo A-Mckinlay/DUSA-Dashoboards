@@ -64,28 +64,30 @@ requirejs(["moment"], function (moment) {
     }
 
     function drawTrend(trendData) {
-        let ctx = document.getElementById("previousNumberRedemptions");
+        let ctx = document.getElementById("prevRedemptionsVal");
         var parsedData = JSON.parse(trendData);
         let previousWeekValue = parsedData["Redemption"]
         ctx.innerHTML = previousWeekValue;
 
         let currentWeekValue = document.getElementById("numberRedemptions").innerHTML;
 
-        if( parseFloat(currentWeekValue) > parseFloat(previousWeekValue ))
+        if(parseFloat(currentWeekValue) > parseFloat(previousWeekValue ))
         {
-            let greenTri = document.getElementById("redemptionTrend");
-            greenTri.src = "http://www.publicdomainpictures.net/pictures/40000/velka/basic-triangle-shape.jpg";
+            let greenTri = $("#redemptionsTrend");
+            greenTri.html("⯅");
+            greenTri.css('color', 'green');
         }
         else if(parseFloat(currentWeekValue) < parseFloat(previousWeekValue))
         {
-            let greenTri = document.getElementById("redemptionTrend");
-            greenTri.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Red_Triangle.svg/1200px-Red_Triangle.svg.png";
-
+            let redTri = $("#redemptionsTrend");
+            redTri.html("⯆");
+            redTri.css('color', 'red');
         }
         else if(parseFloat(currentWeekValue) === parseFloat(previousWeekValue))
         {
-            let greenTri = document.getElementById("redemptionTrend");
-            greenTri.src = "http://www.charbase.com/images/glyph/9644";
+            let noTrend = $("#redemptionsTrend");
+            noTrend.addClass('glyphicon-minus');
+            noTrend.css('color', 'black');
         }
     }
 

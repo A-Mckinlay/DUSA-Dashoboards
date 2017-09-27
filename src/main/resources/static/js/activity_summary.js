@@ -141,7 +141,7 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "dateranger", "chroma", "
                     responsive: true,
                     maintainAspectRatio: true,
                     title: {
-                        display: true,
+                        display: false,
                         text: title
                     },
                     scales: {
@@ -191,7 +191,7 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "dateranger", "chroma", "
                     responsive: true,
                     maintainAspectRatio: true,
                     title: {
-                        display: true,
+                        display: false,
                         text: title
                     },
                     legend: {
@@ -230,8 +230,6 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "dateranger", "chroma", "
             let dateLabels = parseDateLabels(rawData);
             let datasets = parseTotalSalesDatasets(rawData, outlets);
             console.debug("Outlets/dates:");
-            console.debug(outlets);
-            console.debug(dateLabels);
 
             // Cheat and use a matrix transpose to rotate the 2D array! From https://stackoverflow.com/a/31001358
             let dsTranspose = _.zip(...datasets);

@@ -60,32 +60,34 @@ requirejs(["moment"], function (moment) {
         let ctx = document.getElementById("numTransactions");
         var parsedData = JSON.parse(graphData);
         ctx.innerHTML = parsedData["Redemption"];
-
     }
 
     function drawTrend(trendData) {
-        let ctx = document.getElementById("previousNumTransactions");
         var parsedData = JSON.parse(trendData);
         let previousWeekValue = parsedData["Redemption"];
-        ctx.innerHTML = previousWeekValue;
 
-        let currentWeekValue = document.getElementById("numTransactions").innerHTML;
+        let prevNum = document.getElementById("prevNumTrans")
+        prevNum.innerHTML = (previousWeekValue.toString());
 
-        if( parseFloat(currentWeekValue) > parseFloat(previousWeekValue ))
+        let currentWeekValue = $("#numTransactions").html();
+
+        if(parseInt(currentWeekValue) > parseInt(previousWeekValue ))
         {
-            let greenTri = document.getElementById("numTransactionTrend");
-            greenTri.src = "http://www.publicdomainpictures.net/pictures/40000/velka/basic-triangle-shape.jpg";
+            let greenTri = $("#transTrend");
+            greenTri.html("⯅");
+            greenTri.css('color', 'green');
         }
-        else if(parseFloat(currentWeekValue) < parseFloat(previousWeekValue))
+        else if(parseInt(currentWeekValue) < parseInt(previousWeekValue))
         {
-            let greenTri = document.getElementById("numTransactionTrend");
-            greenTri.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Red_Triangle.svg/1200px-Red_Triangle.svg.png";
-
+            let redTri = $("#transTrend");
+            redTri.html("⯆");
+            redTri.css('color', 'red');
         }
-        else if(parseFloat(currentWeekValue) === parseFloat(previousWeekValue))
+        else if(parseInt(currentWeekValue) === parseInt(previousWeekValue))
         {
-            let greenTri = document.getElementById("numTransactionsTrend");
-            greenTri.src = "http://www.charbase.com/images/glyph/9644";
+            let noTrend = $("#transTrend");
+            noTrend.addClass('glyphicon-minus');
+            noTrend.css('color', 'black');
         }
     }
 

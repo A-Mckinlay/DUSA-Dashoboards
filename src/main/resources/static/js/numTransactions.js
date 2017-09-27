@@ -79,14 +79,15 @@ requirejs(["moment"], function (moment) {
         }
         else if(parseFloat(currentWeekValue) < parseFloat(previousWeekValue))
         {
-            let greenTri = $("#numTransactionsTrend");
-            greenTri.html = ("⯆");
-            greenTri.css('color', 'red');
+            let redTri = $("#numTransactionsTrend");
+            redTri.html("⯆");
+            redTri.css('color', 'red');
         }
         else if(parseFloat(currentWeekValue) === parseFloat(previousWeekValue))
         {
-            let greenTri = document.getElementById("numTransactionsTrend");
-            greenTri.src = "http://www.charbase.com/images/glyph/9644";
+            let noTrend = $("#numTransactionsTrend");
+            noTrend.addClass('glyphicon-minus');
+            noTrend.css('color', 'black');
         }
     }
 

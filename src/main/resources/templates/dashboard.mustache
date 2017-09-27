@@ -29,6 +29,11 @@
         line-height: 1.25em;
     }
 
+    .panel:hover{
+        box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        transition: box-shadow 0.3s ease-in-out;
+    }
+
     .undertext{
 
     }
@@ -57,6 +62,7 @@
 
         <div class="col-md-4">
             <a href="/activity" style="text-decoration: none;">
+<<<<<<< HEAD
             <div class="panel panel-default" id="SalesWidget" style="min-height: 40em; max-height: 40em;">
 
                 <div class="panel-body">
@@ -76,16 +82,34 @@
 
                     <div style="align:center;">
                         <p style="text-align: center; font-size: medium; "> vs. previous week</p>
+=======
+                <div class="panel panel-default" style="min-height: 40em; max-height: 40em;">
+                    <div class="panel-body">
+                        <h5>Sales</h5>
+                        <br>
+                        <div id="circle">
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <p id="transactionValue" class="pinline" style=" font-weight:bold;"></p>
+                            <p class="pinline">this week</p>
+                        </div>
+                        <br>
+                        <div style=" align:center;">
 
-                        <div style="text-align: center; font-size: larger; font-weight:bold;">
-                            <span id="averageSpendTrend"></span>
-                            <span id="previousTransactionValue" style="color: black">{{>valueTransactions}}</span>
+                            <p style="text-align: center; font-size: medium; "> vs. previous week</p>
+
+                            <div style="text-align: center; font-size: larger; font-weight:bold;">
+                                <span id="valTransactionsSpend"></span>
+                                <span id="previousTransactionValue" style="color: black">{{>valueTransactions}}</span>
+                            </div>
+>>>>>>> 4666bd6ef4fadb85ce5dc0e8338bc601ac707146
+
                         </div>
 
                     </div>
-
-                </div>
-            </div> <!-- END WIDGET (YOYO SALES) -->
+                </div> <!-- END WIDGET (YOYO SALES) -->
             </a> <!-- END LINK -->
         </div>
 
@@ -108,17 +132,25 @@
 
         <div class="col-md-4">
             <a href="/activity#Transactions" style="text-decoration: none">
+<<<<<<< HEAD
                 <div class="panel panel-default" id="TransactionWidget" style="min-height: 40em; max-height: 40em">
 
                     <div class="panel-body">
                         <h5>YOYO Transactions</h5>
                         <br>
 
+=======
+                <div class="panel panel-default" style="min-height: 40em; max-height: 40em">
+                    <div class="panel-body">
+                        <h5>YOYO Transactions</h5>
+                        <br>
+>>>>>>> 4666bd6ef4fadb85ce5dc0e8338bc601ac707146
                         <div id="circle">
                             <br>
                             <br>
                             <br>
                             <br>
+<<<<<<< HEAD
                             <p id="numTransactions"class="pinline" style="font-weight:bold;"> {{>numTransactions}}</p>
                             <p class="pinline">this week</p>
                         </div>
@@ -135,67 +167,86 @@
                         <br>
                     </div>
 
+=======
+                            <p id="numTransactions"class="pinline" style=" font-weight:bold;"> {{>numTransactions}}</p>
+                            <p class="pinline">this week</p>
+                        </div>
+                        <br>
+                        <div style=" align:center;">
+
+                            <p style="text-align: center; font-size: medium; "> vs. previous week</p>
+
+                            <div style="text-align: center; font-size: larger; font-weight:bold;">
+                                <span id="numTransactionsTrend"></span>
+                                <span id="previousNumTransactions" style="color: black">{{>numTransactions}}</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+>>>>>>> 4666bd6ef4fadb85ce5dc0e8338bc601ac707146
                 </div>
             </a>
         </div>
-
     </div>
 
     <div class="row">
         <div class="col-md-4">
-            <div class="panel panel-default" style="min-height: 40em; max-height: 40em">
-                <div class="panel-body">
-                    <h5>Voucher Redemptions</h5>
-                    <br>
-                    <br>
-                    <br>
-                    <div style="margin-bottom: 5em">
-                        <img style= "float:left; margin-right: -5em; width:10em; height:10em;" src="https://www.yoyowallet.com/assets/img/footer_mark.svg">
-                        <div style="width:20em; float: right;">
-                            <p class="pinline" id="numberRedemptions" style="color:black; font-weight:bold; text-align:center"> </p>
-                            <p class="pinline" style="color:black"> redemptions</br>this week</p>
+            <a href="/loyalty#Redemptions" style="text-decoration: none;">
+                <div class="panel panel-default" style="min-height: 40em; max-height: 40em">
+                    <div class="panel-body">
+                        <h5>Voucher Redemptions</h5>
+                        <br>
+                        <div id="circle">
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <p id="numberRedemptions" class="pinline" style="font-weight:bold;"></p>
+                            <p class="pinline">this week</p>
                         </div>
-                    </div>
-                    <br>
-                    <br>
-                    <div style="text-align: center">
                         <br>
-                        <br>
-                        <p class="pinline" style="color:black; font-weight:bold;" id="previousNumberRedemptions">{{>noRedemptions}}</p>
-                        <p style="font-size: medium; "> vs. previous week</p>
+                        <div style=" align:center;">
+                            <p style="text-align: center; font-size: medium; "> vs. previous week</p>
+                            <div style="text-align: center; font-size: larger; font-weight:bold;">
+                                <span id="redemptionsTrend"></span>
+                                <span id="prevRedemptionsVal" style="color: black">{{>noRedemptions}}</span>
+                            </div>
+
+                        </div>
+
                     </div>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
                 </div>
-            </div>
+            </a>
         </div>
         <div class="col-md-4">
-            <div class="panel panel-default" style="min-height: 40em; max-height: 40em">
-                <div class="panel-body">
-                    <h5>Average User Spend</h5>
-                    <br>
-                    <div id="circle">
+            <a href="/activity" style="text-decoration: none">
+                <div class="panel panel-default" style="min-height: 40em; max-height: 40em">
+                    <div class="panel-body">
+                        <h5>Average User Spend</h5>
                         <br>
+                        <div id="circle">
+                            <br>
+                            <br>
+                            <br>
+                            <p id="averageSpend" class="pinline" style=" font-weight:bold;">{{>averageSpend}}</p>
+                            <p class="pinline">per transaction this week</p>
+                        </div>
                         <br>
-                        <br>
-                        <p id="averageSpend" class="pinline" style=" font-weight:bold;">{{>averageSpend}}</p>
-                        <p class="pinline">per transaction this week</p>
-                        <br>
-                        <br>
+                        <div style="align: center;">
+
+                            <p style="text-align: center; font-size: medium; "> vs Previous week</p>
+
+                            <div style="text-align: center; font-size: larger; font-weight:bold;">
+                                <span id="avgSpendTrend"></span>
+                                <span  id="averageSpend2" style="color:black;">{{>averageSpend}}</span>
+                            </div>
+
+                        </div>
+
                     </div>
-                    <br>
-                    <div style="width:250px; float: right;">
-                        <p style="text-align: center; font-size: medium; "> vs Previous week</p>
-                        <p class="pinline" style="color:black; font-weight:bold;" id="averageSpend2">{{>averageSpend}}</p>
-                    </div>
-                    <img id="averageSpendTrend" style="margin-top:10px; margin-left: 30px; width:50px; height:70px;" src=" ">
-                    <br>
-                    <br>
                 </div>
-            </div>
+            </a>
         </div>
         <div class="col-md-4">
             <div class="panel panel-default" style="min-height: 40em; max-height: 40em">

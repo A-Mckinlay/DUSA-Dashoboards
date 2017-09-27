@@ -71,15 +71,25 @@ requirejs(["moment"], function (moment) {
         let currentWeekValue = document.getElementById("averageSpend").innerHTML;
         currentWeekValue = currentWeekValue.slice(1);
 
-        if( parseFloat(currentWeekValue) >= parseFloat(previousWeekValue ))
+        console.log(previousWeekValue, currentWeekValue);
+
+        if(parseFloat(currentWeekValue) > parseFloat(previousWeekValue ))
         {
-            let greenTri = document.getElementById("averageSpendTrend");
-            greenTri.src = "http://www.publicdomainpictures.net/pictures/40000/velka/basic-triangle-shape.jpg";
+            let greenTri = $("#avgTrend");
+            greenTri.html("⯅");
+            greenTri.css('color', 'green');
         }
-        else if(parseFloat(currentWeekValue) <= parseFloat(previousWeekValue))
+        else if(parseFloat(currentWeekValue) < parseFloat(previousWeekValue))
         {
-            let greenTri = document.getElementById("averageSpendTrend");
-            greenTri.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Red_Triangle.svg/1200px-Red_Triangle.svg.png";
+            let redTri = $("#avgTrend");
+            redTri.html("⯆");
+            redTri.css('color', 'red');
+        }
+        else if(parseFloat(currentWeekValue) === parseFloat(previousWeekValue))
+        {
+            let noTrend = $("#avgTrend");
+            noTrend.addClass('glyphicon-minus');
+            noTrend.css('color', 'black');
         }
     }
 

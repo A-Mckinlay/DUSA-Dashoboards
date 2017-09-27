@@ -60,34 +60,34 @@ requirejs(["moment"], function (moment) {
         let ctx = document.getElementById("valueTransactions");
         var parsedData = JSON.parse(graphData);
         ctx.innerHTML = "£" + parsedData["Redemption"]["discountamount"];
-
     }
 
     function drawTrend(trendData) {
         let ctx = document.getElementById("previousValueTransactions");
         var parsedData = JSON.parse(trendData);
-        let previousWeekValue = "£" + parsedData["Redemption"]["discountamount"];
-        ctx.innerHTML = previousWeekValue;
+        let previousWeekValue = parsedData["Redemption"]["discountamount"];
+        ctx.innerHTML = "£" + previousWeekValue;
 
         let currentWeekValue = document.getElementById("valueTransactions").innerHTML;
         currentWeekValue = currentWeekValue.slice(1);
-        previousWeekValue = previousWeekValue.slice(1);
 
-        if( parseFloat(currentWeekValue) > parseFloat(previousWeekValue))
+        if(parseFloat(currentWeekValue) > parseFloat(previousWeekValue))
         {
-            let greenTri = document.getElementById("valueTransactionTrend");
-            greenTri.src = "http://www.publicdomainpictures.net/pictures/40000/velka/basic-triangle-shape.jpg";
+            let greenTri = $("#valTransTrend");
+            greenTri.html("⯅");
+            greenTri.css('color', 'green');
         }
         else if(parseFloat(currentWeekValue) < parseFloat(previousWeekValue))
         {
-            let greenTri = document.getElementById("valueTransactionTrend");
-            greenTri.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Red_Triangle.svg/1200px-Red_Triangle.svg.png";
-
+            let redTri = $("#valTransTrend");
+            redTri.html("⯆");
+            redTri.css('color', 'red');
         }
         else if(parseFloat(currentWeekValue) === parseFloat(previousWeekValue))
         {
-            let greenTri = document.getElementById("valueTransactionsTrend");
-            greenTri.src = "http://www.charbase.com/images/glyph/9644";
+            let noTrend = $("#valTransTrend");
+            noTrend.addClass('glyphicon-minus');
+            noTrend.css('color', 'black');
         }
     }
 

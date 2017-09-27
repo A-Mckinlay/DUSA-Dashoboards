@@ -53,7 +53,6 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
                 backgroundColor: colours.pop().alpha(0.5).css()
             }
         });
-        console.log(marshalled);
         return marshalled;
     }
 

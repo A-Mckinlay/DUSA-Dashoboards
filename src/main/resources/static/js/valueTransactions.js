@@ -73,21 +73,23 @@ requirejs(["moment"], function (moment) {
         let currentWeekValue = document.getElementById("transactionValue").innerHTML;
         currentWeekValue = currentWeekValue.slice(1);
         previousWeekValue = previousWeekValue.slice(1);
-        if( parseFloat(currentWeekValue) > parseFloat(previousWeekValue ))
+        if( parseFloat(currentWeekValue) > parseFloat(previousWeekValue))
         {
-            let greenTri = document.getElementById("valueTransactionTrend");
-            greenTri.src = "http://www.publicdomainpictures.net/pictures/40000/velka/basic-triangle-shape.jpg";
+            let greenTri = $("#valTransactionsSpend");
+            greenTri.html("⯅");
+            greenTri.css('color', 'green');
         }
         else if(parseFloat(currentWeekValue) < parseFloat(previousWeekValue))
         {
-            let greenTri = document.getElementById("valueTransactionTrend");
-            greenTri.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Red_Triangle.svg/1200px-Red_Triangle.svg.png";
-
+            let redTri = $("#valTransactionsSpend");
+            redTri.html = ("⯆");
+            redTri.css('color', 'red');
         }
         else if(parseFloat(currentWeekValue) === parseFloat(previousWeekValue))
         {
-            let greenTri = document.getElementById("valueTransactionsTrend");
-            greenTri.src = "http://www.charbase.com/images/glyph/9644";
+            let noTrend = $("#valTransactionsSpend");
+            noTrend.addClass('glyphicon-minus');
+            noTrend.css('color', 'black');
         }
     }
 
