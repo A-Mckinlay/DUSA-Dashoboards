@@ -80,7 +80,7 @@ requirejs(["moment"], function (moment) {
         else if(parseFloat(currentWeekValue) < parseFloat(previousWeekValue))
         {
             let redTri = $("#redemptionsTrend");
-            redTri.html = ("⯆");
+            redTri.html("⯆");
             redTri.css('color', 'red');
         }
         else if(parseFloat(currentWeekValue) === parseFloat(previousWeekValue))

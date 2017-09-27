@@ -141,7 +141,7 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "dateranger", "chroma", "
                     responsive: true,
                     maintainAspectRatio: true,
                     title: {
-                        display: true,
+                        display: false,
                         text: title
                     },
                     scales: {
@@ -191,7 +191,7 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "dateranger", "chroma", "
                     responsive: true,
                     maintainAspectRatio: true,
                     title: {
-                        display: true,
+                        display: false,
                         text: title
                     },
                     legend: {
