@@ -49,6 +49,10 @@ compileJava.dependsOn += grunt_build
 
 build.dependsOn += shadowJar
 
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
 dependencies {
     // Spark
     compile group: 'com.sparkjava', name: 'spark-core', version: '2.6.0'
@@ -59,7 +63,7 @@ dependencies {
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
 
     // Autorouter
-    compile group: 'io.drakon.spark', name: 'autorouter', version: '0.0.6'
+    compile group: 'io.drakon.spark', name: 'autorouter', version: '0.0.7'
     compile group: 'io.drakon.spark', name: 'syn', version: '0.0.5'
 
     // Excel
