@@ -39,7 +39,7 @@
 
             <div class="col-md-10">
                 <h1>Herds</h1>
-                <p class="lead">See how they all move around.</p>
+                <p class="lead">See where your customers flock to.</p>
             </div>
 
         </div>
@@ -158,10 +158,12 @@
 
                     <div class="panel panel-info">
                         <div class="panel-heading">
-                            <h3 class="panel-title"> <span class="glyphicon glyphicon-exclamation-sign"></span>Radar Plot Use</h3>
+                            <h3 class="panel-title"> <span class="glyphicon glyphicon-exclamation-sign"></span> Radar Plot Use</h3>
                         </div>
                         <div class="panel-body">
-                            Filler text here.
+                            The radar plot below shows total transactions per 24 hours from the last week. <br>
+                            You can hover over the points on the plot to see futher details for each location. <br>
+                            The volumes of transactions for the academic night and day can be seen by looking at the top and bottom of the plot respectively.
                         </div>
                     </div>
 
@@ -179,9 +181,21 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <h5>Nightlife (Transactions)</h5>
-                    <p>Include graph representing 9pm-3am, thresholded by 15min increments?</p>
+
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"> <span class="glyphicon glyphicon-exclamation-sign"></span> Nightlife Chart</h3>
+                        </div>
+                        <div class="panel-body">
+                            This chart shows transactions across the night from 9pm until 3am, giving an insight into how often Yoyo is used over the course of a night. <br>
+                            Data here is averaged from the last 7 days on record.
+                        </div>
+                    </div>
+
                     <canvas id="9to3graph" width="50" height="50"></canvas>
+
                     {{>9to3graph}}
+
                 </div>
             </div>
         </div>
