@@ -25,14 +25,17 @@
                     <div class="panel panel-warning">
 
                         <div class="panel-heading">
-                            <h3 class="panel-title">Login Failure: {{error}}</h3>
+                            <h3 class="panel-title"> <span class="glyphicon glyphicon-info-sign"></span> Login Failure</h3>
                         </div>
 
                         <div class="panel-body">
-                            {{>loginForm}}
+                            {{error}}
                         </div>
 
                     </div>
+
+                    {{>loginForm}}
+
                 </div>
             </div>
         </div>
@@ -43,17 +46,13 @@
             <div class="row">
 
                 <div class="col-md-6 col-md-offset-3">
-                    <div class="panel panel-primary">
 
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Login</h3>
-                        </div>
 
                         <div class="panel-body">
                             {{>loginForm}}
                         </div>
 
-                    </div>
+
                 </div>
             </div>
         </div>

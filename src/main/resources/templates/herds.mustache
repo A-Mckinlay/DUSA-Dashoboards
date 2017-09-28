@@ -47,13 +47,15 @@
 </div>
 
 <div class="container">
-    <div class="row">
 
+    <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
 
                 <div class="panel-body">
-                    <h5>Tribe Definitions</h5>
+                    <h3>Meet the Herds</h3>
+
+                    <br>
 
                     <div class="row">
 
@@ -84,135 +86,145 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="row">
+                    </div> <!-- END Description Row -->
 
-        <div class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-body">
+                    <hr>
 
-                <h5> Flow of YOYO Transactions</h5>
+                    <div class="row">
 
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"> <span class="glyphicon glyphicon-info-sign"></span> Chord Diagram Use</h3>
-                        </div>
-                        <div class="panel-body">
-                            You can interact with the chord diagrams below by hovering your mouse over the segments on the outside of the circle.<br>
-                            Ribbons/paths show the flow of users between segments, with the end representing flow to a segment from the other. <br>
-                            Customers are assigned to a venue based on where most of their transactions were recorded. <br>
-                        </div>
-                    </div>
+                        <div class="col-md-12">
 
-                <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#view1">Overlap</a></li>
-                    <li><a data-toggle="tab" href="#view2">Flow</a></li>
-                </ul>
+                            <h3> Flow of YOYO Transactions</h3>
 
-                <div class="panel-body">
-                    <div class="tab-content" style="position: relative; width:80vw; margin:auto;">
+                            <div class="panel panel-info">
 
-                        <div id="view1" class="tab-pane fade in active">
-                            <!-- OVERLAP TAB -->
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"> <span class="glyphicon glyphicon-info-sign"></span> Chord Diagram Use</h3>
+                                </div>
 
-                            <div class="panel panel-default">
                                 <div class="panel-body">
-                                    The <b>Overlap</b> view shows relative customer overlap between venues over the latest week on record. <br>
+                                    You can interact with the chord diagrams below by hovering your mouse over the segments on the outside of the circle.<br>
+                                    Ribbons/paths show the flow of users between segments, with the end representing flow to a segment from the other. <br>
+                                    Customers are assigned to a venue based on where most of their transactions were recorded. <br>
                                 </div>
                             </div>
 
-                            <!-- <div id="OverlapText">
-                                <p>This chord diagram shows the customer overlap between venues over the course of the last week.</p>
-                            </div> -->
+                            <ul class="nav nav-tabs">
 
-                            <div class="chord-svg-div" id="herds-chords-div">
-                                <svg class="chord-svg" id="herds-chords"></svg>
-                            </div>
+                                <li class="active"><a data-toggle="tab" href="#view1">Overlap</a></li>
+                                <li><a data-toggle="tab" href="#view2">Flow</a></li>
 
-                        </div>
+                            </ul>
 
-                        <div id="view2" class="tab-pane fade">
+                            <div class="panel-body">
+                                <div class="tab-content" style="position: relative; width:80vw; margin:auto;">
 
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    The <b>Flow</b> view shows absolute customer movement between venues over the latest week on record.
+                                    <div id="view1" class="tab-pane fade in active">
+                                        <!-- OVERLAP TAB -->
+
+                                        <div class="col-md-12">
+
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    The <b>Overlap</b> view shows relative customer overlap between venues over the latest week on record. <br>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="chord-svg-div" id="herds-chords-div">
+                                            <svg class="chord-svg" id="herds-chords"></svg>
+                                        </div>
+
+                                    </div>
+
+                                    <div id="view2" class="tab-pane fade">
+                                        <!-- FLOW TAB -->
+
+                                        <div class="col-md-12">
+
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    The <b>Flow</b> view shows absolute customer movement between venues over the latest week on record.
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="chord-svg-div" id="herds-flows-div">
+                                            <svg class="chord-svg" id="herds-flows"></svg>
+                                        </div>
+
+                                        <script src="/js/herdsChord.min.js"></script>
+
+                                    </div>
                                 </div>
                             </div>
 
-                            <!-- <div id="FlowText">
-                                <p>This chord diagram shows the exact flow of customers between venues over the course of the last week.</p>
-                            </div> -->
+                            <hr>
 
-                            <div class="chord-svg-div" id="herds-flows-div">
-                                <svg class="chord-svg" id="herds-flows"></svg>
+                        </div> <!-- END CHORD DIAGRAM ROW -->
+
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <div class="panel-body">
+                                    <h3> Night vs Day</h3>
+
+                                    <div class="panel panel-info">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title"> <span class="glyphicon glyphicon-info-sign"></span> Radar Plot Use</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            The radar plot below shows total transactions per 24 hours from the last week. <br>
+                                            You can hover over the points on the plot to see futher details for each location. <br>
+                                            The volumes of transactions for the academic night and day can be seen by looking at the top and bottom of the plot respectively.
+                                        </div>
+                                    </div>
+
+                                    <canvas id="nightVsDay" width="100%" height="50"></canvas>
+                                    {{>nightVsDay}}
+                                    <br>
+
+                                </div>
                             </div>
+                        </div> <!-- END RADAR PLOT ROW -->
 
-                            <script src="/js/herdsChord.min.js"></script>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <div class="panel-body">
+                                    <h3>Nightlife (Transactions)</h3>
+
+                                    <div class="panel panel-info">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title"> <span class="glyphicon glyphicon-info-sign"></span> Nightlife Chart</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            This chart shows transactions across the night from 9pm until 3am, giving an insight into how often Yoyo is used over the course of a night. <br>
+                                            Data here is averaged from the last 7 days on record.
+                                        </div>
+                                    </div>
+
+                                    <canvas id="9to3graph" width="100%" height="50"></canvas>
+
+                                    {{>9to3graph}}
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel panel-default">
 
-                <div class="panel-body">
-                    <h5> Night vs Day</h5>
-
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"> <span class="glyphicon glyphicon-info-sign"></span> Radar Plot Use</h3>
-                        </div>
-                        <div class="panel-body">
-                            The radar plot below shows total transactions per 24 hours from the last week. <br>
-                            You can hover over the points on the plot to see futher details for each location. <br>
-                            The volumes of transactions for the academic night and day can be seen by looking at the top and bottom of the plot respectively.
-                        </div>
-                    </div>
-
-                    <canvas id="nightVsDay" width="100%" height="50"></canvas>
-                    {{>nightVsDay}}
-                    <br>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <h5>Nightlife (Transactions)</h5>
-
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"> <span class="glyphicon glyphicon-info-sign"></span> Nightlife Chart</h3>
-                        </div>
-                        <div class="panel-body">
-                            This chart shows transactions across the night from 9pm until 3am, giving an insight into how often Yoyo is used over the course of a night. <br>
-                            Data here is averaged from the last 7 days on record.
-                        </div>
-                    </div>
-
-                    <canvas id="9to3graph" width="100%" height="50"></canvas>
-
-                    {{>9to3graph}}
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-</div>
 </body>
 
 {{>footer}}

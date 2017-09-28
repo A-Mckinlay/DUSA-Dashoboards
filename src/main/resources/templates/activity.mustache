@@ -12,7 +12,7 @@
 <div class="container">
     <div class="page-header" id="activity-banner">
         <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <h1>Activity</h1>
                 <p class="lead">Your DUSA data breakdown.</p>
             </div>
@@ -42,6 +42,7 @@
                             <p style="line-height: 1em">You can click on the chart labels at the top of each chart to show/hide their content from the graph.</p>
                             <p style="line-height: 1em">You can also choose how many weeks of data you're viewing for all of the graphs using the controls under this text.</p>
 
+                            <hr>
                             <br>
 
                             {{>dateranger}}
@@ -67,7 +68,13 @@
                         </div>
 
                         <div id="spectrograph" class="tab-pane fade">
-                            <h3 id="Heatmaps">Heatmaps</h3>
+                            <h2 id="Heatmaps">Heatmaps</h2>
+                            <p class="lead">See what times are hot or not across all of DUSA.</p>
+
+                            <p>The following bars show transaction frequency per location over each venue. <br>
+                                The heatmaps are seperate: the colours are plotted based on each location seperately so that activity data is not skewed by larger venues.
+                            </p>
+
                             {{>spectrographPage}}
                         </div>
 

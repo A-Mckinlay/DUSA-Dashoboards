@@ -12,53 +12,74 @@
     <div class="container">
         <div class="page-header" id="upload-banner">
             <div class="row">
+
                 <div class="col-md-10">
                     <h1>Upload</h1>
+                    <p class="lead">Load it up so we can break it down.</p>
                 </div>
+
             </div>
         </div>
     </div>
 
     <div class="container">
+
         {{#renderTitle}}
             <div class="row">
                 <div class="col-md-12">
+
                     <div class="panel panel-{{renderClass}}">
+
                         <div class="panel-heading">
                             <h3 class="panel-title">{{renderTitle}}</h3>
                         </div>
+
                         <div class="panel-body">
                             {{renderText}}
                         </div>
+
                     </div>
                 </div>
             </div>
+
         {{/renderTitle}}
         <div class="row">
             <div class="col-md-6">
-                <div class="panel panel-primary">
+                <div class="panel panel-primary" style="min-height: 15em">
+
                     <div class="panel-heading">
                         <h3 class="panel-title">Upload Disbursal File</h3>
                     </div>
+
                     <div class="panel-body">
+
                         <form method='post' enctype='multipart/form-data'>
+
                             <div class="form-group">
                                 <input type='file' name='disbursal-file'>
                             </div>
+
                             <div class="form-group">
                                 <input type="submit" class="btn btn-primary" value="Upload">
                             </div>
+
                         </form>
                     </div>
                 </div>
             </div>
+
             <div class="col-md-6">
-                <div class="panel panel-default">
+
+                <div class="panel panel-default" style="min-height: 15em">
+
                     <div class="panel-heading">
                         <h3 class="panel-title">Information</h3>
                     </div>
+
                     <div class="panel-body">
-                        Please upload your weekly disbursal files using the adjacent file selector. Uploading bulk files(more than one week) could take a long time so please either allow time for it to complete or upload each week instead.
+                        Please upload your weekly disbursal files using the adjacent file selector. <br>
+                        <br>
+                        <b>Please Note:</b> Uploading bulk files (more than one week) could take a long time so please either allow time for it to complete or upload by week instead.
                     </div>
                 </div>
             </div>
