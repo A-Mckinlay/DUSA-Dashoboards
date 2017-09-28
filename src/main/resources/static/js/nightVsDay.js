@@ -17,7 +17,7 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
         const rawData = JSON.parse(graphData);
         let dataSets = parseRawData(rawData);
         let hlabels = getHLabels();
-        drawChart("nightVsDay", "number of transactions by venue by hour", hlabels, dataSets);
+        drawChart("nightVsDay", "# of transactions by venue by hour", hlabels, dataSets);
     }
 
 
