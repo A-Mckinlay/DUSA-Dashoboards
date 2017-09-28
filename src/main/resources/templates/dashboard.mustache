@@ -28,33 +28,33 @@
     <div class="row">
 
         <div class="col-md-4">
-            <a href="/activity" style="text-decoration: none;">
-            <div class="panel panel-dashboard" id="SalesWidget">
+            <a href="/activity#Revenue" style="text-decoration: none;">
+                <div class="panel panel-dashboard" id="SalesWidget">
 
-                <div class="panel-body">
-                    <h5>YOYO Sales</h5>
-                    <br>
+                    <div class="panel-body">
+                        <h5>YOYO Sales</h5>
+                        <br>
 
-                    <div id="circle">
-                        <div id="circle-text">
-                            <p id="transactionValue" class="pinline" style=" font-weight:bold;"></p>
-                            <p class="pinline">this week</p>
-                        </div>
-                    </div>
-
-                    <br>
-
-                    <div style="align:center;">
-                        <p class="trendtext"> vs. previous week</p>
-
-                        <div style="text-align: center; font-size: larger; font-weight:bold; ">
-                            <span id="valTransactionsSpend" class="glyphicon"></span>
-                            <span id="previousTransactionValue" style="color: black">{{>valueTransactions}}</span>
+                        <div id="circle">
+                            <div id="circle-text">
+                                <p id="transactionValue" class="pinline" style=" font-weight:bold;"></p>
+                                <p class="pinline">this week</p>
+                            </div>
                         </div>
 
+                        <br>
+
+                        <div style="align:center;">
+                            <p class="trendtext"> vs. previous week</p>
+
+                            <div style="text-align: center; font-size: larger; font-weight:bold; ">
+                                <span id="valTransactionsSpend" class="glyphicon"></span>
+                                <span id="previousTransactionValue" style="color: black">{{>valueTransactions}}</span>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
-            </div>
             </a> <!-- END LINK -->
         </div>
 
@@ -174,14 +174,16 @@
         </div>
 
         <div class="col-md-4">
-            <div class="panel panel-dashboard">
-                <div class="panel-body">
-                    <h5>Busiest Times</h5>
-                    <br>
-                    <canvas id="busiestTimes" width="50" height="50"></canvas>
-                    {{>busyTimes}}
+            <a href="/herds#NightVsDay" style="text-decoration: none">
+                <div class="panel panel-dashboard">
+                    <div class="panel-body">
+                        <h5>Busiest Times</h5>
+                        <br>
+                        <canvas id="busiestTimes" width="50" height="50"></canvas>
+                        {{>busyTimes}}
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
 
     </div>

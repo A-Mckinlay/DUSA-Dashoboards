@@ -148,7 +148,7 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "dateranger", "chroma", "
                         xAxes: [{
                             display: true,
                             scaleLabel: {
-                                display: true,
+                                display: false,
                                 labelString: 'Day'
                             }
                         }],

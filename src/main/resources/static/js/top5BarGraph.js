@@ -81,7 +81,7 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
                 scaleBeginAtZero: true,
                 scales: {
                     xAxes: [{scaleLabel:{
-                        display: true,
+                        display: false,
                         labelString: "Total Sales - £"
                     }}],
                     yAxes: [{
