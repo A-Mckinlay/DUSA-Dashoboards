@@ -100,14 +100,12 @@
 
                     <div class="panel panel-info">
                         <div class="panel-heading">
-                            <h3 class="panel-title"> <span class="glyphicon glyphicon-exclamation-sign"></span> Chord Diagram Use</h3>
+                            <h3 class="panel-title"> <span class="glyphicon glyphicon-info-sign"></span> Chord Diagram Use</h3>
                         </div>
                         <div class="panel-body">
                             You can interact with the chord diagrams below by hovering your mouse over the segments on the outside of the circle.<br>
                             Ribbons/paths show the flow of users between segments, with the end representing flow to a segment from the other. <br>
                             Customers are assigned to a venue based on where most of their transactions were recorded. <br>
-                            The <b>Overlap</b> tab shows relative customer overlap between venues over the latest week on record. <br>
-                            The <b>Flow</b> tab shows absolute customer movement between venues over the latest week on record.
                         </div>
                     </div>
 
@@ -121,6 +119,13 @@
 
                         <div id="view1" class="tab-pane fade in active">
                             <!-- OVERLAP TAB -->
+
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    The <b>Overlap</b> view shows relative customer overlap between venues over the latest week on record. <br>
+                                </div>
+                            </div>
+
                             <!-- <div id="OverlapText">
                                 <p>This chord diagram shows the customer overlap between venues over the course of the last week.</p>
                             </div> -->
@@ -132,6 +137,12 @@
                         </div>
 
                         <div id="view2" class="tab-pane fade">
+
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    The <b>Flow</b> view shows absolute customer movement between venues over the latest week on record.
+                                </div>
+                            </div>
 
                             <!-- <div id="FlowText">
                                 <p>This chord diagram shows the exact flow of customers between venues over the course of the last week.</p>
@@ -158,7 +169,7 @@
 
                     <div class="panel panel-info">
                         <div class="panel-heading">
-                            <h3 class="panel-title"> <span class="glyphicon glyphicon-exclamation-sign"></span> Radar Plot Use</h3>
+                            <h3 class="panel-title"> <span class="glyphicon glyphicon-info-sign"></span> Radar Plot Use</h3>
                         </div>
                         <div class="panel-body">
                             The radar plot below shows total transactions per 24 hours from the last week. <br>
@@ -167,7 +178,7 @@
                         </div>
                     </div>
 
-                    <canvas id="nightVsDay" width="100" height="93"></canvas>
+                    <canvas id="nightVsDay" width="100%" height="50"></canvas>
                     {{>nightVsDay}}
                     <br>
                 </div>
@@ -184,7 +195,7 @@
 
                     <div class="panel panel-info">
                         <div class="panel-heading">
-                            <h3 class="panel-title"> <span class="glyphicon glyphicon-exclamation-sign"></span> Nightlife Chart</h3>
+                            <h3 class="panel-title"> <span class="glyphicon glyphicon-info-sign"></span> Nightlife Chart</h3>
                         </div>
                         <div class="panel-body">
                             This chart shows transactions across the night from 9pm until 3am, giving an insight into how often Yoyo is used over the course of a night. <br>
@@ -192,7 +203,7 @@
                         </div>
                     </div>
 
-                    <canvas id="9to3graph" width="50" height="50"></canvas>
+                    <canvas id="9to3graph" width="100%" height="50"></canvas>
 
                     {{>9to3graph}}
 
