@@ -74,13 +74,13 @@ requirejs(["moment"], function (moment) {
         if(parseInt(currentWeekValue) > parseInt(previousWeekValue ))
         {
             let greenTri = $("#transTrend");
-            greenTri.html("⯅");
+            greenTri.addClass('glyphicon-triangle-top');
             greenTri.css('color', 'green');
         }
         else if(parseInt(currentWeekValue) < parseInt(previousWeekValue))
         {
             let redTri = $("#transTrend");
-            redTri.html("⯆");
+            redTri.addClass('glyphicon-triangle-bottom');
             redTri.css('color', 'red');
         }
         else if(parseInt(currentWeekValue) === parseInt(previousWeekValue))
