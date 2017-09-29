@@ -60,8 +60,6 @@ requirejs(["moment"], function (moment) {
         let ctx = document.getElementById("transactionValue");
         var parsedData = JSON.parse(graphData);
         ctx.innerHTML = "£" + parsedData["Payment"]["cashspent"];
-        console.log(graphData);
-
     }
 
     function drawTrend(trendData) {

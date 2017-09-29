@@ -71,8 +71,6 @@ requirejs(["moment"], function (moment) {
         let currentWeekValue = document.getElementById("averageSpend").innerHTML;
         currentWeekValue = currentWeekValue.slice(1);
 
-        console.log(previousWeekValue, currentWeekValue);
-
         if(parseFloat(currentWeekValue) > parseFloat(previousWeekValue ))
         {
             let greenTri = $("#avgTrend");

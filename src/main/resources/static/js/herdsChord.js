@@ -9,8 +9,6 @@ requirejs(["d3", "lodash", "dashohelper", "chroma", "distinct-colors"],
             if (locked) return;
             locked = true;
 
-            console.log("Rebuilding chords.");
-
             if (chordsData === null) {
                 getChordData();
                 return;

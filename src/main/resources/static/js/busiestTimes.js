@@ -15,7 +15,6 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
 
     function drawVenuePopGraph(graphData){
         const rawData = JSON.parse(graphData);
-        console.log(rawData);
         let busiestTimeData = parseRawDataSet(rawData);
         let hLabels = generateLabels(busiestTimeData);
         let colourPallete = getColourPallete(hLabels.length);
@@ -40,7 +39,6 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
                 hLabels.push(dataPoint.x);
             }
         });
-        console.log(hLabels);
         return hLabels;
     }
 

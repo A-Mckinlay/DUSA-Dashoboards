@@ -16,9 +16,7 @@ requirejs(["moment", "Chart", "lodash", "dashohelper", "chroma", "distinct-color
     function drawGraph(graphData){
         const rawData = JSON.parse(graphData);
         let herdTransactionData = parseRawDataSet(rawData);
-        console.log(herdTransactionData);
         let hLabels = generateLabels(herdTransactionData);
-        console.log(hLabels);
         drawChart("9to3graph", "Average number of transactions per hour of the day", hLabels, herdTransactionData);
     }
 
